@@ -16,7 +16,7 @@ contract Chats is ERC20Token, ContractOwnershipTransfer {
      * @param _decimals Token decimals
      */
     string public name = "CHATS";
-    string public symbol = "CAS";
+    string public symbol = "CHA";
     uint256 public decimals = 18;
 
     // Called when new token are issued
@@ -30,7 +30,7 @@ contract Chats is ERC20Token, ContractOwnershipTransfer {
      * The contract can be initialized with a number of tokens
      * All the tokens are deposited to the owner address     *
      *
-     * @param _initialSupply Initial supply of the contract 1000000000000000000000000 (1,000,0000 FMY Token)
+     * @param _initialSupply Initial supply of the contract 0 (1,000,0000 CHA Token)
      */
     constructor(uint256 _initialSupply) public {
         _totalSupply = _initialSupply;

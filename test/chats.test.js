@@ -1,16 +1,16 @@
 const { assert } = require("chai");
 
-const FreeMoney = artifacts.require("./FreeMoney.sol");
+const chats = artifacts.require("./Chats.sol");
 
 require("chai")
   .use(require("chai-as-promised"))
   .should();
 
-contract("FreeMoney", (accounts) => {
+contract("chats", (accounts) => {
   let contract;
 
   before(async () => {
-    contract = await FreeMoney.deployed();
+    contract = await chats.deployed();
   });
 
   describe("Deployment", async () => {
@@ -24,12 +24,12 @@ contract("FreeMoney", (accounts) => {
 
     it("... correct contract name", async () => {
       const name = await contract.name();
-      assert.equal(name, "FreeMoney");
+      assert.equal(name, "chats");
     });
 
     it("... has the correct symbol", async () => {
       const symbol = await contract.symbol();
-      assert.equal(symbol, "FMY");
+      assert.equal(symbol, "CHA");
     });
 
     it("... deployed with 1Mil FMY Token", async () => {
@@ -141,7 +141,7 @@ contract("FreeMoney", (accounts) => {
       await contract.DestroyBlackFunds(accounts[1], { from: accounts[3] });
       const bal1 = await contract.balanceOf(accounts[1]);
 
-      assert.notEqual(bal.toString(), bal1.toString(), 'balances amount not distroyed')
+      assert.notEqual(bal.toString(), bal1.toString(), 'balances amount not destroyed')
     });
 
     it("... removing user from BlackList", async () => {
