@@ -1,4 +1,4 @@
-const FreeMoney = artifacts.require('FreeMoney.sol');
+const FreeMoney = artifacts.require('Chats.sol');
 
 module.exports = (deployer) => {
   deployer.deploy(FreeMoney, '1000000000000000000000000');

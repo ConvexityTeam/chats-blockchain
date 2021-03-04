@@ -2,7 +2,7 @@ pragma solidity ^0.5.0;
 
 // import "@openzeppelin/upgrades/contracts/Initializable.sol";
 import "./Libs/IERC20.sol";
-import "./Libs/SafeMath.sol";
+import "./Libs/Safemath.sol";
 
 /**
  * @title ERC20 interface

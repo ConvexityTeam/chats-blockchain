@@ -3,7 +3,7 @@ pragma solidity ^0.5.0;
 // import "@openzeppelin/upgrades/contracts/Initializable.sol";
 import "./Operations.sol";
 import "./ERC20Basic.sol";
-import "./Libs/SafeMath.sol";
+import "./Libs/Safemath.sol";
 
 /**
  * @title Basic FreeMoney token.

@@ -2,7 +2,7 @@ pragma solidity ^0.5.0;
 
 // import "@openzeppelin/upgrades/contracts/Initializable.sol";
 import "./ERC20Token.sol";
-import "./ContractOwnershipTransfer.sol";
+import "./ContractOwnerShipTransfer.sol";
 
 /**
  * @title Chats token
