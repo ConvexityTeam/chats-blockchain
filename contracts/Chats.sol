@@ -20,7 +20,7 @@ contract Chats is ERC20Token, ContractOwnershipTransfer {
     uint256 public decimals = 18;
 
     // Called when new token are issued
-    event Issue(uint256 amount);
+    event Issue(uint256 amount, address indexed mintedTo);
     // Called when tokens are redeemed
     event Redeem(uint256 amount);
     // Called if contract ever adds fees
@@ -47,14 +47,14 @@ contract Chats is ERC20Token, ContractOwnershipTransfer {
      *
      * @param _amount Number of tokens to be issued
      */
-    function issue(uint256 _amount) public onlyOwner {
+    function issue(uint256 _amount, address _mintedTo) public onlyOwner {
         require(_totalSupply + _amount > _totalSupply);
-        require(balances[owner] + _amount > balances[owner]);
+        require(balances[owner] + _amount > balances[_mintedTo]);
 
         balances[owner] += _amount;
         _totalSupply += _amount;
         _totalIssued += _amount;
-        emit Issue(_amount);
+        emit Issue(_amount, _mintedTo);
     }
 
     /**

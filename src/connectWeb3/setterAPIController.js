@@ -32,10 +32,9 @@ const BlockchainTrxAdmin = async (result) => {
 };
 
 const BlockchainTrx = async (result, _From, _Pswd) => {
-  const nonce = await connect.web3.eth.getTransactionCount(_From);
+  await connect.web3.eth.unlockAccount(_From, _Pswd);
   const data = result.encodeABI();
   const tx = {
-    nonce: nonce,
     from: _From,
     to: connect.address,
     data: data,
@@ -43,10 +42,8 @@ const BlockchainTrx = async (result, _From, _Pswd) => {
     gasPrice: 0,
   };
 
-  const transfer = await connect.web3.eth.personal.signTransaction(tx, _Pswd);
-  const serializetx = transfer.raw;
-  const sendtx = await connect.web3.eth.sendSignedTransaction(serializetx);
-
+  const sendtx = await connect.web3.eth.sendTransaction(tx);
+  await connect.web3.eth.lockAccount(_From)
   return sendtx;
 };
 
