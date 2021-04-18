@@ -2,13 +2,91 @@
   "contractName": "ERC20Basic",
   "abi": [
     {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "spender",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "value",
+          "type": "uint256"
+        }
+      ],
+      "name": "Approval",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "from",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "to",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "value",
+          "type": "uint256"
+        }
+      ],
+      "name": "Transfer",
+      "type": "event"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_owner",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_spender",
+          "type": "address"
+        }
+      ],
+      "name": "allowance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "constant": false,
       "inputs": [
         {
+          "internalType": "address",
           "name": "_spender",
           "type": "address"
         },
         {
+          "internalType": "uint256",
           "name": "_value",
           "type": "uint256"
         }
@@ -16,6 +94,7 @@
       "name": "approve",
       "outputs": [
         {
+          "internalType": "bool",
           "name": "",
           "type": "bool"
         }
@@ -30,6 +109,7 @@
       "name": "totalSupply",
       "outputs": [
         {
+          "internalType": "uint256",
           "name": "",
           "type": "uint256"
         }
@@ -42,37 +122,12 @@
       "constant": false,
       "inputs": [
         {
-          "name": "_from",
-          "type": "address"
-        },
-        {
-          "name": "_to",
-          "type": "address"
-        },
-        {
-          "name": "_value",
-          "type": "uint256"
-        }
-      ],
-      "name": "transferFrom",
-      "outputs": [
-        {
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
+          "internalType": "address",
           "name": "to",
           "type": "address"
         },
         {
+          "internalType": "uint256",
           "name": "value",
           "type": "uint256"
         }
@@ -80,6 +135,38 @@
       "name": "transfer",
       "outputs": [
         {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_from",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_value",
+          "type": "uint256"
+        }
+      ],
+      "name": "transferFrom",
+      "outputs": [
+        {
+          "internalType": "bool",
           "name": "",
           "type": "bool"
         }
@@ -92,73 +179,7 @@
       "constant": true,
       "inputs": [
         {
-          "name": "_owner",
-          "type": "address"
-        },
-        {
-          "name": "_spender",
-          "type": "address"
-        }
-      ],
-      "name": "allowance",
-      "outputs": [
-        {
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "name": "from",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "name": "to",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "name": "value",
-          "type": "uint256"
-        }
-      ],
-      "name": "Transfer",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "name": "owner",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "name": "spender",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "name": "value",
-          "type": "uint256"
-        }
-      ],
-      "name": "Approval",
-      "type": "event"
-    },
-    {
-      "constant": true,
-      "inputs": [
-        {
+          "internalType": "address",
           "name": "_address",
           "type": "address"
         }
@@ -166,6 +187,7 @@
       "name": "balanceOf",
       "outputs": [
         {
+          "internalType": "uint256",
           "name": "balance",
           "type": "uint256"
         }
@@ -175,7 +197,7 @@
       "type": "function"
     }
   ],
-  "metadata": "",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Approval\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_owner\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_spender\",\"type\":\"address\"}],\"name\":\"allowance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_spender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_value\",\"type\":\"uint256\"}],\"name\":\"approve\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"balance\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_value\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{\"balanceOf(address)\":{\"details\":\"Gets the balance of the specified address.\",\"params\":{\"_address\":\"The address to return the its balance.\"},\"return\":\"An uint256 representing the amount owned by the _address.\"}},\"title\":\"ERC20 interface\"},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/justcharlz/token-chats/contracts/ERC20Basic.sol\":\"ERC20Basic\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/justcharlz/token-chats/contracts/ERC20Basic.sol\":{\"keccak256\":\"0x576ae13cf6e7f7c3024973d60c1ad30e10ad57d40ef97bcd74aa0fe09ca35e92\",\"urls\":[\"bzz-raw://86cb8e3e9b656bd82a97bb2d17fa50dbd697c553205dd7c56930977df10d7500\",\"dweb:/ipfs/QmTbRmWBJJ88qVrG6HToyGTFCzVHJtZ5CghGh7z2iUkQEf\"]},\"/home/justcharlz/token-chats/contracts/Libs/IERC20.sol\":{\"keccak256\":\"0xbde3c5a6ba831df15610ae3e45a21d2abac6cc49f4767d6510a203ae4de6723f\",\"urls\":[\"bzz-raw://5ae0ba409f705fd815136bec2315663ce3d9349f9af2943cb5427b1bcbaaab91\",\"dweb:/ipfs/QmZNGD8pWqSrBBDsXkgkb3p6muU2vKH2m8hHGgTSQhFBff\"]},\"/home/justcharlz/token-chats/contracts/Libs/Safemath.sol\":{\"keccak256\":\"0x7a15ee9697214029102d86b56187cc9e251b6c643d44f4aefe698e7a817147d7\",\"urls\":[\"bzz-raw://a1b9be717048ea7d227d7a23e3435b908f39a8f35278abcbded5cc2c0fb98f45\",\"dweb:/ipfs/QmeFyC98VTvBLRgGZDi1cyULVBthXkipFRnRN8nCEGMzAG\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
@@ -186,14 +208,14 @@
     "absolutePath": "/home/justcharlz/token-chats/contracts/ERC20Basic.sol",
     "exportedSymbols": {
       "ERC20Basic": [
-        405
+        410
       ]
     },
-    "id": 406,
+    "id": 411,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 381,
+        "id": 386,
         "literals": [
           "solidity",
           "^",
@@ -206,10 +228,10 @@
       {
         "absolutePath": "/home/justcharlz/token-chats/contracts/Libs/IERC20.sol",
         "file": "./Libs/IERC20.sol",
-        "id": 382,
+        "id": 387,
         "nodeType": "ImportDirective",
-        "scope": 406,
-        "sourceUnit": 854,
+        "scope": 411,
+        "sourceUnit": 859,
         "src": "89:27:2",
         "symbolAliases": [],
         "unitAlias": ""
@@ -217,10 +239,10 @@
       {
         "absolutePath": "/home/justcharlz/token-chats/contracts/Libs/Safemath.sol",
         "file": "./Libs/Safemath.sol",
-        "id": 383,
+        "id": 388,
         "nodeType": "ImportDirective",
-        "scope": 406,
-        "sourceUnit": 1041,
+        "scope": 411,
+        "sourceUnit": 1046,
         "src": "117:29:2",
         "symbolAliases": [],
         "unitAlias": ""
@@ -231,53 +253,53 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 384,
+              "id": 389,
               "name": "IERC20",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 853,
+              "referencedDeclaration": 858,
               "src": "205:6:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IERC20_$853",
+                "typeIdentifier": "t_contract$_IERC20_$858",
                 "typeString": "contract IERC20"
               }
             },
-            "id": 385,
+            "id": 390,
             "nodeType": "InheritanceSpecifier",
             "src": "205:6:2"
           }
         ],
         "contractDependencies": [
-          853
+          858
         ],
         "contractKind": "contract",
         "documentation": "@title ERC20 interface",
         "fullyImplemented": false,
-        "id": 405,
+        "id": 410,
         "linearizedBaseContracts": [
-          405,
-          853
+          410,
+          858
         ],
         "name": "ERC20Basic",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
-            "id": 388,
+            "id": 393,
             "libraryName": {
               "contractScope": null,
-              "id": 386,
+              "id": 391,
               "name": "SafeMath",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1040,
+              "referencedDeclaration": 1045,
               "src": "224:8:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_SafeMath_$1040",
+                "typeIdentifier": "t_contract$_SafeMath_$1045",
                 "typeString": "library SafeMath"
               }
             },
             "nodeType": "UsingForDirective",
             "src": "218:27:2",
             "typeName": {
-              "id": 387,
+              "id": 392,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
               "src": "237:7:2",
@@ -289,10 +311,10 @@
           },
           {
             "constant": false,
-            "id": 392,
+            "id": 397,
             "name": "balances",
             "nodeType": "VariableDeclaration",
-            "scope": 405,
+            "scope": 410,
             "src": "251:45:2",
             "stateVariable": true,
             "storageLocation": "default",
@@ -301,9 +323,9 @@
               "typeString": "mapping(address => uint256)"
             },
             "typeName": {
-              "id": 391,
+              "id": 396,
               "keyType": {
-                "id": 389,
+                "id": 394,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "259:7:2",
@@ -319,7 +341,7 @@
                 "typeString": "mapping(address => uint256)"
               },
               "valueType": {
-                "id": 390,
+                "id": 395,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
                 "src": "270:7:2",
@@ -334,7 +356,7 @@
           },
           {
             "body": {
-              "id": 403,
+              "id": 408,
               "nodeType": "Block",
               "src": "584:42:2",
               "statements": [
@@ -343,25 +365,25 @@
                     "argumentTypes": null,
                     "baseExpression": {
                       "argumentTypes": null,
-                      "id": 399,
+                      "id": 404,
                       "name": "balances",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 392,
+                      "referencedDeclaration": 397,
                       "src": "601:8:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
                         "typeString": "mapping(address => uint256)"
                       }
                     },
-                    "id": 401,
+                    "id": 406,
                     "indexExpression": {
                       "argumentTypes": null,
-                      "id": 400,
+                      "id": 405,
                       "name": "_address",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 394,
+                      "referencedDeclaration": 399,
                       "src": "610:8:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -379,30 +401,30 @@
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 398,
-                  "id": 402,
+                  "functionReturnParameters": 403,
+                  "id": 407,
                   "nodeType": "Return",
                   "src": "594:25:2"
                 }
               ]
             },
             "documentation": "@dev Gets the balance of the specified address.\n@param _address The address to return the its balance.\n@return An uint256 representing the amount owned by the _address.",
-            "id": 404,
+            "id": 409,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "balanceOf",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 395,
+              "id": 400,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 394,
+                  "id": 399,
                   "name": "_address",
                   "nodeType": "VariableDeclaration",
-                  "scope": 404,
+                  "scope": 409,
                   "src": "528:16:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -411,7 +433,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 393,
+                    "id": 398,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "528:7:2",
@@ -428,15 +450,15 @@
               "src": "527:18:2"
             },
             "returnParameters": {
-              "id": 398,
+              "id": 403,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 397,
+                  "id": 402,
                   "name": "balance",
                   "nodeType": "VariableDeclaration",
-                  "scope": 404,
+                  "scope": 409,
                   "src": "567:15:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -445,7 +467,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 396,
+                    "id": 401,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "567:7:2",
@@ -460,14 +482,14 @@
               ],
               "src": "566:17:2"
             },
-            "scope": 405,
+            "scope": 410,
             "src": "509:117:2",
             "stateMutability": "view",
-            "superFunction": 814,
+            "superFunction": 819,
             "visibility": "public"
           }
         ],
-        "scope": 406,
+        "scope": 411,
         "src": "182:446:2"
       }
     ],
@@ -478,7 +500,7 @@
       "absolutePath": "/home/justcharlz/token-chats/contracts/ERC20Basic.sol",
       "exportedSymbols": {
         "ERC20Basic": [
-          405
+          410
         ]
       }
     },
@@ -492,54 +514,54 @@
             ".0"
           ]
         },
-        "id": 381,
+        "id": 386,
         "name": "PragmaDirective",
         "src": "0:23:2"
       },
       {
         "attributes": {
-          "SourceUnit": 854,
+          "SourceUnit": 859,
           "absolutePath": "/home/justcharlz/token-chats/contracts/Libs/IERC20.sol",
           "file": "./Libs/IERC20.sol",
-          "scope": 406,
+          "scope": 411,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 382,
+        "id": 387,
         "name": "ImportDirective",
         "src": "89:27:2"
       },
       {
         "attributes": {
-          "SourceUnit": 1041,
+          "SourceUnit": 1046,
           "absolutePath": "/home/justcharlz/token-chats/contracts/Libs/Safemath.sol",
           "file": "./Libs/Safemath.sol",
-          "scope": 406,
+          "scope": 411,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 383,
+        "id": 388,
         "name": "ImportDirective",
         "src": "117:29:2"
       },
       {
         "attributes": {
           "contractDependencies": [
-            853
+            858
           ],
           "contractKind": "contract",
           "documentation": "@title ERC20 interface",
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            405,
-            853
+            410,
+            858
           ],
           "name": "ERC20Basic",
-          "scope": 406
+          "scope": 411
         },
         "children": [
           {
@@ -551,15 +573,15 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "IERC20",
-                  "referencedDeclaration": 853,
+                  "referencedDeclaration": 858,
                   "type": "contract IERC20"
                 },
-                "id": 384,
+                "id": 389,
                 "name": "UserDefinedTypeName",
                 "src": "205:6:2"
               }
             ],
-            "id": 385,
+            "id": 390,
             "name": "InheritanceSpecifier",
             "src": "205:6:2"
           },
@@ -569,10 +591,10 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "SafeMath",
-                  "referencedDeclaration": 1040,
+                  "referencedDeclaration": 1045,
                   "type": "library SafeMath"
                 },
-                "id": 386,
+                "id": 391,
                 "name": "UserDefinedTypeName",
                 "src": "224:8:2"
               },
@@ -581,12 +603,12 @@
                   "name": "uint256",
                   "type": "uint256"
                 },
-                "id": 387,
+                "id": 392,
                 "name": "ElementaryTypeName",
                 "src": "237:7:2"
               }
             ],
-            "id": 388,
+            "id": 393,
             "name": "UsingForDirective",
             "src": "218:27:2"
           },
@@ -594,7 +616,7 @@
             "attributes": {
               "constant": false,
               "name": "balances",
-              "scope": 405,
+              "scope": 410,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "mapping(address => uint256)",
@@ -612,7 +634,7 @@
                       "name": "address",
                       "type": "address"
                     },
-                    "id": 389,
+                    "id": 394,
                     "name": "ElementaryTypeName",
                     "src": "259:7:2"
                   },
@@ -621,17 +643,17 @@
                       "name": "uint256",
                       "type": "uint256"
                     },
-                    "id": 390,
+                    "id": 395,
                     "name": "ElementaryTypeName",
                     "src": "270:7:2"
                   }
                 ],
-                "id": 391,
+                "id": 396,
                 "name": "Mapping",
                 "src": "251:27:2"
               }
             ],
-            "id": 392,
+            "id": 397,
             "name": "VariableDeclaration",
             "src": "251:45:2"
           },
@@ -645,9 +667,9 @@
                 null
               ],
               "name": "balanceOf",
-              "scope": 405,
+              "scope": 410,
               "stateMutability": "view",
-              "superFunction": 814,
+              "superFunction": 819,
               "visibility": "public"
             },
             "children": [
@@ -657,7 +679,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_address",
-                      "scope": 404,
+                      "scope": 409,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -671,17 +693,17 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 393,
+                        "id": 398,
                         "name": "ElementaryTypeName",
                         "src": "528:7:2"
                       }
                     ],
-                    "id": 394,
+                    "id": 399,
                     "name": "VariableDeclaration",
                     "src": "528:16:2"
                   }
                 ],
-                "id": 395,
+                "id": 400,
                 "name": "ParameterList",
                 "src": "527:18:2"
               },
@@ -691,7 +713,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "balance",
-                      "scope": 404,
+                      "scope": 409,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -704,17 +726,17 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 396,
+                        "id": 401,
                         "name": "ElementaryTypeName",
                         "src": "567:7:2"
                       }
                     ],
-                    "id": 397,
+                    "id": 402,
                     "name": "VariableDeclaration",
                     "src": "567:15:2"
                   }
                 ],
-                "id": 398,
+                "id": 403,
                 "name": "ParameterList",
                 "src": "566:17:2"
               },
@@ -722,7 +744,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 398
+                      "functionReturnParameters": 403
                     },
                     "children": [
                       {
@@ -741,11 +763,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 392,
+                              "referencedDeclaration": 397,
                               "type": "mapping(address => uint256)",
                               "value": "balances"
                             },
-                            "id": 399,
+                            "id": 404,
                             "name": "Identifier",
                             "src": "601:8:2"
                           },
@@ -755,51 +777,51 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 394,
+                              "referencedDeclaration": 399,
                               "type": "address",
                               "value": "_address"
                             },
-                            "id": 400,
+                            "id": 405,
                             "name": "Identifier",
                             "src": "610:8:2"
                           }
                         ],
-                        "id": 401,
+                        "id": 406,
                         "name": "IndexAccess",
                         "src": "601:18:2"
                       }
                     ],
-                    "id": 402,
+                    "id": 407,
                     "name": "Return",
                     "src": "594:25:2"
                   }
                 ],
-                "id": 403,
+                "id": 408,
                 "name": "Block",
                 "src": "584:42:2"
               }
             ],
-            "id": 404,
+            "id": 409,
             "name": "FunctionDefinition",
             "src": "509:117:2"
           }
         ],
-        "id": 405,
+        "id": 410,
         "name": "ContractDefinition",
         "src": "182:446:2"
       }
     ],
-    "id": 406,
+    "id": 411,
     "name": "SourceUnit",
     "src": "0:629:2"
   },
   "compiler": {
     "name": "solc",
-    "version": "0.5.0+commit.1d4f565a.Emscripten.clang"
+    "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-03-05T06:56:33.063Z",
+  "updatedAt": "2021-04-17T21:58:05.083Z",
   "devdoc": {
     "methods": {
       "balanceOf(address)": {

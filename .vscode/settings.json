@@ -4,5 +4,6 @@
     "slither.hiddenDetectors": [],
     "cSpell.enableFiletypes": [
         "solidity"
-    ]
+    ],
+    "solidity.defaultCompiler": "remote"
 }
