@@ -3,7 +3,7 @@ const trnx = require("../../connectWeb3/index");
 const CreateAccount = async (req, res) => {
     const userPwsd = req.params.userpwsd
     try {
-        const AccountCreated = await trnx.createAccount(userPwsd);
+        const AccountCreated = await trnx.createAccount();
         return res.json({ AccountCreated });  
     } catch (error) {
         res.status(500);

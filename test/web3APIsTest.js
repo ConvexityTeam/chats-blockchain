@@ -18,7 +18,7 @@ async function TestingWeb3APIs() {
     });
     console.log("3) Contract Owner >>>", GetOwner);
 
-    const User = await trnx.createAccount("CHArl!307").then((result) => {
+    const User = await trnx.createAccount().then((result) => {
       return result;
     });
     console.log("4) User Created   >>>", User);
