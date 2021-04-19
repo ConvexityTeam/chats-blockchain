@@ -19524,7 +19524,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-04-17T21:58:05.101Z",
+  "updatedAt": "2021-04-19T07:26:46.907Z",
   "devdoc": {
     "details": "Contract module for user management. * This module is used through inheritance. It will make available the contract addresses of users, admin, whitelisting and blacklisting of users.",
     "methods": {

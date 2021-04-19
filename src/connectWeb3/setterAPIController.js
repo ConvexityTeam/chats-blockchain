@@ -476,9 +476,9 @@ exports.transfers = async (_senderAddr, _senderPswd, _receiver, _value) => {
  * @param {string} _value: The amount to be Minted.
  * @returns {Boolean} object with transaction status; true or throws.
  */
-exports.minting = async (_value) => {
+exports.minting = async (_value, _mintTo) => {
   try {
-    const result = await connect.contract.methods.issue(_value);
+    const result = await connect.contract.methods.issue(_value, _mintTo);
     const sendtx = await BlockchainTrxAdmin(result);
 
     return sendtx.status;

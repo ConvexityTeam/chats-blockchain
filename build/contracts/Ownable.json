@@ -1187,7 +1187,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-04-17T21:58:05.108Z",
+  "updatedAt": "2021-04-19T07:26:46.913Z",
   "devdoc": {
     "details": "Owned contract - Implements a simple ownership model with 2-phase transfer functions to let the owner sets transfer the ownership control. It can transfer the ownership to a new owner through making a proposedOwner.",
     "methods": {

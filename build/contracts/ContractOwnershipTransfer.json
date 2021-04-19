@@ -5647,7 +5647,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-04-17T21:58:05.081Z",
+  "updatedAt": "2021-04-19T07:26:46.886Z",
   "devdoc": {
     "details": "Contract module for Tranfering the Contract ownership. * This module is used to transfer the Ownership of the Contract to a new Owner who is not BlackListed but is an Admin.",
     "methods": {

@@ -11,8 +11,8 @@ module.exports = {
      network_id: "*",       // Any network (default: none)
     },
 
-    // Used for the Azure network
-    blockchainservice: {
+    // Used for the BSC network
+    binance: {
       provider: new HDWalletProvider(MNEMONIC, BLOCKCHAINSERV),
       network_id: "*",
       gas: 0,

@@ -112,7 +112,7 @@ async function TestingWeb3APIs() {
     });
     console.log("21) TransferedFrom >>>", TransferFrom);
 
-    const Minted = await trnx.minting('1000000000000000000').then((result) => {
+    const Minted = await trnx.minting('1000000000000000000', User).then((result) => {
       return result;
     });
     console.log("22) Minting  works >>>", Minted);

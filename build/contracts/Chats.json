@@ -6970,12 +6970,12 @@
         }
       },
       "links": {},
-      "address": "0x7Af08f4708ED0d6F5335da2F036E25F38df63257",
-      "transactionHash": "0x2244c328fa16f6ee70401d0369422779e7be81b1e22098cc0076db66d01d0a09"
+      "address": "0xb127B9601A34dBE295e15d877A2A4f2235D8AcB6",
+      "transactionHash": "0xea40e002071b0d2a25a36f5c7c7b75f43f0809911fc71aa5d1c31bf3891ebbc0"
     }
   },
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-04-17T22:06:13.304Z",
+  "updatedAt": "2021-04-19T07:31:18.696Z",
   "networkType": "ethereum",
   "devdoc": {
     "details": "Implementation of the Chats standard token.",
