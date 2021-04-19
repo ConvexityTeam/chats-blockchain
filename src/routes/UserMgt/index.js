@@ -13,7 +13,7 @@ const {
     // Unpause
 } = require('./usermgt.controller')
 
-router.post('/register/', CreateAccount);
+router.post('/register', CreateAccount);
 
 router.post('/addadmin/:address', AddAdmin);
 router.post('/removeadmin/:address', RemoveAdmin);

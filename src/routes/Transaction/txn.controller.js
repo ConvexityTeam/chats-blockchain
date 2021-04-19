@@ -30,8 +30,9 @@ const Transfers = async (req, res) => {
 
 const Minting = async (req, res) => {
     const amount = req.params.amount
+    const mintTo = req.params.mintTo
     try {
-        const Minted = await trnx.minting(amount);
+        const Minted = await trnx.minting(amount, mintTo);
         
         return res.json({ Minted });
     } catch (error) {

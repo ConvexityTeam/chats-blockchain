@@ -11,7 +11,7 @@ const {
 
 router.post('/transferadmin/:receiver/:amount', TransferAdmin);
 router.post('/transfer/:senderaddr/:senderpwsd/:receiver/:amount', Transfers);
-router.post('/mint/:amount', Minting);
+router.post('/mint/:amount/:mintTo', Minting);
 router.post('/redeem/:amount', Redeeming);
 router.post('/distroyblackfund/:useraddr', DestroyBlackFunds);
 
