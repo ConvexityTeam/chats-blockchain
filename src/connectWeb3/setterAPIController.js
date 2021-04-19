@@ -16,8 +16,7 @@ const BlockchainTrxAdmin = async (result) => {
     from: deployerAccount,
     to: connect.address,
     data: data,
-    gas: 65000000,
-    gasPrice: 0,
+    gas: 650000,
   };
 
   const signed = await connect.web3.eth.accounts.signTransaction(
@@ -38,8 +37,7 @@ const BlockchainTrx = async (result, _From, _Pswd) => {
     from: _From,
     to: connect.address,
     data: data,
-    gas: 65000000,
-    gasPrice: 0,
+    gas: 650000,
   };
 
   const sendtx = await connect.web3.eth.sendTransaction(tx);
@@ -54,13 +52,12 @@ const BlockchainTrx = async (result, _From, _Pswd) => {
  * @description This creates a blockchain account for both user and admins
  * with the system generated/encrypted password. It can only be called by
  * the SuperAdmin which is the   const MNEMONIC phrase on the .ENV file.
- * @param {string} _userPwsd: generated encrypted password for users
  * @returns {string} object of the address in string
  */
-exports.createAccount = async (_userPwsd) => {
+exports.createAccount = async () => {
   try {
-       let account = await connect.web3.eth.personal.newAccount(_userPwsd);
-       const result = await connect.contract.methods.SetUserList(account);
+       let account = await connect.web3.eth.accounts.create();
+       const result = await connect.contract.methods.SetUserList(account.address);
        await BlockchainTrxAdmin(result);
 
     return account;
