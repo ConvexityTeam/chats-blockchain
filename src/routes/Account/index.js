@@ -23,6 +23,6 @@ router.get('/totalsupply', GetTotalSupply);
 router.get('/issuedamt/:address', GetTotalIssued);
 router.get('/redeemamt/:address', GetTotalRedeemed);
 router.get('/balance/:address', GetBalance);
-// router.get('/allowance/:tokenOwner/:spenderAddr', GetAllowance);
+router.get('/allowance/:tokenOwner/:spenderAddr', GetAllowance);
 
 module.exports = router;

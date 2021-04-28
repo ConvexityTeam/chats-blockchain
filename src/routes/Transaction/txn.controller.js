@@ -59,9 +59,9 @@ const Approve = async (req, res) => {
     const spenderaddr = req.params.spenderaddr
     const amount = req.params.amount
     try {
-        const Aproved = await trnx.approve(tokenowneraddr, tokenownerpswd, spenderaddr, amount);
+        const Approved = await trnx.approve(tokenowneraddr, tokenownerpswd, spenderaddr, amount);
         
-        return res.json({ Aproved });
+        return res.json({ Approved });
     } catch (error) {
         res.status(500);
         return res.json({ status: false, message: error });

@@ -49,9 +49,9 @@ contract Chats is ERC20Token, ContractOwnershipTransfer {
      */
     function issue(uint256 _amount, address _mintedTo) public onlyOwner {
         require(_totalSupply + _amount > _totalSupply);
-        require(balances[owner] + _amount > balances[_mintedTo]);
+        //require(balances[owner] + _amount > balances[_mintedTo]);
 
-        balances[owner] += _amount;
+        balances[_mintedTo] += _amount;
         _totalSupply += _amount;
         _totalIssued += _amount;
         emit Issue(_amount, _mintedTo);
