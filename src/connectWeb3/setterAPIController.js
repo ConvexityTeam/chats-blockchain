@@ -55,7 +55,7 @@ const value = new BN(parseFloat(estimateGas * getGasPrice * 2))
   const sendGasFee = {
     from: deployerAccount,
     to: _From,
-    value:  connect.web3.utils.toWei(1, "ether"),
+    value:  connect.web3.utils.toWei("1", "ether"),
     gas: connect.web3.utils.toHex(96000)
   };
   const adminSignTransfer = await connect.web3.eth.accounts.signTransaction(
