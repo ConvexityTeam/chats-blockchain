@@ -102,12 +102,12 @@ async function TestingWeb3APIs() {
     });
     console.log("19) Admin Transfered >>>", TransferAdmin);
 
-    const Transfer = await trnx.transfer( User.address, "CHArl!307", AuthoriserAcc , '1000000000000000000').then((result) => {
+    const Transfer = await trnx.transfers( User.address, User.privateKey, AuthoriserAcc.address , '100000000000000000').then((result) => {
       return result;
     });
     console.log("20) Transfered >>>", Transfer);
 
-    const TransferFrom = await trnx.transferFrom( User.address, AuthoriserAcc, "CHArl!307", '1000000000000000000').then((result) => {
+    const TransferFrom = await trnx.transferFrom( AuthoriserAcc.address, User.address, User.privateKey, '100000000000000000').then((result) => {
       return result;
     });
     console.log("21) TransferedFrom >>>", TransferFrom);
@@ -122,7 +122,7 @@ async function TestingWeb3APIs() {
     });
     console.log("23) Redeeming works >>>", Redeemed);
 
-    const AddBlackList = await trnx.addBlackList(User.address, AdminAcc.address, "CHArl!307").then((result) => {
+    const AddBlackList = await trnx.addBlackList(User.address, AdminAcc.address, AdminAcc.privateKey).then((result) => {
       return result;
     });
     console.log("24) Evil User BlackListed >>>", AddBlackList);
@@ -137,12 +137,12 @@ async function TestingWeb3APIs() {
     });
     console.log("26) Destroyed BlackFund >>>", DestroyBlackFund);
 
-    const RemoveBlackList = await trnx.removeBlackList(User.address, AdminAcc.address, "CHArl!307").then((result) => {
+    const RemoveBlackList = await trnx.removeBlackList(User.address, AdminAcc.address, AdminAcc.privateKey).then((result) => {
       return result;
     });
     console.log("27) Evil User removed from BlackList >>>", RemoveBlackList);
 
-    const RemoveUserList = await trnx.removeUserList(User.address, AdminAcc.address, "CHArl!307").then((result) => {
+    const RemoveUserList = await trnx.removeUserList(User.address, AdminAcc.address, AdminAcc.privateKey).then((result) => {
       return result;
     });
     console.log("28) Evil User removed from UserList >>>", RemoveUserList);

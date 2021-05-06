@@ -41,9 +41,7 @@ const BlockchainTrx = async (result, _From, _Pswd) => {
   
   const estimateGas = await connect.web3.eth.estimateGas({from: _From, to: connect.address,  data: data})
   console.log(getGasPrice,' ',estimateGas, ' ', estimateGas * getGasPrice + estimateGas * getGasPrice)
-  const nonce = await connect.web3.eth.getTransactionCount(_From);
   const tx = {
-    nonce: nonce,
     from: _From,
     to: connect.address,
     data: data,
@@ -51,11 +49,16 @@ const BlockchainTrx = async (result, _From, _Pswd) => {
   };
 
   // const estimateGas1 = await connect.web3.eth.estimateGas({from: deployerAccount, to: _From, data: data}).then(resp => resp)
-const value = new BN(parseFloat(estimateGas * getGasPrice * 2))
+const value = new BN(estimateGas * getGasPrice * 2).toString()
+
+// console.log(value)
+// const b = estimateGas * getGasPrice * 2
+// const value2 = ethers.utils.parseUnits(toString(b), 10)
+// console.log(value2)
   const sendGasFee = {
     from: deployerAccount,
     to: _From,
-    value:  connect.web3.utils.toWei("1", "ether"),
+    value:  connect.web3.utils.toWei("0.1", "ether"),
     gas: connect.web3.utils.toHex(96000)
   };
   const adminSignTransfer = await connect.web3.eth.accounts.signTransaction(
