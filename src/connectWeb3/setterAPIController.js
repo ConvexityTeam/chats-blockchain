@@ -1,14 +1,16 @@
 const connect = require("../resources/web3config.js");
 const ethers = require("ethers");
+var deployerAccount
+var mnemonicWallet
 
 const BlockchainTrxAdmin = async (result) => {
   const MNEMONIC = process.env.MNEMONIC;
-  const mnemonicWallet = ethers.Wallet.fromMnemonic(MNEMONIC);
+  mnemonicWallet = ethers.Wallet.fromMnemonic(MNEMONIC);
   const accountObj = await connect.web3.eth.accounts.privateKeyToAccount(
     mnemonicWallet.privateKey
   );
 
-  const deployerAccount = accountObj.address;
+  deployerAccount = accountObj.address;
   const nonce = await connect.web3.eth.getTransactionCount(deployerAccount);
   const data = result.encodeABI();
   const tx = {
@@ -31,17 +33,49 @@ const BlockchainTrxAdmin = async (result) => {
 };
 
 const BlockchainTrx = async (result, _From, _Pswd) => {
-  await connect.web3.eth.unlockAccount(_From, _Pswd);
   const data = result.encodeABI();
+
+  const gasPrice = await connect.web3.eth.getGasPrice(resp => resp)
+  var BN = connect.web3.utils.BN;
+  const getGasPrice = connect.web3.utils.fromWei(new BN(parseInt(gasPrice)), 'ether')
+  
+  const estimateGas = await connect.web3.eth.estimateGas({from: _From, to: connect.address,  data: data})
+  console.log(getGasPrice,' ',estimateGas, ' ', estimateGas * getGasPrice + estimateGas * getGasPrice)
+  const nonce = await connect.web3.eth.getTransactionCount(_From);
   const tx = {
+    nonce: nonce,
     from: _From,
     to: connect.address,
     data: data,
-    gas: 650000,
+    gas: connect.web3.utils.toHex(estimateGas)
   };
 
-  const sendtx = await connect.web3.eth.sendTransaction(tx);
-  await connect.web3.eth.lockAccount(_From)
+  // const estimateGas1 = await connect.web3.eth.estimateGas({from: deployerAccount, to: _From, data: data}).then(resp => resp)
+const value = new BN(parseFloat(estimateGas * getGasPrice * 2))
+  const sendGasFee = {
+    from: deployerAccount,
+    to: _From,
+    value:  connect.web3.utils.toWei(1, "ether"),
+    gas: connect.web3.utils.toHex(96000)
+  };
+  const adminSignTransfer = await connect.web3.eth.accounts.signTransaction(
+    sendGasFee,
+    mnemonicWallet.privateKey
+  );
+  const adminTransferBNB = await connect.web3.eth.sendSignedTransaction(
+    adminSignTransfer.rawTransaction
+  );
+  console.log('Sent BNB by Admin', adminTransferBNB.status)
+
+  // connect.web3.eth.getBalance(deployerAccount).then(console.log);
+  connect.web3.eth.getBalance(_From).then(console.log);
+  const signed = await connect.web3.eth.accounts.signTransaction(
+    tx,
+    _Pswd
+  );
+  const sendtx = await connect.web3.eth.sendSignedTransaction(
+    signed.rawTransaction
+  );
   return sendtx;
 };
 
