@@ -1,16 +1,14 @@
 const connect = require("../resources/web3config.js");
 const ethers = require("ethers");
-var deployerAccount
-var mnemonicWallet
-
-const BlockchainTrxAdmin = async (result) => {
-  const MNEMONIC = process.env.MNEMONIC;
-  mnemonicWallet = ethers.Wallet.fromMnemonic(MNEMONIC);
-  const accountObj = await connect.web3.eth.accounts.privateKeyToAccount(
+const MNEMONIC = process.env.MNEMONIC;
+const mnemonicWallet = ethers.Wallet.fromMnemonic(MNEMONIC);
+const accountObj = connect.web3.eth.accounts.privateKeyToAccount(
     mnemonicWallet.privateKey
   );
+const deployerAccount = accountObj.address;
 
-  deployerAccount = accountObj.address;
+const BlockchainTrxAdmin = async (result) => {
+  
   const nonce = await connect.web3.eth.getTransactionCount(deployerAccount);
   const data = result.encodeABI();
   const tx = {
@@ -33,53 +31,46 @@ const BlockchainTrxAdmin = async (result) => {
 };
 
 const BlockchainTrx = async (result, _From, _Pswd) => {
-  const data = result.encodeABI();
-
-  const gasPrice = await connect.web3.eth.getGasPrice(resp => resp)
-  var BN = connect.web3.utils.BN;
-  const getGasPrice = connect.web3.utils.fromWei(new BN(parseInt(gasPrice)), 'ether')
   
+  const data = result.encodeABI();
+  const gasPrice = await connect.web3.eth.getGasPrice()
+  const getGasPrice = connect.web3.utils.fromWei(gasPrice, 'ether')
   const estimateGas = await connect.web3.eth.estimateGas({from: _From, to: connect.address,  data: data})
-  console.log(getGasPrice,' ',estimateGas, ' ', estimateGas * getGasPrice + estimateGas * getGasPrice)
+  
   const tx = {
     from: _From,
     to: connect.address,
     data: data,
-    gas: connect.web3.utils.toHex(estimateGas)
+    gas: estimateGas
   };
 
-  // const estimateGas1 = await connect.web3.eth.estimateGas({from: deployerAccount, to: _From, data: data}).then(resp => resp)
-const value = new BN(estimateGas * getGasPrice * 2).toString()
+const value = estimateGas * getGasPrice
+const value2 = ethers.utils.parseUnits(value.toString())
 
-// console.log(value)
-// const b = estimateGas * getGasPrice * 2
-// const value2 = ethers.utils.parseUnits(toString(b), 10)
-// console.log(value2)
   const sendGasFee = {
     from: deployerAccount,
     to: _From,
-    value:  connect.web3.utils.toWei("0.1", "ether"),
-    gas: connect.web3.utils.toHex(96000)
+    value:  connect.web3.utils.toWei(value.toString(), "ether"),
+    gas: await connect.web3.eth.estimateGas({from: deployerAccount, to: _From, value: value2})
   };
   const adminSignTransfer = await connect.web3.eth.accounts.signTransaction(
     sendGasFee,
     mnemonicWallet.privateKey
   );
-  const adminTransferBNB = await connect.web3.eth.sendSignedTransaction(
-    adminSignTransfer.rawTransaction
-  );
-  console.log('Sent BNB by Admin', adminTransferBNB.status)
-
-  // connect.web3.eth.getBalance(deployerAccount).then(console.log);
-  connect.web3.eth.getBalance(_From).then(console.log);
+  
   const signed = await connect.web3.eth.accounts.signTransaction(
     tx,
     _Pswd
   );
-  const sendtx = await connect.web3.eth.sendSignedTransaction(
-    signed.rawTransaction
+
+  const adminTransferBNB = await connect.web3.eth.sendSignedTransaction(
+    adminSignTransfer.rawTransaction
   );
-  return sendtx;
+  
+  const sendtx = await connect.web3.eth.sendSignedTransaction(signed.rawTransaction);
+
+  return sendtx
+
 };
 
 //////////      Account Management        ////////////
@@ -549,18 +540,21 @@ exports.redeeming = async (_value) => {
 };
 
 /**
- * @name Appove
+ * @name Approve
  * @description This redeems tokens from the SuperAdmin's Account. It is only called 
  * by the SuperAdmin.
- * 
- * @param {string} _value: The amount to be redeemed.
+ * @param {string} _tokenOwnerAddr: The _tokenOwnerAddr to be redeemed.
+ * @param {string} _tokenOwnerPswd: The _tokenOwnerPswd to be redeemed.
+ * @param {string} _spenderAddr: The _spenderAddr to be redeemed.
+ * @param {string} _value: The _value to be redeemed.
  * @returns {Boolean} object with transaction status; true or throws.
  */
-exports.approve = async (_tokenOwnerAddr,_tokenOwnerPswd, _spenderAddr, _value) => {
+exports.approve = async (_tokenOwnerAddr, _tokenOwnerPswd, _spenderAddr, _value) => {
   try {
+
     const result = await connect.contract.methods.approve(_spenderAddr, _value);
     const sendtx = await BlockchainTrx(result, _tokenOwnerAddr,_tokenOwnerPswd);
-
+    console.log(sendtx)
     const event = await connect.contract.getPastEvents("Approval", {
           fromBlock: sendtx.blockNumber,
         });

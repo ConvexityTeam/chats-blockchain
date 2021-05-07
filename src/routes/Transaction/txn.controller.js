@@ -54,8 +54,8 @@ const Redeeming = async (req, res) => {
 };
 
 const Approve = async (req, res) => {
-    const tokenowneraddr = req.params.tokenowneraddr;
-    const tokenownerpswd = req.param.tokenownerpswd;
+    const tokenowneraddr = req.params.tokenowneraddr
+    const tokenownerpswd = req.params.tokenownerpswd
     const spenderaddr = req.params.spenderaddr
     const amount = req.params.amount
     try {
