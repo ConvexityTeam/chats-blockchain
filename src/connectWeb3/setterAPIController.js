@@ -580,17 +580,17 @@ exports.approve = async (_tokenOwnerAddr, _tokenOwnerPswd, _spenderAddr, _value)
  * @name TransferFrom
  * @description This enables the transfer of tokens from Beneficiary to vendor.
  * It can be called by any registered user
- * @param {string} _tokenOwerAddr: The _tokenOwerAddr to be transfer.
+ * @param {string} _tokenOwerAddr: The _tokenOwerAddr to be transfer from.
+ * @param {string} _tokenOwerAddr: The _newOwerAddr to be transfer to.
  * @param {string} _spenderAddr: The _spenderAddr to send from.
  * @param {string} _spenderPwsd: The _spenderPwsd the password of the msg.sender.
  * @param {string} _value: The amount to be redeemed.
  * @returns {Boolean} object with transaction status; true or throws.
  */
-exports.transferFrom = async (_tokenOwnerAddr, _spenderAddr, _spenderPwsd, _value) => {
+exports.transferFrom = async (_tokenOwnerAddr, _to, _spenderAddr, _spenderPwsd, _value) => {
     try {
 
-      console.log(_tokenOwnerAddr, _spenderAddr, _spenderPwsd, _value)
-        const result = await connect.contract.methods.transferFrom(_tokenOwnerAddr, _spenderAddr, _value);
+        const result = await connect.contract.methods.transferFrom(_tokenOwnerAddr, _to, _value);
         const sendtx = await BlockchainTrx(result, _spenderAddr, _spenderPwsd);
         
         const event = await connect.contract.getPastEvents("Transfer", {
