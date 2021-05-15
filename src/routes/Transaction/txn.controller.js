@@ -70,12 +70,13 @@ const Approve = async (req, res) => {
 
 const TransferFrom = async (req, res) => {
     const tokenowneraddr = req.params.tokenowneraddr
+    const to = req.params.to
     const spenderaddr = req.params.spenderaddr
     const spenderpwsd = req.params.spenderpwsd
     const amount = req.params.amount;
     
     try {
-        const TransferedFrom = await trnx.transferFrom(tokenowneraddr, spenderaddr, spenderpwsd, amount);
+        const TransferedFrom = await trnx.transferFrom(tokenowneraddr, to, spenderaddr, spenderpwsd, amount);
         
         return res.json({ TransferedFrom });
     } catch (error) {
