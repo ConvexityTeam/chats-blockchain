@@ -44,7 +44,7 @@ contract Chats is ERC20Token, ContractOwnershipTransfer {
 
     /**
      * Issue a new amount of tokens these tokens are deposited into the owner address
-     *
+     * This is for issuing of token to the user or the beneficiary of the NGO
      * @param _amount Number of tokens to be issued
      */
     function issue(uint256 _amount, address _mintedTo) public onlyOwner {
