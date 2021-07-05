@@ -18,7 +18,7 @@ services:
   token-app:
     container_name: token-app
     build:
-      context: tokens-chats
+      context: .
       dockerfile: Dockerfile
     networks:
       - gateway
