@@ -10,10 +10,23 @@ services:
     volumes:
       - web-root:/var/www/html
       - ./nginx:/etc/nginx/conf.d
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
     depends_on:
       - token-app
     networks:
       - gateway
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - web-root:/var/www/html
+    depends_on:
+      - webserver
+    command: certonly --webroot --webroot-path=/var/www/html --email support@convexity.com --agree-tos --no-eff-email --staging -d token.chats.cash
 
   token-app:
     container_name: token-app
@@ -32,5 +45,11 @@ networks:
     name: gateway
 
 volumes:
+  certbot-etc:
+  certbot-var:
   web-root:
     driver: local
+    driver_opts:
+      type: none
+      device: /home/ubuntu/token-chats/views/
+      o: bind
