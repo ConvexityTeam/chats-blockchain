@@ -7,6 +7,7 @@ services:
     restart: unless-stopped
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - web-root:/var/www/html
       - ./nginx:/etc/nginx/conf.d
@@ -24,6 +25,7 @@ services:
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
       - web-root:/var/www/html
+      - dhparam:/etc/ssl/certs
     depends_on:
       - webserver
     command: certonly --webroot --webroot-path=/var/www/html --email support@convexity.com --agree-tos --no-eff-email --force-renewal -d token.chats.cash
@@ -52,4 +54,10 @@ volumes:
     driver_opts:
       type: none
       device: /home/ubuntu/token-chats/views/
+      o: bind
+  dhparam:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/sammy/token-chats/dhparam/
       o: bind
