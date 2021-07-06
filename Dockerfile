@@ -9,8 +9,6 @@ COPY . .
 
 RUN npm cache verify
 
-RUN ls -la 
-
 RUN npm install
 
 ENV NODE_ENV=production
