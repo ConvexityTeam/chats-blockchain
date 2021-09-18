@@ -9,6 +9,9 @@ const helmet = require('helmet');
 const logger = require('morgan');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./src/docs/swagger.json');
+const {
+  Config,
+} = require("./utils");
 
 const app = express();
 const swaggerSetupOptions = {};
@@ -18,7 +21,19 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(logger('dev'));
 app.use(helmet());
-app.use(cors());
+const whitelist = Config.WHITELISTDOMAINS;
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (whitelist.indexOf(origin) !== -1 || origin === undefined) {
+      callback(null, true);
+    } else {
+      // logger.info(`Cors origin denied ${origin}`);
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
+};
+app.use(cors(corsOptions));
 
 // APIs
 app.use('/api/v1', router);
