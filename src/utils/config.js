@@ -28,8 +28,10 @@ exports.Config = {
       process.env.TEST_CONTRACTADDR,
 
   WHITELISTDOMAINS: [
-        "http://172.31.22.207",
-        "https://172.31.22.207"
+        "172.31.22.207",
+        "https://172.31.22.207",
+        "3.138.231.35",
+        "https://3.138.231.35",
       ],
 
 }
