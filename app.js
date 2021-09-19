@@ -33,7 +33,8 @@ const corsOptions = {
   },
   credentials: true,
 };
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors())
 
 // APIs
 app.use('/api/v1', router);
