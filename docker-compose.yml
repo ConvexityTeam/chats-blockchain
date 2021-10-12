@@ -7,13 +7,13 @@ services:
     restart: unless-stopped
     ports:
       - "80:80"
-      # - "443:443"
+      - "443:443"
     volumes:
       - web-root:/var/www/html
       - ./nginx:/etc/nginx/conf.d
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
-      # - dhparam:/etc/ssl/certs
+      - dhparam:/etc/ssl/certs
     depends_on:
       - token-app
     networks:
@@ -56,9 +56,9 @@ volumes:
       type: none
       device: /home/ubuntu/token-chats/views/
       o: bind
-  # dhparam:
-  #   driver: local
-  #   driver_opts:
-  #     type: none
-  #     device: /home/ubuntu/token-chats/dhparam/
-  #     o: bind
+  dhparam:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/ubuntu/token-chats/dhparam/
+      o: bind
