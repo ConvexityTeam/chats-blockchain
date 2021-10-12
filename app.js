@@ -11,7 +11,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./src/docs/swagger.json');
 const {
   Config,
-} = require("./utils");
+} = require("./src/utils");
 
 const app = express();
 const swaggerSetupOptions = {};
