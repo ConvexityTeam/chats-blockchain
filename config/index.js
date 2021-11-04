@@ -7,6 +7,7 @@ const baseConfig = {
   isDev: env === 'development',
   isTest: env === 'testing',
   port: process.env.PORT,
+  checksumSecret: process.env.CHECKSUM_SECRET || ''
 };
 
 let envConfig = {};
