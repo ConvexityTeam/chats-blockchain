@@ -36,6 +36,7 @@ const Minting = async (req, res) => {
         
         return res.json({ Minted });
     } catch (error) {
+        console.log(error);
         res.status(500);
         return res.json({ status: false, message: error });
     }
