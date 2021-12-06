@@ -46,9 +46,10 @@ app.use(function (req, res, next) {
 });
 
 // error handler
-// app.use(function(err, req, res) {
-//   res.locals.message = err.message;
-//   res.locals.error = req.app.get('env') === 'development' ? err : {};
-// });
+app.use(function(err, req, res) {
+  console.log(err);
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+});
 
 module.exports = app;
