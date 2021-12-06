@@ -41,14 +41,11 @@ app.use('/api/v1', router);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404, 'Resource Not Found.'));
+app.all('*', function (req, res) {
+  res.status(404).json({
+    status: false,
+    message: 'Resource Not Found'
+  });
 });
-
-// error handler
-// app.use(function(err, req, res) {
-//   res.locals.message = err.message;
-//   res.locals.error = req.app.get('env') === 'development' ? err : {};
-// });
 
 module.exports = app;
