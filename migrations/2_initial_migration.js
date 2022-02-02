@@ -1,6 +1,6 @@
-const FreeMoney = artifacts.require('Chats.sol');
+const CHATS = artifacts.require('Chats.sol');
 
 module.exports = (deployer) => {
-  deployer.deploy(FreeMoney, '1000000000000000000000000');
+  deployer.deploy(CHATS, '0');
   console.log('CHATS Token Contract is deployed');
 };
