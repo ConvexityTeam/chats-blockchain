@@ -6608,12 +6608,12 @@
         }
       },
       "links": {},
-      "address": "0x0de9Ae23990de45AEa678927FA2B8Ff2dCC228C6",
-      "transactionHash": "0x81b58dd22ea135f92b9309e7ad16249fb273dfd647707932917200afa516858f"
+      "address": "0xB84f998cf9C423F823601354af9005551C4f9A64",
+      "transactionHash": "0x8f2b3e3e29260aca50d43a3e45c60ffcccc489d1279652ec689e1ef50c4a4cc7"
     }
   },
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-02-02T15:54:28.736Z",
+  "updatedAt": "2022-02-02T17:32:44.009Z",
   "networkType": "ethereum",
   "devdoc": {
     "details": "Implementation of the Chats standard token.",
