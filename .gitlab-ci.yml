@@ -9,7 +9,7 @@ before_script:
 deploy_staging:
   stage: deploy
   script:
-    - ssh $USER@$APP_URL -o StrictHostKeyChecking=no ". ssh-restart.sh && ssh-add .ssh/convexityApps && cd token-chats && git fetch && git reset --hard origin/master && git pull origin master && docker-compose up --force-recreate --no-deps -d token-app && chmod +x ssl_renew.sh && exit"
+    - ssh $USER@$APP_URL -o StrictHostKeyChecking=no ". ssh-restart.sh && ssh-add .ssh/convexityApps && cd token-chats && git fetch && git reset --hard origin/master && git pull origin master && docker-compose build token-app && docker-compose up --force-recreate --no-deps -d && chmod +x ssl_renew.sh && exit"
     # - ssh $USER@$APP_URL -o StrictHostKeyChecking=no ". ssh-restart.sh && ssh-add .ssh/convexityApps && cd token-chats && git fetch && git reset --hard origin/master && git pull origin master && docker-compose build token-app && docker-compose up -d && chmod +x ssl_renew.sh && exit"
   only:
     - master
