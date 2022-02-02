@@ -23,7 +23,7 @@ exports.Config = {
       : process.env.BLOCKCHAINSERV_TEST,
   
   DEPLOYEDCONTRACT:
-    process.env.APPENV == 'development'
+    process.env.APPENV == 'production'
       ? process.env.CONTRACTADDR :
       process.env.TEST_CONTRACTADDR,
 
