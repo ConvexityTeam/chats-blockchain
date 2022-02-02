@@ -1,15 +1,15 @@
 {
   "contractName": "Context",
   "abi": [],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/justcharlz/token-chats/contracts/Libs/Context.sol\":\"Context\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/justcharlz/token-chats/contracts/Libs/Context.sol\":{\"keccak256\":\"0x5537a2e600d7318b22c82df0eb0fb3c4b3f007d7b83a8ac34642e5d2eee8c429\",\"urls\":[\"bzz-raw://db6d89b7b75028e8f6a126ea6496862c89c090075fff1b6bdbc2d5ed2e233246\",\"dweb:/ipfs/QmWQ61A2gLVyyNfhkLWbC6PEqJ34bUGDMWkz5fvGQfMNE3\"]}},\"version\":1}",
-  "bytecode": "0x6080604052348015600f57600080fd5b50603e80601d6000396000f3fe6080604052600080fdfea265627a7a7231582030dfbfa76e73ee5922167c111df1611c49b19ce4d8db1aeb949fe9d0988b1cec64736f6c63430005100032",
-  "deployedBytecode": "0x6080604052600080fdfea265627a7a7231582030dfbfa76e73ee5922167c111df1611c49b19ce4d8db1aeb949fe9d0988b1cec64736f6c63430005100032",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"project:/contracts/Libs/Context.sol\":\"Context\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/Libs/Context.sol\":{\"keccak256\":\"0x5537a2e600d7318b22c82df0eb0fb3c4b3f007d7b83a8ac34642e5d2eee8c429\",\"urls\":[\"bzz-raw://db6d89b7b75028e8f6a126ea6496862c89c090075fff1b6bdbc2d5ed2e233246\",\"dweb:/ipfs/QmWQ61A2gLVyyNfhkLWbC6PEqJ34bUGDMWkz5fvGQfMNE3\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603e80601d6000396000f3fe6080604052600080fdfea265627a7a7231582084aecfbde3786747dcafb1be9d29a7f5bf97e19f51742864a48f55796934b1b564736f6c63430005100032",
+  "deployedBytecode": "0x6080604052600080fdfea265627a7a7231582084aecfbde3786747dcafb1be9d29a7f5bf97e19f51742864a48f55796934b1b564736f6c63430005100032",
   "sourceMap": "525:581:4:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;525:581:4;;;;;;;",
   "deployedSourceMap": "525:581:4:-;;;;;",
   "source": "pragma solidity ^0.5.0;\n\n/*\n * @dev Provides information about the current execution context, including the\n * sender of the transaction and its data. While these are generally available\n * via msg.sender and msg.data, they should not be accessed in such a direct\n * manner, since when dealing with GSN meta-transactions the account sending and\n * paying for execution may not be the actual sender (as far as an application\n * is concerned).\n *\n * This contract is only required for intermediate, library-like contracts.\n */\ncontract Context {\n    // Empty internal constructor, to prevent people from mistakenly deploying\n    // an instance of this contract, which should be used via inheritance.\n    // constructor () public {}\n    // solhint-disable-previous-line no-empty-blocks\n\n    function _msgSender() internal view returns (address) {\n        return msg.sender;\n    }\n\n    function _msgData() internal view returns (bytes memory) {\n        this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691\n        return msg.data;\n    }\n}\n",
-  "sourcePath": "/home/justcharlz/token-chats/contracts/Libs/Context.sol",
+  "sourcePath": "/Users/charlesokaformbah/Projects/token-chats/contracts/Libs/Context.sol",
   "ast": {
-    "absolutePath": "/home/justcharlz/token-chats/contracts/Libs/Context.sol",
+    "absolutePath": "project:/contracts/Libs/Context.sol",
     "exportedSymbols": {
       "Context": [
         775
@@ -260,7 +260,7 @@
   },
   "legacyAST": {
     "attributes": {
-      "absolutePath": "/home/justcharlz/token-chats/contracts/Libs/Context.sol",
+      "absolutePath": "project:/contracts/Libs/Context.sol",
       "exportedSymbols": {
         "Context": [
           775
@@ -562,8 +562,8 @@
     "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.3.4",
-  "updatedAt": "2021-04-28T09:11:23.995Z",
+  "schemaVersion": "3.4.4",
+  "updatedAt": "2022-02-02T15:41:20.492Z",
   "devdoc": {
     "methods": {}
   },

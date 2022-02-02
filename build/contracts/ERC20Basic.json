@@ -197,15 +197,15 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Approval\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_owner\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_spender\",\"type\":\"address\"}],\"name\":\"allowance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_spender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_value\",\"type\":\"uint256\"}],\"name\":\"approve\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"balance\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_value\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{\"balanceOf(address)\":{\"details\":\"Gets the balance of the specified address.\",\"params\":{\"_address\":\"The address to return the its balance.\"},\"return\":\"An uint256 representing the amount owned by the _address.\"}},\"title\":\"ERC20 interface\"},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/justcharlz/token-chats/contracts/ERC20Basic.sol\":\"ERC20Basic\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/justcharlz/token-chats/contracts/ERC20Basic.sol\":{\"keccak256\":\"0x576ae13cf6e7f7c3024973d60c1ad30e10ad57d40ef97bcd74aa0fe09ca35e92\",\"urls\":[\"bzz-raw://86cb8e3e9b656bd82a97bb2d17fa50dbd697c553205dd7c56930977df10d7500\",\"dweb:/ipfs/QmTbRmWBJJ88qVrG6HToyGTFCzVHJtZ5CghGh7z2iUkQEf\"]},\"/home/justcharlz/token-chats/contracts/Libs/IERC20.sol\":{\"keccak256\":\"0xbde3c5a6ba831df15610ae3e45a21d2abac6cc49f4767d6510a203ae4de6723f\",\"urls\":[\"bzz-raw://5ae0ba409f705fd815136bec2315663ce3d9349f9af2943cb5427b1bcbaaab91\",\"dweb:/ipfs/QmZNGD8pWqSrBBDsXkgkb3p6muU2vKH2m8hHGgTSQhFBff\"]},\"/home/justcharlz/token-chats/contracts/Libs/Safemath.sol\":{\"keccak256\":\"0x7a15ee9697214029102d86b56187cc9e251b6c643d44f4aefe698e7a817147d7\",\"urls\":[\"bzz-raw://a1b9be717048ea7d227d7a23e3435b908f39a8f35278abcbded5cc2c0fb98f45\",\"dweb:/ipfs/QmeFyC98VTvBLRgGZDi1cyULVBthXkipFRnRN8nCEGMzAG\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Approval\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_owner\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_spender\",\"type\":\"address\"}],\"name\":\"allowance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_spender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_value\",\"type\":\"uint256\"}],\"name\":\"approve\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_address\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"balance\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"internalType\":\"address\",\"name\":\"_from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_value\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{\"balanceOf(address)\":{\"details\":\"Gets the balance of the specified address.\",\"params\":{\"_address\":\"The address to return the its balance.\"},\"return\":\"An uint256 representing the amount owned by the _address.\"}},\"title\":\"ERC20 interface\"},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"project:/contracts/ERC20Basic.sol\":\"ERC20Basic\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/ERC20Basic.sol\":{\"keccak256\":\"0x576ae13cf6e7f7c3024973d60c1ad30e10ad57d40ef97bcd74aa0fe09ca35e92\",\"urls\":[\"bzz-raw://86cb8e3e9b656bd82a97bb2d17fa50dbd697c553205dd7c56930977df10d7500\",\"dweb:/ipfs/QmTbRmWBJJ88qVrG6HToyGTFCzVHJtZ5CghGh7z2iUkQEf\"]},\"project:/contracts/Libs/IERC20.sol\":{\"keccak256\":\"0xbde3c5a6ba831df15610ae3e45a21d2abac6cc49f4767d6510a203ae4de6723f\",\"urls\":[\"bzz-raw://5ae0ba409f705fd815136bec2315663ce3d9349f9af2943cb5427b1bcbaaab91\",\"dweb:/ipfs/QmZNGD8pWqSrBBDsXkgkb3p6muU2vKH2m8hHGgTSQhFBff\"]},\"project:/contracts/Libs/Safemath.sol\":{\"keccak256\":\"0x7a15ee9697214029102d86b56187cc9e251b6c643d44f4aefe698e7a817147d7\",\"urls\":[\"bzz-raw://a1b9be717048ea7d227d7a23e3435b908f39a8f35278abcbded5cc2c0fb98f45\",\"dweb:/ipfs/QmeFyC98VTvBLRgGZDi1cyULVBthXkipFRnRN8nCEGMzAG\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.5.0;\n\n// import \"@openzeppelin/upgrades/contracts/Initializable.sol\";\nimport \"./Libs/IERC20.sol\";\nimport \"./Libs/Safemath.sol\";\n\n/**\n * @title ERC20 interface\n */\ncontract ERC20Basic is IERC20 {\n    using SafeMath for uint256;\n\n    mapping(address => uint256) internal balances;\n\n    /**\n     * @dev Gets the balance of the specified address.\n     * @param _address The address to return the its balance.\n     * @return An uint256 representing the amount owned by the _address.\n     */\n    function balanceOf(address _address) public view returns (uint256 balance) {\n        return balances[_address];\n    }\n}\n",
-  "sourcePath": "/home/justcharlz/token-chats/contracts/ERC20Basic.sol",
+  "sourcePath": "/Users/charlesokaformbah/Projects/token-chats/contracts/ERC20Basic.sol",
   "ast": {
-    "absolutePath": "/home/justcharlz/token-chats/contracts/ERC20Basic.sol",
+    "absolutePath": "project:/contracts/ERC20Basic.sol",
     "exportedSymbols": {
       "ERC20Basic": [
         398
@@ -226,7 +226,7 @@
         "src": "0:23:2"
       },
       {
-        "absolutePath": "/home/justcharlz/token-chats/contracts/Libs/IERC20.sol",
+        "absolutePath": "project:/contracts/Libs/IERC20.sol",
         "file": "./Libs/IERC20.sol",
         "id": 375,
         "nodeType": "ImportDirective",
@@ -237,7 +237,7 @@
         "unitAlias": ""
       },
       {
-        "absolutePath": "/home/justcharlz/token-chats/contracts/Libs/Safemath.sol",
+        "absolutePath": "project:/contracts/Libs/Safemath.sol",
         "file": "./Libs/Safemath.sol",
         "id": 376,
         "nodeType": "ImportDirective",
@@ -497,7 +497,7 @@
   },
   "legacyAST": {
     "attributes": {
-      "absolutePath": "/home/justcharlz/token-chats/contracts/ERC20Basic.sol",
+      "absolutePath": "project:/contracts/ERC20Basic.sol",
       "exportedSymbols": {
         "ERC20Basic": [
           398
@@ -521,7 +521,7 @@
       {
         "attributes": {
           "SourceUnit": 847,
-          "absolutePath": "/home/justcharlz/token-chats/contracts/Libs/IERC20.sol",
+          "absolutePath": "project:/contracts/Libs/IERC20.sol",
           "file": "./Libs/IERC20.sol",
           "scope": 399,
           "symbolAliases": [
@@ -536,7 +536,7 @@
       {
         "attributes": {
           "SourceUnit": 1034,
-          "absolutePath": "/home/justcharlz/token-chats/contracts/Libs/Safemath.sol",
+          "absolutePath": "project:/contracts/Libs/Safemath.sol",
           "file": "./Libs/Safemath.sol",
           "scope": 399,
           "symbolAliases": [
@@ -820,8 +820,8 @@
     "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.3.4",
-  "updatedAt": "2021-04-28T09:11:23.990Z",
+  "schemaVersion": "3.4.4",
+  "updatedAt": "2022-02-02T15:41:20.486Z",
   "devdoc": {
     "methods": {
       "balanceOf(address)": {

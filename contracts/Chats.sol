@@ -16,8 +16,8 @@ contract Chats is ERC20Token, ContractOwnershipTransfer {
      * @param _decimals Token decimals
      */
     string public name = "CHATS";
-    string public symbol = "CHA";
-    uint256 public decimals = 18;
+    string public symbol = "CHS";
+    uint256 public decimals = 3;
 
     // Called when new token are issued
     event Issue(uint256 amount, address indexed mintedTo);
