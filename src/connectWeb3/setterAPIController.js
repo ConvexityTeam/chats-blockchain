@@ -12,7 +12,6 @@ const BlockchainTrxAdmin = async (result) => {
   const nonce = await connect.web3.eth.getTransactionCount(deployerAccount);
   const data = result.encodeABI();
   const tx = {
-    nonce: nonce,
     from: deployerAccount,
     to: connect.address,
     data: data,
