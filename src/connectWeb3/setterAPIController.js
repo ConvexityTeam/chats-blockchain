@@ -9,9 +9,31 @@ const deployerAccount = accountObj.address;
 
 const BlockchainTrxAdmin = async (result) => {
   
-  const nonce = await connect.web3.eth.getTransactionCount(deployerAccount);
   const data = result.encodeABI();
   const tx = {
+    from: deployerAccount,
+    to: connect.address,
+    data: data,
+    gas: 650000,
+  };
+
+  const signed = await connect.web3.eth.accounts.signTransaction(
+    tx,
+    mnemonicWallet.privateKey
+  );
+  const invoice = await connect.web3.eth.sendSignedTransaction(
+    signed.rawTransaction
+  );
+
+  return invoice;
+};
+
+const BlockchainTrxAdminRetry = async (result) => {
+  
+  const nonce = (await connect.web3.eth.getTransactionCount(deployerAccount)) + 1;
+  const data = result.encodeABI();
+  const tx = {
+    nonce: nonce,
     from: deployerAccount,
     to: connect.address,
     data: data,
@@ -72,6 +94,58 @@ const value2 = ethers.utils.parseUnits(value.toFixed(8))
 
 };
 
+const BlockchainTrxRetry = async (result, _From, _Pswd) => {
+  const data = result.encodeABI();
+  const gasPrice = await connect.web3.eth.getGasPrice();
+  const getGasPrice = connect.web3.utils.fromWei(gasPrice, 'ether');
+  const estimateGas = await connect.web3.eth.estimateGas({
+    from: _From,
+    to: connect.address,
+    data: data,
+  });
+
+  const nonce = (await connect.web3.eth.getTransactionCount(_From)) + 1;
+  console.log('Nonce on Retry', nonce);
+
+  const tx = {
+    nonce: nonce,
+    from: _From,
+    to: connect.address,
+    data: data,
+    gas: estimateGas,
+  };
+
+  const value = estimateGas * getGasPrice;
+  const value2 = ethers.utils.parseUnits(value.toFixed(8));
+
+  const sendGasFee = {
+    from: deployerAccount,
+    to: _From,
+    value: connect.web3.utils.toWei(value.toFixed(8), 'ether'),
+    gas: await connect.web3.eth.estimateGas({
+      from: deployerAccount,
+      to: _From,
+      value: value2,
+    }),
+  };
+  const adminSignTransfer = await connect.web3.eth.accounts.signTransaction(
+    sendGasFee,
+    mnemonicWallet.privateKey
+  );
+
+  const signed = await connect.web3.eth.accounts.signTransaction(tx, _Pswd);
+
+  const adminTransferBNB = await connect.web3.eth.sendSignedTransaction(
+    adminSignTransfer.rawTransaction
+  );
+
+  const sendtx = await connect.web3.eth.sendSignedTransaction(
+    signed.rawTransaction
+  );
+
+  return sendtx;
+};
+
 //////////      Account Management        ////////////
 
 /**
@@ -89,10 +163,24 @@ exports.createAccount = async () => {
 
     return account;
   } catch (error) {
-    let err = {
-      name: "Web3-CreateAccount",
-      error: error.message,
-    };
+    if (
+      error.message.includes(
+        'Returned error: replacement transaction underpriced'
+      ) ||
+      error.message.includes('Returned error: known transaction')
+    ) {
+      console.log("retried");
+      let account = await connect.web3.eth.accounts.create();
+       const result = await connect.contract.methods.SetUserList(account.address);
+       await BlockchainTrxAdminRetry(result);
+
+    return account;
+    }else{
+      let err = {
+        name: "Web3-CreateAccount",
+        error: error.message,
+      };
+    }
     throw err;
   }
 };
