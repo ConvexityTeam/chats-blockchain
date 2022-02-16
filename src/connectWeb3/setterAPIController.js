@@ -8,7 +8,6 @@ const accountObj = connect.web3.eth.accounts.privateKeyToAccount(
 const deployerAccount = accountObj.address;
 
 const BlockchainTrxAdmin = async (result) => {
-  
   const data = result.encodeABI();
   const tx = {
     from: deployerAccount,
@@ -24,7 +23,6 @@ const BlockchainTrxAdmin = async (result) => {
   const invoice = await connect.web3.eth.sendSignedTransaction(
     signed.rawTransaction
   );
-
   return invoice;
 };
 
@@ -105,7 +103,6 @@ const BlockchainTrxRetry = async (result, _From, _Pswd) => {
   });
 
   const nonce = (await connect.web3.eth.getTransactionCount(_From)) + 1;
-  console.log('Nonce on Retry', nonce);
 
   const tx = {
     nonce: nonce,
@@ -158,9 +155,9 @@ const BlockchainTrxRetry = async (result, _From, _Pswd) => {
 exports.createAccount = async () => {
   try {
        let account = await connect.web3.eth.accounts.create();
+       
        const result = await connect.contract.methods.SetUserList(account.address);
-       await BlockchainTrxAdmin(result);
-
+       const accounted = await BlockchainTrxAdmin(result);
     return account;
   } catch (error) {
     if (
@@ -173,14 +170,15 @@ exports.createAccount = async () => {
       let account = await connect.web3.eth.accounts.create();
        const result = await connect.contract.methods.SetUserList(account.address);
        await BlockchainTrxAdminRetry(result);
-
-    return account;
+      console.log(result)
+    // return account;
     }else{
       let err = {
         name: "Web3-CreateAccount",
         error: error.message,
       };
     }
+
     throw err;
   }
 };

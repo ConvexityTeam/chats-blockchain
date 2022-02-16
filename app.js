@@ -48,4 +48,23 @@ app.all('*', function (req, res) {
   });
 });
 
+// catch 404 and forward to error handler
+app.use((req, res, next) => {
+  next(
+    response.PlainError(
+      Errors.NOTFOUNDERROR,
+      HttpStatus.NOT_FOUND,
+      GetCodeMsg(Errors.NOTFOUNDERROR),
+      { error: 'Page not found error' }
+    )
+  );
+});
+
+// error handler
+app.use((err, req, res, next) => {
+  if (process.env.APPENV == 'development') {
+    console.log(err);
+  };
+})
+
 module.exports = app;
