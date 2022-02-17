@@ -166,12 +166,12 @@ exports.createAccount = async () => {
       ) ||
       error.message.includes('Returned error: known transaction')
     ) {
-      console.log("retried");
+     
       let account = await connect.web3.eth.accounts.create();
        const result = await connect.contract.methods.SetUserList(account.address);
        await BlockchainTrxAdminRetry(result);
-      console.log(result)
-    // return account;
+      
+    return account;
     }else{
       let err = {
         name: "Web3-CreateAccount",
@@ -197,10 +197,23 @@ exports.addAdmin = async (_AdminAddress) => {
 
     return sendtx.status;
   } catch (error) {
-    let err = {
-      name: "Web3-AddAdmin",
-      error: error,
-    };
+    if (
+      error.message.includes(
+        'Returned error: replacement transaction underpriced'
+      ) ||
+      error.message.includes('Returned error: known transaction')
+    ) {
+      const result = await connect.contract.methods.AddAdmin(_AdminAddress);
+      const sendtx = await BlockchainTrxAdminRetry(result);
+
+    return sendtx.status;
+    }else{
+      let err = {
+        name: "Web3-AddAdmin",
+        error: error,
+      };
+    }
+
     throw err;
   }
 };
