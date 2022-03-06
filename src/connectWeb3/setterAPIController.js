@@ -618,14 +618,15 @@ exports.minting = async (_value, _mintTo) => {
  * @name Redeeming
  * @description This redeems tokens from the SuperAdmin's Account. It is only called 
  * by the SuperAdmin.
- * 
+ * @param {string} _senderAddr: Address sending the tokens
+ * @param {string} _senderPswd: The password of the sender
  * @param {string} _value: The amount to be redeemed.
  * @returns {Boolean} object with transaction status; true or throws.
  */
-exports.redeeming = async (_value) => {
+exports.redeeming = async (_value, _senderAddr, _senderPswd) => {
   try {
     const result = await connect.contract.methods.redeem(_value);
-    const sendtx = await BlockchainTrxAdmin(result);
+    const sendtx = await BlockchainTrx(result, _senderAddr, _senderPswd);
 
     return sendtx.status;
   } catch (error) {
@@ -679,7 +680,7 @@ exports.approve = async (_tokenOwnerAddr, _tokenOwnerPswd, _spenderAddr, _value)
  * @description This enables the transfer of tokens from Beneficiary to vendor.
  * It can be called by any registered user
  * @param {string} _tokenOwerAddr: The _tokenOwerAddr to be transfer from.
- * @param {string} _tokenOwerAddr: The _newOwerAddr to be transfer to.
+ * @param {string} _to: The _newOwerAddr to be transfer to.
  * @param {string} _spenderAddr: The _spenderAddr to send from.
  * @param {string} _spenderPwsd: The _spenderPwsd the password of the msg.sender.
  * @param {string} _value: The amount to be redeemed.
