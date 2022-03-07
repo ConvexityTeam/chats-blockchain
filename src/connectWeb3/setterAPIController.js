@@ -619,12 +619,12 @@ exports.minting = async (_value, _mintTo) => {
  * by the SuperAdmin.
  * @param {string} _senderAddr: Address sending the tokens
  * @param {string} _senderPswd: The password of the sender
- * @param {string} _value: The amount to be redeemed.
+ * @param {string} _amount: The amount to be redeemed.
  * @returns {Boolean} object with transaction status; true or throws.
  */
-exports.redeeming = async (_senderAddr, _senderPswd, _value) => {
+exports.redeeming = async (_senderAddr, _senderPswd, _amount) => {
   try {
-    const result = await connect.contract.methods.redeem(_value);
+    const result = await connect.contract.methods.redeem(_amount);
     const sendtx = await BlockchainTrx(result, _senderAddr, _senderPswd);
 
     return sendtx.status;

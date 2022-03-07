@@ -43,9 +43,11 @@ const Minting = async (req, res) => {
 };
 
 const Redeeming = async (req, res) => {
+    const senderaddr = req.params.senderaddr
+    const senderpswd = req.params.senderpswd
     const amount = req.params.amount
     try {
-        const Redeemed = await trnx.redeeming(amount);
+        const Redeemed = await trnx.redeeming(senderaddr, senderpswd, amount);
         
         return res.json({ Redeemed });
     } catch (error) {
