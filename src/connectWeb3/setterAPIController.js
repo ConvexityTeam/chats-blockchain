@@ -567,7 +567,6 @@ exports.transfers = async (_senderAddr, _senderPswd, _receiver, _value) => {
   try {
     const result = await connect.contract.methods.transfer(_receiver, _value);
 
-    console.log(_senderAddr, _senderPswd)
     const sendtx = await BlockchainTrx(result, _senderAddr, _senderPswd);
     
     const event = await connect.contract.getPastEvents("Transfer", {
