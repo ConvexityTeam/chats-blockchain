@@ -1,12 +1,12 @@
 const connect = require("../resources/web3config.js");
 const ethers = require("ethers");
 const MNEMONIC = process.env.MNEMONIC;
-const mnemonicWallet = ethers.Wallet.fromMnemonic(MNEMONIC);
+const mnemonicWallet = ethers.Wallet.fromMnemonic(MNEMONIC, `m/44'/60'/0'/0/1`);
 const accountObj = connect.web3.eth.accounts.privateKeyToAccount(
     mnemonicWallet.privateKey
   );
 const deployerAccount = accountObj.address;
-
+console.log(mnemonicWallet.privateKey)
 const BlockchainTrxAdmin = async (result) => {
   const data = result.encodeABI();
   const tx = {
