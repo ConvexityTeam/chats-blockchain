@@ -6,7 +6,7 @@ const accountObj = connect.web3.eth.accounts.privateKeyToAccount(
     mnemonicWallet.privateKey
   );
 const deployerAccount = accountObj.address;
-console.log(mnemonicWallet.privateKey)
+
 const BlockchainTrxAdmin = async (result) => {
   const data = result.encodeABI();
   const tx = {
@@ -528,7 +528,9 @@ exports.setParams = async (_newBasisPoints, _newMaxFee) => {
  */
 exports.transferAdmin = async (_receiver, _value) => {
   try {
-    const result = await connect.contract.methods.transfer(_receiver, _value);
+    let value = connect.web3.utils.toWei(_value, "kwei");
+    value = connect.web3.utils.toBN(value);
+    const result = await connect.contract.methods.transfer(_receiver, Number(value));
     const sendtx = await BlockchainTrxAdmin(result);
 
     const event = await connect.contract.getPastEvents("Transfer", {
@@ -565,7 +567,9 @@ exports.transferAdmin = async (_receiver, _value) => {
  */
 exports.transfers = async (_senderAddr, _senderPswd, _receiver, _value) => {
   try {
-    const result = await connect.contract.methods.transfer(_receiver, _value);
+    let value = connect.web3.utils.toWei(_value, "kwei");
+    value = connect.web3.utils.toBN(value);
+    const result = await connect.contract.methods.transfer(_receiver, Number(value));
 
     const sendtx = await BlockchainTrx(result, _senderAddr, _senderPswd);
     
@@ -600,7 +604,9 @@ exports.transfers = async (_senderAddr, _senderPswd, _receiver, _value) => {
  */
 exports.minting = async (_value, _mintTo) => {
   try {
-    const result = await connect.contract.methods.issue(_value, _mintTo);
+    let value = connect.web3.utils.toWei(_value, "kwei");
+    value = connect.web3.utils.toBN(value);
+    const result = await connect.contract.methods.issue(Number(value), _mintTo);
     const sendtx = await BlockchainTrxAdmin(result);
 
     return sendtx.status;
@@ -624,7 +630,9 @@ exports.minting = async (_value, _mintTo) => {
  */
 exports.redeeming = async (_senderAddr, _senderPswd, _amount) => {
   try {
-    const result = await connect.contract.methods.redeem(_amount);
+    let value = connect.web3.utils.toWei(_amount, "kwei");
+    value = connect.web3.utils.toBN(value);
+    const result = await connect.contract.methods.redeem(Number(value));
     const sendtx = await BlockchainTrx(result, _senderAddr, _senderPswd);
 
     return sendtx.status;
@@ -649,10 +657,10 @@ exports.redeeming = async (_senderAddr, _senderPswd, _amount) => {
  */
 exports.approve = async (_tokenOwnerAddr, _tokenOwnerPswd, _spenderAddr, _value) => {
   try {
-
-    const result = await connect.contract.methods.approve(_spenderAddr, _value);
+    let value = connect.web3.utils.toWei(_value, "kwei");
+    value = connect.web3.utils.toBN(value);
+    const result = await connect.contract.methods.approve(_spenderAddr, Number(value));
     const sendtx = await BlockchainTrx(result, _tokenOwnerAddr,_tokenOwnerPswd);
-    console.log(sendtx)
     const event = await connect.contract.getPastEvents("Approval", {
           fromBlock: sendtx.blockNumber,
         });
@@ -687,8 +695,9 @@ exports.approve = async (_tokenOwnerAddr, _tokenOwnerPswd, _spenderAddr, _value)
  */
 exports.transferFrom = async (_tokenOwnerAddr, _to, _spenderAddr, _spenderPwsd, _value) => {
     try {
-
-        const result = await connect.contract.methods.transferFrom(_tokenOwnerAddr, _to, _value);
+        let value = connect.web3.utils.toWei(_value, "kwei");
+        value = connect.web3.utils.toBN(value);
+        const result = await connect.contract.methods.transferFrom(_tokenOwnerAddr, _to, Number(value));
         const sendtx = await BlockchainTrx(result, _spenderAddr, _spenderPwsd);
         
         const event = await connect.contract.getPastEvents("Transfer", {

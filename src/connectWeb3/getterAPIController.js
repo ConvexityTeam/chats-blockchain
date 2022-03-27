@@ -87,7 +87,8 @@ exports.isPaused = async () => {
  */
 exports.totalSupply = async () => {
   try {
-    let result = await connect.contract.methods.totalSupply().call();
+    let value = await connect.contract.methods.totalSupply().call();
+    const result =connect.web3.utils.fromWei(value, "kwei");
     return result;
   } catch (error) {
     let err = {
@@ -106,7 +107,8 @@ exports.totalSupply = async () => {
  */
 exports.totalIssued = async (_From) => {
   try {
-    let result = await connect.contract.methods.totalIssued().call({ from: _From });
+    let value = await connect.contract.methods.totalIssued().call({ from: _From });
+    const result =connect.web3.utils.fromWei(value, "kwei");
     return result;
   } catch (error) {
     let err = {
@@ -125,7 +127,8 @@ exports.totalIssued = async (_From) => {
  */
 exports.totalRedeemed = async (_From) => {
   try {
-    let result = await connect.contract.methods.totalRedeemed().call({ from: _From });
+    let value = await connect.contract.methods.totalRedeemed().call({ from: _From });
+    const result =connect.web3.utils.fromWei(value, "kwei");
     return result;
   } catch (error) {
     let err = {
@@ -150,7 +153,8 @@ exports.totalRedeemed = async (_From) => {
  */
 exports.allowance = async (_tokenOwner, _spender) => {
   try {
-    let result = await connect.contract.methods.allowance(_tokenOwner, _spender).call();
+    let value = await connect.contract.methods.allowance(_tokenOwner, _spender).call();
+    const result =connect.web3.utils.fromWei(value, "kwei");
     return result;
   } catch (error) {
     let err = {
@@ -171,7 +175,8 @@ exports.allowance = async (_tokenOwner, _spender) => {
  */
 exports.balanceOf = async (_account) => {
   try {
-    let result = await connect.contract.methods.balanceOf(_account).call();
+    let value = await connect.contract.methods.balanceOf(_account).call();
+    const result =connect.web3.utils.fromWei(value, "kwei");
     return result;
   } catch (error) {
     let err = {

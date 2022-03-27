@@ -18,7 +18,6 @@ const Transfers = async (req, res) => {
     const receiver = req.params.receiver
     const amount = req.params.amount
     try {
-        console.log(senderaddr, senderpwsd )
         const Transfered = await trnx.transfers(senderaddr, senderpwsd, receiver, amount);
         
         return res.json({ Transfered });
