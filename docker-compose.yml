@@ -3,7 +3,7 @@ version: "3.9"
 services:
   webserver:
     image: nginx:mainline-alpine
-    container_name: web-server
+    container_name: webserver
     restart: unless-stopped
     ports:
       - "81:81"
