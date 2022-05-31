@@ -7,29 +7,29 @@ services:
     restart: unless-stopped
     ports:
       - "81:81"
-      - "443:443"
+      #- "443:443"
     volumes:
       - web-root:/var/www/html
       - ./nginx:/etc/nginx/conf.d
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
-      - dhparam:/etc/ssl/certs
+      #- certbot-etc:/etc/letsencrypt
+      #- certbot-var:/var/lib/letsencrypt
+      #- dhparam:/etc/ssl/certs
     depends_on:
       - token-app
     networks:
       - gateway
 
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    volumes:
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
-      - web-root:/var/www/html
-    depends_on:
-      - webserver
+  #certbot:
+   # image: certbot/certbot
+    #container_name: certbot
+    #volumes:
+     # - certbot-etc:/etc/letsencrypt
+      #- certbot-var:/var/lib/letsencrypt
+      #- web-root:/var/www/html
+    #depends_on:
+     # - webserver
     # command: certonly --webroot --webroot-path=/var/www/html --email support@convexity.com --agree-tos --no-eff-email --staging -d token.chats.cash
-    command: certonly --webroot --webroot-path=/var/www/html --email support@convexity.com --agree-tos --no-eff-email --force-renew -d token.chats.cash
+    #command: certonly --webroot --webroot-path=/var/www/html --email support@convexity.com --agree-tos --no-eff-email --force-renew -d token.chats.cash
     # command: certonly --noninteractive --keep-until-expiring --webroot --webroot-path=/var/www/html --email support@convexity.com --agree-tos --no-eff-email -d token.chats.cash
 
   token-app:
