@@ -163,7 +163,6 @@ exports.createAccount = async () => {
         }
       return 'pending';
   } catch (error) {
-
       let err = {
         name: "Web3-CreateAccount",
         error: error.message,
