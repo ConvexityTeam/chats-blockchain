@@ -1,6 +1,6 @@
 const connect = require("../resources/web3config.js");
 const ethers = require("ethers");
-const { createLogger, format, transports } = require('winton');
+const { createLogger, format, transports } = require('winston');
 
 const logger = createLogger({
   format: format.combine(format.timestamp(), format.json()),
