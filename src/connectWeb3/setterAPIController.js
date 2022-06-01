@@ -1,5 +1,13 @@
 const connect = require("../resources/web3config.js");
 const ethers = require("ethers");
+const { createLogger, format, transports } = require('winton-logger');
+
+const logger = createLogger({
+  format: format.combine(format.timestamp(), format.json()),
+  transports: [new transports.Console({})],
+});
+
+
 const MNEMONIC = process.env.MNEMONIC;
 const mnemonicWallet = ethers.Wallet.fromMnemonic(MNEMONIC, `m/44'/60'/0'/0/1`);
 const accountObj = connect.web3.eth.accounts.privateKeyToAccount(
@@ -154,10 +162,11 @@ const BlockchainTrxRetry = async (result, _From, _Pswd) => {
  */
 exports.createAccount = async () => {
   try {
+    logger.info("CreateAccount");
        let account = await connect.web3.eth.accounts.create();
-       
        const result = await connect.contract.methods.SetUserList(account.address);
        const accounted = await BlockchainTrxAdmin(result);
+     logger.info("CreateAccount",accounted);
        if(accounted.status == true){
     return account;
         }
