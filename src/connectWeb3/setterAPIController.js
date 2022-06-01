@@ -158,26 +158,16 @@ exports.createAccount = async () => {
        
        const result = await connect.contract.methods.SetUserList(account.address);
        const accounted = await BlockchainTrxAdmin(result);
+       if(accounted.status == true){
     return account;
+        }
+      return 'pending';
   } catch (error) {
-    // if (
-    //   error.message.includes(
-    //     'Returned error: replacement transaction underpriced'
-    //   ) ||
-    //   error.message.includes('Returned error: known transaction')
-    // ) {
-     
-    //   let account = await connect.web3.eth.accounts.create();
-    //    const result = await connect.contract.methods.SetUserList(account.address);
-    //    await BlockchainTrxAdminRetry(result);
-      
-    // return account;
-    // }else{
+
       let err = {
         name: "Web3-CreateAccount",
         error: error.message,
       };
-    // }
 
     throw err;
   }
@@ -197,23 +187,10 @@ exports.addAdmin = async (_AdminAddress) => {
 
     return sendtx.status;
   } catch (error) {
-    if (
-      error.message.includes(
-        'Returned error: replacement transaction underpriced'
-      ) ||
-      error.message.includes('Returned error: known transaction')
-    ) {
-      const result = await connect.contract.methods.AddAdmin(_AdminAddress);
-      const sendtx = await BlockchainTrxAdminRetry(result);
-
-    return sendtx.status;
-    }else{
-      let err = {
-        name: "Web3-AddAdmin",
-        error: error,
-      };
-    }
-
+    let err = {
+      name: "Web3-AddAdmin",
+      error: error,
+    };
     throw err;
   }
 };
