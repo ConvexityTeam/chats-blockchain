@@ -7,17 +7,17 @@
     "test": "test"
   },
   "dependencies": {
-    "@openzeppelin/cli": "^2.8.2",
-    "@openzeppelin/contracts": "^3.4.2",
+    
     "@openzeppelin/contracts-ethereum-package": "^3.0.0",
     "@openzeppelin/upgrades": "^2.8.0",
-    "@truffle/hdwallet-provider": "^1.2.0",
+    "@truffle/hdwallet-provider": "^2.0.9",
     "bl": "^4.0.3",
     "body-parser": "^1.19.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
+    "defender-relay-client": "^1.24.0",
     "dotenv": "^8.2.0",
     "ethers": "^5.4.1",
     "express": "^4.17.1",
@@ -29,8 +29,10 @@
     "winston": "^3.7.2"
   },
   "devDependencies": {
+    "@openzeppelin/cli": "^2.8.2",
+    "@openzeppelin/contracts": "^4.6.0",
     "nodemon": "^2.0.16",
-    "swagger": "^0.7.5",
+    "swagger": "^0.0.1",
     "swagger-ui-express": "^4.1.4"
   },
   "scripts": {
