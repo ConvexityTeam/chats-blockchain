@@ -16,6 +16,11 @@ exports.Config = {
     process.env.NODE_ENV == 'production'
       ? process.env.CONTRACTADDR
       : process.env.CONTRACTADDR_TEST,
+
+  OPERATIONSADDR:
+    process.env.NODE_ENV == 'production'
+      ? process.env.OPERATIONSADDR
+      : process.env.OPERATIONSADDR_TEST,
   
   BLOCKCHAINSERV:
     process.env.NODE_ENV == 'production'

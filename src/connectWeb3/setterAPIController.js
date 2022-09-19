@@ -1,92 +1,14 @@
-const connect = require("../resources/web3config.js");
+const {web3, tokenAddress, operationsAddress, tokenContract, operationsContract} = require("../resources/web3config.js");
+const { BlockchainTrx, BlockchainTrxAdmin } = require("./localGNS.js");
+const { signERC2612Permit } = require('eth-permit');
 const ethers = require("ethers");
+const { Config } = require("../utils");
 const { createLogger, format, transports } = require('winston');
 
 const logger = createLogger({
   format: format.combine(format.timestamp(), format.json()),
   transports: [new transports.Console({})],
 });
-
-
-const MNEMONIC = process.env.MNEMONIC;
-const mnemonicWallet = ethers.Wallet.fromMnemonic(MNEMONIC, `m/44'/60'/0'/0/1`);
-const accountObj = connect.web3.eth.accounts.privateKeyToAccount(
-    mnemonicWallet.privateKey
-  );
-const deployerAccount = accountObj.address;
-
-const BlockchainTrxAdmin = async (_result, _nonce) => {
-  const data = _result.encodeABI();
-  // const gasPrice = await connect.web3.eth.getGasPrice()
-  // const getGasPrice = connect.web3.utils.fromWei(gasPrice, 'gwei')
-  const estimateGas = await connect.web3.eth.estimateGas({from: deployerAccount, to: connect.address,  data: data})
-  // const value = estimateGas * gasPrice + (estimateGas * getGasPrice * fee / 100)
-  if(_nonce > 0) {
-    let nonce = connect.web3.eth.getTransactionCount(deployerAccount, pending) + _nonce;
-  }else{
-    nonce = connect.web3.eth.getTransactionCount(deployerAccount)
-  }
-  const tx = {
-    from: deployerAccount,
-    to: connect.address,
-    data: data,
-    gasLimit: estimateGas,
-    nonce:  nonce
-  };
-
-  const signed = await connect.web3.eth.accounts.signTransaction(
-    tx,
-    mnemonicWallet.privateKey
-  );
-  const invoice = await connect.web3.eth.sendSignedTransaction(
-    signed.rawTransaction
-  );
-  return invoice;
-};
-
-
-const BlockchainTrx = async (result, _From, _Pswd) => {
-  
-  const data = result.encodeABI();
-  const gasPrice = await connect.web3.eth.getGasPrice()
-  const getGasPrice = connect.web3.utils.fromWei(gasPrice, 'ether')
-  const estimateGas = await connect.web3.eth.estimateGas({from: _From, to: connect.address,  data: data})
-  
-  const tx = {
-    from: _From,
-    to: connect.address,
-    data: data,
-    gas: estimateGas
-  };
-
-  const value = estimateGas * getGasPrice
-const value2 = ethers.utils.parseUnits(value.toFixed(8))
-
-  const sendGasFee = {
-    from: deployerAccount,
-    to: _From,
-    value:  connect.web3.utils.toWei(value.toFixed(8), "ether"),
-    gas: await connect.web3.eth.estimateGas({from: deployerAccount, to: _From, value: value2})
-  };
-  const adminSignTransfer = await connect.web3.eth.accounts.signTransaction(
-    sendGasFee,
-    mnemonicWallet.privateKey
-  );
-  
-  const signed = await connect.web3.eth.accounts.signTransaction(
-    tx,
-    _Pswd
-  );
-
-  const adminTransferBNB = await connect.web3.eth.sendSignedTransaction(
-    adminSignTransfer.rawTransaction
-  );
-  
-  const sendtx = await connect.web3.eth.sendSignedTransaction(signed.rawTransaction);
-
-  return sendtx
-
-};
 
 
 //////////      Account Management        ////////////
@@ -101,9 +23,9 @@ const value2 = ethers.utils.parseUnits(value.toFixed(8))
 exports.createAccount = async () => {
   try {
     logger.info("CreateAccount");
-       let account = await connect.web3.eth.accounts.create();
-       const result = await connect.contract.methods.SetUserList(account.address);
-       const accounted = await BlockchainTrxAdmin(result, 0);
+       let account = await web3.eth.accounts.create();
+       const result = operationsContract.methods.SetUserList(account.address);
+       const accounted = await BlockchainTrxAdmin(result, 0, operationsAddress);
      logger.info("CreateAccount",accounted);
 
        if(accounted.status == true){
@@ -119,8 +41,8 @@ exports.createAccount = async () => {
       error.message.includes('Returned error: known transaction')
     ) {
       logger.info("CreateAccount");
-       let account = await connect.web3.eth.accounts.create();
-       const result = await connect.contract.methods.SetUserList(account.address);
+       let account = await web3.eth.accounts.create();
+       const result = await contract.methods.SetUserList(account.address);
        const accounted = await BlockchainTrxAdmin(result, 1);
      logger.info("CreateAccount",accounted);
 
@@ -148,9 +70,9 @@ exports.createAccount = async () => {
 exports.addAdmin = async (_AdminAddress) => {
   try {
     logger.info("Add Admin");
-    const [from] = await connect.web3.eth.getAccounts();
+    const [from] = await web3.eth.getAccounts();
        
-    const result = await connect.contract(from);
+    const result = await contract(from);
     const sendtx = await result.methods.AddAdmin(_AdminAddress).send();
 
     logger.info("Add Admin",sendtx);
@@ -173,7 +95,7 @@ exports.addAdmin = async (_AdminAddress) => {
  */
 exports.removeAdmin = async (_AdminAddress) => {
   try {
-    const result = await connect.contract.methods.RemoveAdmin(_AdminAddress);
+    const result = await contract.methods.RemoveAdmin(_AdminAddress);
     const sendtx = await BlockchainTrxAdmin(result);
 
     return sendtx.status;
@@ -195,7 +117,7 @@ exports.removeAdmin = async (_AdminAddress) => {
  */
 exports.addAuthorizer = async (_AdminAddress) => {
   try {
-    const result = await connect.contract.methods.AddAuthorizer(_AdminAddress);
+    const result = await contract.methods.AddAuthorizer(_AdminAddress);
     const sendtx = await BlockchainTrxAdmin(result);
 
     return sendtx.status;
@@ -216,7 +138,7 @@ exports.addAuthorizer = async (_AdminAddress) => {
  */
 exports.removeAuthorizer = async (_AdminAddress) => {
   try {
-    const result = await connect.contract.methods.RemoveAuthorizer(_AdminAddress);
+    const result = await contract.methods.RemoveAuthorizer(_AdminAddress);
     const sendtx = await BlockchainTrxAdmin(result);
 
     return sendtx.status;
@@ -240,7 +162,7 @@ exports.removeAuthorizer = async (_AdminAddress) => {
  */
 exports.addBlackList = async (_AdminAddress, _From, _pwsd) => {
   try {
-    const result = await connect.contract.methods.AddBlackList(_AdminAddress);
+    const result = await contract.methods.AddBlackList(_AdminAddress);
     const sendtx = await BlockchainTrx(result, _From, _pwsd);
 
     return sendtx.status;
@@ -263,7 +185,7 @@ exports.addBlackList = async (_AdminAddress, _From, _pwsd) => {
  */
 exports.removeBlackList = async (_AdminAddress, _From, _pwsd) => {
   try {
-    const result = await connect.contract.methods.RemoveBlackList(_AdminAddress);
+    const result = await contract.methods.RemoveBlackList(_AdminAddress);
     const sendtx = await BlockchainTrx(result, _From, _pwsd);
 
     return sendtx.status;
@@ -287,7 +209,7 @@ exports.removeBlackList = async (_AdminAddress, _From, _pwsd) => {
  */
 exports.addUserList = async (_Addr) => {
   try {
-    const result = await connect.contract.methods.SetUserList(_Addr);
+    const result = await contract.methods.SetUserList(_Addr);
     const sendtx = await BlockchainTrxAdmin(result);
 
     return sendtx.status;
@@ -310,7 +232,7 @@ exports.addUserList = async (_Addr) => {
  */
 exports.removeUserList = async (_Addr) => {
   try {
-    const result = await connect.contract.methods.RemoveUserList(_Addr);
+    const result = await contract.methods.RemoveUserList(_Addr);
     const sendtx = await BlockchainTrxAdmin(result);
 
     return sendtx.status;
@@ -334,7 +256,7 @@ exports.removeUserList = async (_Addr) => {
  */
 exports.pause = async () => {
   try {
-    const result = await connect.contract.methods.pause();
+    const result = await contract.methods.pause();
     const sendtx = await BlockchainTrxAdmin(result);
 
     return sendtx.status;
@@ -356,7 +278,7 @@ exports.pause = async () => {
  */
 exports.unpause = async () => {
   try {
-    const result = await connect.contract.methods.unpause();
+    const result = await contract.methods.unpause();
     const sendtx = await BlockchainTrxAdmin(result);
 
     return sendtx.status;
@@ -379,7 +301,7 @@ exports.unpause = async () => {
  */
 exports.initiateOwnershipTransfer = async (_proposedOwner) => {
   try {
-    const result = await connect.contract.methods.initiateOwnershipTransfer(_proposedOwner);
+    const result = await contract.methods.initiateOwnershipTransfer(_proposedOwner);
     const sendtx = await BlockchainTrx(result, _sender, _senderPswd);
 
     return sendtx.status;
@@ -403,7 +325,7 @@ exports.initiateOwnershipTransfer = async (_proposedOwner) => {
  */
 exports.completeOwnershipTransfer = async (_proposedOwner, _proposedOwnerPswd) => {
   try {
-    const result = await connect.contract.methods.completeOwnershipTransfer();
+    const result = await contract.methods.completeOwnershipTransfer();
     const sendtx = await BlockchainTrx(result, _proposedOwner, _proposedOwnerPswd);
 
     return sendtx.status;
@@ -425,7 +347,7 @@ exports.completeOwnershipTransfer = async (_proposedOwner, _proposedOwnerPswd) =
  */
 exports.cancelOwnershipTransfer = async () => {
   try {
-    const result = await connect.contract.methods.cancelOwnershipTransfer();
+    const result = await contract.methods.cancelOwnershipTransfer();
     const sendtx = await BlockchainTrx(result, _sender, _senderPswd);
 
     return sendtx.status;
@@ -449,7 +371,7 @@ exports.cancelOwnershipTransfer = async () => {
  */
 exports.setParams = async (_newBasisPoints, _newMaxFee) => {
   try {
-    const result = await connect.contract.methods.setParams(_newBasisPoints, _newMaxFee);
+    const result = await contract.methods.setParams(_newBasisPoints, _newMaxFee);
     const sendtx = await BlockchainTrxAdmin(result);
 
     return sendtx.status;
@@ -475,12 +397,12 @@ exports.setParams = async (_newBasisPoints, _newMaxFee) => {
  */
 exports.transferAdmin = async (_receiver, _value) => {
   try {
-    let value = connect.web3.utils.toWei(_value, "kwei");
-    value = connect.web3.utils.toBN(value);
-    const result = await connect.contract.methods.transfer(_receiver, Number(value));
+    let value = web3.utils.toWei(_value, "kwei");
+    value = web3.utils.toBN(value);
+    const result = await contract.methods.transfer(_receiver, Number(value));
     const sendtx = await BlockchainTrxAdmin(result);
 
-    const event = await connect.contract.getPastEvents("Transfer", {
+    const event = await contract.getPastEvents("Transfer", {
       fromBlock: sendtx.blockNumber,
     });
 
@@ -514,13 +436,13 @@ exports.transferAdmin = async (_receiver, _value) => {
  */
 exports.transfers = async (_senderAddr, _senderPswd, _receiver, _value) => {
   try {
-    let value = connect.web3.utils.toWei(_value, "kwei");
-    value = connect.web3.utils.toBN(value);
-    const result = await connect.contract.methods.transfer(_receiver, Number(value));
+    let value = web3.utils.toWei(_value, "kwei");
+    value = web3.utils.toBN(value);
+    const result = await contract.methods.transfer(_receiver, Number(value));
 
     const sendtx = await BlockchainTrx(result, _senderAddr, _senderPswd);
     
-    const event = await connect.contract.getPastEvents("Transfer", {
+    const event = await contract.getPastEvents("Transfer", {
       fromBlock: sendtx.blockNumber,
     });
 
@@ -552,9 +474,9 @@ exports.transfers = async (_senderAddr, _senderPswd, _receiver, _value) => {
 exports.minting = async (_value, _mintTo) => {
   try {
     logger.info("Minting");
-    let value = connect.web3.utils.toWei(_value, "kwei");
-    value = connect.web3.utils.toBN(value);
-    const result = await connect.contract.methods.issue(Number(value), _mintTo);
+    let value = web3.utils.toWei(_value, "kwei");
+    value = web3.utils.toBN(value);
+    const result = await contract.methods.issue(Number(value), _mintTo);
     const sendtx = await BlockchainTrxAdmin(result, 0);
     logger.info("Minting Done");
     return sendtx.status;
@@ -567,9 +489,9 @@ exports.minting = async (_value, _mintTo) => {
       error.message.includes('Returned error: known transaction')
     ) {
       logger.info("Minting");
-      let value = connect.web3.utils.toWei(_value, "kwei");
-      value = connect.web3.utils.toBN(value);
-      const result = await connect.contract.methods.issue(Number(value), _mintTo);
+      let value = web3.utils.toWei(_value, "kwei");
+      value = web3.utils.toBN(value);
+      const result = await contract.methods.issue(Number(value), _mintTo);
       const sendtx = await BlockchainTrxAdmin(result, 1);
       logger.info("Minting Done");
     return sendtx.status;
@@ -594,9 +516,9 @@ exports.minting = async (_value, _mintTo) => {
  */
 exports.redeeming = async (_senderAddr, _senderPswd, _amount) => {
   try {
-    let value = connect.web3.utils.toWei(_amount, "kwei");
-    value = connect.web3.utils.toBN(value);
-    const result = await connect.contract.methods.redeem(Number(value));
+    let value = web3.utils.toWei(_amount, "kwei");
+    value = web3.utils.toBN(value);
+    const result = await contract.methods.redeem(Number(value));
     const sendtx = await BlockchainTrx(result, _senderAddr, _senderPswd);
 
     return sendtx.status;
@@ -621,13 +543,20 @@ exports.redeeming = async (_senderAddr, _senderPswd, _amount) => {
  */
 exports.approve = async (_tokenOwnerAddr, _tokenOwnerPswd, _spenderAddr, _value) => {
   try {
-    let value = connect.web3.utils.toWei(_value, "kwei");
-    value = connect.web3.utils.toBN(value);
-    const result = await connect.contract.methods.approve(_spenderAddr, Number(value));
-    const sendtx = await BlockchainTrx(result, _tokenOwnerAddr,_tokenOwnerPswd);
-    const event = await connect.contract.getPastEvents("Approval", {
+    let value = web3.utils.toWei(_value, "kwei");
+        // value = web3.utils.toBN(value);
+        logger.info("Approve");
+        const wallet = new ethers.Wallet(_tokenOwnerPswd, new ethers.providers.JsonRpcProvider(Config.BLOCKCHAINSERV));
+    const nonce =   await web3.eth.getTransactionCount(_tokenOwnerAddr)
+    const blockTime = await web3.eth.getBlock('latest');
+    const deadline =  blockTime.timestamp + Math.floor(Date.now() / 1000) + 60 * 20 * 30;
+    const signature = await signERC2612Permit(wallet, tokenAddress, _tokenOwnerAddr, _spenderAddr, value, deadline, nonce);
+    const result = tokenContract.methods.permit(_tokenOwnerAddr, _spenderAddr, value, signature.deadline, signature.v, signature.r, signature.s)
+    const sendtx = await BlockchainTrx(result, tokenAddress, _tokenOwnerAddr,_tokenOwnerPswd);
+    const event = await tokenContract.getPastEvents("Approval", {
           fromBlock: sendtx.blockNumber,
         });
+      // console.log('Event>>',event);
 
         let TransferEvent = {};
         TransferEvent.TokenOwner = event[0].returnValues.owner;
@@ -659,12 +588,12 @@ exports.approve = async (_tokenOwnerAddr, _tokenOwnerPswd, _spenderAddr, _value)
  */
 exports.transferFrom = async (_tokenOwnerAddr, _to, _spenderAddr, _spenderPwsd, _value) => {
     try {
-        let value = connect.web3.utils.toWei(_value, "kwei");
-        value = connect.web3.utils.toBN(value);
-        const result = await connect.contract.methods.transferFrom(_tokenOwnerAddr, _to, Number(value));
+        let value = web3.utils.toWei(_value, "kwei");
+        value = web3.utils.toBN(value);
+        const result = await contract.methods.transferFrom(_tokenOwnerAddr, _to, Number(value));
         const sendtx = await BlockchainTrx(result, _spenderAddr, _spenderPwsd);
         
-        const event = await connect.contract.getPastEvents("Transfer", {
+        const event = await contract.getPastEvents("Transfer", {
           fromBlock: sendtx.blockNumber,
         });
 
@@ -695,10 +624,10 @@ exports.transferFrom = async (_tokenOwnerAddr, _to, _spenderAddr, _spenderPwsd, 
  */
 exports.destroyBlackFunds = async (_evilUser) => {
   try {
-    const result = await connect.contract.methods.DestroyBlackFunds(_evilUser);
+    const result = await contract.methods.DestroyBlackFunds(_evilUser);
     const sendtx = await BlockchainTrxAdmin(result);
 
-    const event = await connect.contract.getPastEvents("DestroyedBlackFunds", {
+    const event = await contract.getPastEvents("DestroyedBlackFunds", {
       fromBlock: sendtx.blockNumber,
     });
 
