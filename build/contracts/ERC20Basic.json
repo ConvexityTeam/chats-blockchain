@@ -203,19 +203,19 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.5.0;\n\n// import \"@openzeppelin/upgrades/contracts/Initializable.sol\";\nimport \"./Libs/IERC20.sol\";\nimport \"./Libs/Safemath.sol\";\n\n/**\n * @title ERC20 interface\n */\ncontract ERC20Basic is IERC20 {\n    using SafeMath for uint256;\n\n    mapping(address => uint256) internal balances;\n\n    /**\n     * @dev Gets the balance of the specified address.\n     * @param _address The address to return the its balance.\n     * @return An uint256 representing the amount owned by the _address.\n     */\n    function balanceOf(address _address) public view returns (uint256 balance) {\n        return balances[_address];\n    }\n}\n",
-  "sourcePath": "/Users/charlesokaformbah/Projects/token-chats/contracts/ERC20Basic.sol",
+  "sourcePath": "/Users/charlesokaformbah/Projects/chats-token/contracts/ERC20Basic.sol",
   "ast": {
     "absolutePath": "project:/contracts/ERC20Basic.sol",
     "exportedSymbols": {
       "ERC20Basic": [
-        398
+        402
       ]
     },
-    "id": 399,
+    "id": 403,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 374,
+        "id": 378,
         "literals": [
           "solidity",
           "^",
@@ -228,10 +228,10 @@
       {
         "absolutePath": "project:/contracts/Libs/IERC20.sol",
         "file": "./Libs/IERC20.sol",
-        "id": 375,
+        "id": 379,
         "nodeType": "ImportDirective",
-        "scope": 399,
-        "sourceUnit": 847,
+        "scope": 403,
+        "sourceUnit": 851,
         "src": "89:27:2",
         "symbolAliases": [],
         "unitAlias": ""
@@ -239,10 +239,10 @@
       {
         "absolutePath": "project:/contracts/Libs/Safemath.sol",
         "file": "./Libs/Safemath.sol",
-        "id": 376,
+        "id": 380,
         "nodeType": "ImportDirective",
-        "scope": 399,
-        "sourceUnit": 1034,
+        "scope": 403,
+        "sourceUnit": 1038,
         "src": "117:29:2",
         "symbolAliases": [],
         "unitAlias": ""
@@ -253,53 +253,53 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 377,
+              "id": 381,
               "name": "IERC20",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 846,
+              "referencedDeclaration": 850,
               "src": "205:6:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IERC20_$846",
+                "typeIdentifier": "t_contract$_IERC20_$850",
                 "typeString": "contract IERC20"
               }
             },
-            "id": 378,
+            "id": 382,
             "nodeType": "InheritanceSpecifier",
             "src": "205:6:2"
           }
         ],
         "contractDependencies": [
-          846
+          850
         ],
         "contractKind": "contract",
         "documentation": "@title ERC20 interface",
         "fullyImplemented": false,
-        "id": 398,
+        "id": 402,
         "linearizedBaseContracts": [
-          398,
-          846
+          402,
+          850
         ],
         "name": "ERC20Basic",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
-            "id": 381,
+            "id": 385,
             "libraryName": {
               "contractScope": null,
-              "id": 379,
+              "id": 383,
               "name": "SafeMath",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1033,
+              "referencedDeclaration": 1037,
               "src": "224:8:2",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_SafeMath_$1033",
+                "typeIdentifier": "t_contract$_SafeMath_$1037",
                 "typeString": "library SafeMath"
               }
             },
             "nodeType": "UsingForDirective",
             "src": "218:27:2",
             "typeName": {
-              "id": 380,
+              "id": 384,
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
               "src": "237:7:2",
@@ -311,10 +311,10 @@
           },
           {
             "constant": false,
-            "id": 385,
+            "id": 389,
             "name": "balances",
             "nodeType": "VariableDeclaration",
-            "scope": 398,
+            "scope": 402,
             "src": "251:45:2",
             "stateVariable": true,
             "storageLocation": "default",
@@ -323,9 +323,9 @@
               "typeString": "mapping(address => uint256)"
             },
             "typeName": {
-              "id": 384,
+              "id": 388,
               "keyType": {
-                "id": 382,
+                "id": 386,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "259:7:2",
@@ -341,7 +341,7 @@
                 "typeString": "mapping(address => uint256)"
               },
               "valueType": {
-                "id": 383,
+                "id": 387,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
                 "src": "270:7:2",
@@ -356,7 +356,7 @@
           },
           {
             "body": {
-              "id": 396,
+              "id": 400,
               "nodeType": "Block",
               "src": "584:42:2",
               "statements": [
@@ -365,25 +365,25 @@
                     "argumentTypes": null,
                     "baseExpression": {
                       "argumentTypes": null,
-                      "id": 392,
+                      "id": 396,
                       "name": "balances",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 385,
+                      "referencedDeclaration": 389,
                       "src": "601:8:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
                         "typeString": "mapping(address => uint256)"
                       }
                     },
-                    "id": 394,
+                    "id": 398,
                     "indexExpression": {
                       "argumentTypes": null,
-                      "id": 393,
+                      "id": 397,
                       "name": "_address",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 387,
+                      "referencedDeclaration": 391,
                       "src": "610:8:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -401,30 +401,30 @@
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 391,
-                  "id": 395,
+                  "functionReturnParameters": 395,
+                  "id": 399,
                   "nodeType": "Return",
                   "src": "594:25:2"
                 }
               ]
             },
             "documentation": "@dev Gets the balance of the specified address.\n@param _address The address to return the its balance.\n@return An uint256 representing the amount owned by the _address.",
-            "id": 397,
+            "id": 401,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "balanceOf",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 388,
+              "id": 392,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 387,
+                  "id": 391,
                   "name": "_address",
                   "nodeType": "VariableDeclaration",
-                  "scope": 397,
+                  "scope": 401,
                   "src": "528:16:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -433,7 +433,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 386,
+                    "id": 390,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "528:7:2",
@@ -450,15 +450,15 @@
               "src": "527:18:2"
             },
             "returnParameters": {
-              "id": 391,
+              "id": 395,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 390,
+                  "id": 394,
                   "name": "balance",
                   "nodeType": "VariableDeclaration",
-                  "scope": 397,
+                  "scope": 401,
                   "src": "567:15:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -467,7 +467,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 389,
+                    "id": 393,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "567:7:2",
@@ -482,14 +482,14 @@
               ],
               "src": "566:17:2"
             },
-            "scope": 398,
+            "scope": 402,
             "src": "509:117:2",
             "stateMutability": "view",
-            "superFunction": 807,
+            "superFunction": 811,
             "visibility": "public"
           }
         ],
-        "scope": 399,
+        "scope": 403,
         "src": "182:446:2"
       }
     ],
@@ -500,7 +500,7 @@
       "absolutePath": "project:/contracts/ERC20Basic.sol",
       "exportedSymbols": {
         "ERC20Basic": [
-          398
+          402
         ]
       }
     },
@@ -514,54 +514,54 @@
             ".0"
           ]
         },
-        "id": 374,
+        "id": 378,
         "name": "PragmaDirective",
         "src": "0:23:2"
       },
       {
         "attributes": {
-          "SourceUnit": 847,
+          "SourceUnit": 851,
           "absolutePath": "project:/contracts/Libs/IERC20.sol",
           "file": "./Libs/IERC20.sol",
-          "scope": 399,
+          "scope": 403,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 375,
+        "id": 379,
         "name": "ImportDirective",
         "src": "89:27:2"
       },
       {
         "attributes": {
-          "SourceUnit": 1034,
+          "SourceUnit": 1038,
           "absolutePath": "project:/contracts/Libs/Safemath.sol",
           "file": "./Libs/Safemath.sol",
-          "scope": 399,
+          "scope": 403,
           "symbolAliases": [
             null
           ],
           "unitAlias": ""
         },
-        "id": 376,
+        "id": 380,
         "name": "ImportDirective",
         "src": "117:29:2"
       },
       {
         "attributes": {
           "contractDependencies": [
-            846
+            850
           ],
           "contractKind": "contract",
           "documentation": "@title ERC20 interface",
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            398,
-            846
+            402,
+            850
           ],
           "name": "ERC20Basic",
-          "scope": 399
+          "scope": 403
         },
         "children": [
           {
@@ -573,15 +573,15 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "IERC20",
-                  "referencedDeclaration": 846,
+                  "referencedDeclaration": 850,
                   "type": "contract IERC20"
                 },
-                "id": 377,
+                "id": 381,
                 "name": "UserDefinedTypeName",
                 "src": "205:6:2"
               }
             ],
-            "id": 378,
+            "id": 382,
             "name": "InheritanceSpecifier",
             "src": "205:6:2"
           },
@@ -591,10 +591,10 @@
                 "attributes": {
                   "contractScope": null,
                   "name": "SafeMath",
-                  "referencedDeclaration": 1033,
+                  "referencedDeclaration": 1037,
                   "type": "library SafeMath"
                 },
-                "id": 379,
+                "id": 383,
                 "name": "UserDefinedTypeName",
                 "src": "224:8:2"
               },
@@ -603,12 +603,12 @@
                   "name": "uint256",
                   "type": "uint256"
                 },
-                "id": 380,
+                "id": 384,
                 "name": "ElementaryTypeName",
                 "src": "237:7:2"
               }
             ],
-            "id": 381,
+            "id": 385,
             "name": "UsingForDirective",
             "src": "218:27:2"
           },
@@ -616,7 +616,7 @@
             "attributes": {
               "constant": false,
               "name": "balances",
-              "scope": 398,
+              "scope": 402,
               "stateVariable": true,
               "storageLocation": "default",
               "type": "mapping(address => uint256)",
@@ -634,7 +634,7 @@
                       "name": "address",
                       "type": "address"
                     },
-                    "id": 382,
+                    "id": 386,
                     "name": "ElementaryTypeName",
                     "src": "259:7:2"
                   },
@@ -643,17 +643,17 @@
                       "name": "uint256",
                       "type": "uint256"
                     },
-                    "id": 383,
+                    "id": 387,
                     "name": "ElementaryTypeName",
                     "src": "270:7:2"
                   }
                 ],
-                "id": 384,
+                "id": 388,
                 "name": "Mapping",
                 "src": "251:27:2"
               }
             ],
-            "id": 385,
+            "id": 389,
             "name": "VariableDeclaration",
             "src": "251:45:2"
           },
@@ -667,9 +667,9 @@
                 null
               ],
               "name": "balanceOf",
-              "scope": 398,
+              "scope": 402,
               "stateMutability": "view",
-              "superFunction": 807,
+              "superFunction": 811,
               "visibility": "public"
             },
             "children": [
@@ -679,7 +679,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "_address",
-                      "scope": 397,
+                      "scope": 401,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -693,17 +693,17 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 386,
+                        "id": 390,
                         "name": "ElementaryTypeName",
                         "src": "528:7:2"
                       }
                     ],
-                    "id": 387,
+                    "id": 391,
                     "name": "VariableDeclaration",
                     "src": "528:16:2"
                   }
                 ],
-                "id": 388,
+                "id": 392,
                 "name": "ParameterList",
                 "src": "527:18:2"
               },
@@ -713,7 +713,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "balance",
-                      "scope": 397,
+                      "scope": 401,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -726,17 +726,17 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 389,
+                        "id": 393,
                         "name": "ElementaryTypeName",
                         "src": "567:7:2"
                       }
                     ],
-                    "id": 390,
+                    "id": 394,
                     "name": "VariableDeclaration",
                     "src": "567:15:2"
                   }
                 ],
-                "id": 391,
+                "id": 395,
                 "name": "ParameterList",
                 "src": "566:17:2"
               },
@@ -744,7 +744,7 @@
                 "children": [
                   {
                     "attributes": {
-                      "functionReturnParameters": 391
+                      "functionReturnParameters": 395
                     },
                     "children": [
                       {
@@ -763,11 +763,11 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 385,
+                              "referencedDeclaration": 389,
                               "type": "mapping(address => uint256)",
                               "value": "balances"
                             },
-                            "id": 392,
+                            "id": 396,
                             "name": "Identifier",
                             "src": "601:8:2"
                           },
@@ -777,41 +777,41 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": 387,
+                              "referencedDeclaration": 391,
                               "type": "address",
                               "value": "_address"
                             },
-                            "id": 393,
+                            "id": 397,
                             "name": "Identifier",
                             "src": "610:8:2"
                           }
                         ],
-                        "id": 394,
+                        "id": 398,
                         "name": "IndexAccess",
                         "src": "601:18:2"
                       }
                     ],
-                    "id": 395,
+                    "id": 399,
                     "name": "Return",
                     "src": "594:25:2"
                   }
                 ],
-                "id": 396,
+                "id": 400,
                 "name": "Block",
                 "src": "584:42:2"
               }
             ],
-            "id": 397,
+            "id": 401,
             "name": "FunctionDefinition",
             "src": "509:117:2"
           }
         ],
-        "id": 398,
+        "id": 402,
         "name": "ContractDefinition",
         "src": "182:446:2"
       }
     ],
-    "id": 399,
+    "id": 403,
     "name": "SourceUnit",
     "src": "0:629:2"
   },
@@ -821,7 +821,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-02-02T15:41:20.486Z",
+  "updatedAt": "2022-09-21T09:25:52.223Z",
   "devdoc": {
     "methods": {
       "balanceOf(address)": {

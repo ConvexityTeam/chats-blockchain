@@ -7,7 +7,7 @@ const CreateAccount = async (req, res) => {
         return res.json({ AccountCreated });  
     } catch (error) {
         res.status(500);
-        return res.json({ status: false, message: error });
+        return res.json({ status: false, message: getPureError(error)});
     }
 };
 
@@ -18,7 +18,7 @@ const AddAdmin = async (req, res) => {
         return res.json({ AddedAdmin }); 
     } catch (error) {
         res.status(500);
-        return res.json({ status: false, message: error });
+        return res.json({ status: false, message: getPureError(error)});
     }
 };
 
@@ -29,7 +29,7 @@ const RemoveAdmin = async (req, res) => {
         return res.json({ RemovedAdmin });
     } catch (error) {
         res.status(500);
-        return res.json({ status: false, message: error });
+        return res.json({ status: false, message: getPureError(error)});
     }
 };
 
@@ -40,7 +40,7 @@ const AddAuthorizer = async (req, res) => {
         return res.json({ AddedAuthorizer }); 
     } catch (error) {
         res.status(500);
-        return res.json({ status: false, message: error });
+        return res.json({ status: false, message: getPureError(error)});
     }
 };
 
@@ -51,7 +51,7 @@ const RemoveAuthorizer = async (req, res) => {
         return res.json({ RemovedAdmin });
     } catch (error) {
         res.status(500);
-        return res.json({ status: false, message: error });
+        return res.json({ status: false, message: getPureError(error)});
     }
 };
 
@@ -64,7 +64,7 @@ const AddBlackList = async (req, res) => {
         return res.json({ AddedBlackList }); 
     } catch (error) {
         res.status(500);
-        return res.json({ status: false, message: error });
+        return res.json({ status: false, message: getPureError(error)});
     }
 };
 
@@ -77,18 +77,36 @@ const RemoveBlackList = async (req, res) => {
         return res.json({ RemovedBlacklist });
     } catch (error) {
         res.status(500);
-        return res.json({ status: false, message: error });
+        return res.json({ status: false, message: getPureError(error)});
     }
 };
+
+function replaceErrors(key, value) {
+    if (value instanceof Error) {
+        var error = {};
+  
+        Object.getOwnPropertyNames(value).forEach(function (key) {
+            error[key] = value[key];
+        });
+  
+        return error;
+    }
+  
+    return value;
+  }
+  
+  function getPureError(error) {
+    return JSON.parse(JSON.stringify(error, replaceErrors));
+  }
 
 const AddUserList = async (req, res) => {
     const address = req.params.address
     try {
         const AddedUser = await trnx.addUserList(address);
         return res.json({ AddedUser }); 
-    } catch (error) {
+    } catch(error) {
         res.status(500);
-        return res.json({ status: false, message: error });
+        return res.json({ status: false, message: getPureError(error) });
     }
 };
 
@@ -99,7 +117,7 @@ const RemoveUserList = async (req, res) => {
         return res.json({ RemovedUser });
     } catch (error) {
         res.status(500);
-        return res.json({ status: false, message: error });
+        return res.json({ status: false, message: getPureError(error)});
     }
 };
 
@@ -109,7 +127,7 @@ const Pause = async (req, res) => {
         return res.json({ PauseContract }); 
     } catch (error) {
         res.status(500);
-        return res.json({ status: false, message: error });
+        return res.json({ status: false, message: getPureError(error)});
     }
 };
 
@@ -119,7 +137,7 @@ const Unpause = async (req, res) => {
         return res.json({ UnpauseContract });
     } catch (error) {
         res.status(500);
-        return res.json({ status: false, message: error });
+        return res.json({ status: false, message: getPureError(error)});
     }
 };
 

@@ -17,20 +17,20 @@ const deployerAccount = accountObj.address;
 
 const BlockchainTrxAdmin = async (_result, _nonce) => {
   const data = _result.encodeABI();
-  // const gasPrice = await connect.web3.eth.getGasPrice()
+  const gasPrice = await connect.web3.eth.getGasPrice()
   // const getGasPrice = connect.web3.utils.fromWei(gasPrice, 'gwei')
   const estimateGas = await connect.web3.eth.estimateGas({from: deployerAccount, to: connect.address,  data: data})
-  // const value = estimateGas * gasPrice + (estimateGas * getGasPrice * fee / 100)
+  const gaslimit = estimateGas + 1000;
   if(_nonce > 0) {
-    let nonce = connect.web3.eth.getTransactionCount(deployerAccount, pending) + _nonce;
+    let nonce = await connect.web3.eth.getTransactionCount(deployerAccount, pending) + _nonce;
   }else{
-    nonce = connect.web3.eth.getTransactionCount(deployerAccount)
+    nonce = await connect.web3.eth.getTransactionCount(deployerAccount)
   }
   const tx = {
     from: deployerAccount,
     to: connect.address,
     data: data,
-    gasLimit: estimateGas,
+    gasLimit: gaslimit,
     nonce:  nonce
   };
 
@@ -89,6 +89,8 @@ const value2 = ethers.utils.parseUnits(value.toFixed(8))
 };
 
 
+
+
 //////////      Account Management        ////////////
 
 /**
@@ -129,7 +131,7 @@ exports.createAccount = async () => {
     }else{
       let err = {
         name: "Web3-CreateAccount",
-        error: error,
+        error: error.message,
       };
       throw err;
     }
@@ -159,7 +161,7 @@ exports.addAdmin = async (_AdminAddress) => {
     logger.error("Add Admin",error);
     let err = {
       name: "Web3-AddAdmin",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -180,7 +182,7 @@ exports.removeAdmin = async (_AdminAddress) => {
   } catch (error) {
     let err = {
       name: "Web3-RemoveAdmin",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -202,7 +204,7 @@ exports.addAuthorizer = async (_AdminAddress) => {
   } catch (error) {
     let err = {
       name: "Web3-AddAuthorizers",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -223,7 +225,7 @@ exports.removeAuthorizer = async (_AdminAddress) => {
   } catch (error) {
     let err = {
       name: "Web3-RemoveAuthorizers",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -247,7 +249,7 @@ exports.addBlackList = async (_AdminAddress, _From, _pwsd) => {
   } catch (error) {
     let err = {
       name: "Web3-AddBlackList",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -270,7 +272,7 @@ exports.removeBlackList = async (_AdminAddress, _From, _pwsd) => {
   } catch (error) {
     let err = {
       name: "Web3-RemoveBlackList",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -287,14 +289,15 @@ exports.removeBlackList = async (_AdminAddress, _From, _pwsd) => {
  */
 exports.addUserList = async (_Addr) => {
   try {
+    logger.info("Add User List",_Addr);
     const result = await connect.contract.methods.SetUserList(_Addr);
     const sendtx = await BlockchainTrxAdmin(result);
-
+    logger.info("Add User List",sendtx);
     return sendtx.status;
-  } catch (error) {
+  } catch(error) {
     let err = {
       name: "Web3-addUserList",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -317,7 +320,7 @@ exports.removeUserList = async (_Addr) => {
   } catch (error) {
     let err = {
       name: "Web3-RemoveUserList",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -341,7 +344,7 @@ exports.pause = async () => {
   } catch (error) {
     let err = {
       name: "Web3-PauseContract",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -363,7 +366,7 @@ exports.unpause = async () => {
   } catch (error) {
     let err = {
       name: "Web3-UnpauseContract",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -386,7 +389,7 @@ exports.initiateOwnershipTransfer = async (_proposedOwner) => {
   } catch (error) {
     let err = {
       name: "Web3-InitiateOwnershipTransfer",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -410,7 +413,7 @@ exports.completeOwnershipTransfer = async (_proposedOwner, _proposedOwnerPswd) =
   } catch (error) {
     let err = {
       name: "Web3-CompleteOwnershipTransfer",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -432,7 +435,7 @@ exports.cancelOwnershipTransfer = async () => {
   } catch (error) {
     let err = {
       name: "Web3-CancelOwnershipTransfer",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -456,7 +459,7 @@ exports.setParams = async (_newBasisPoints, _newMaxFee) => {
   } catch (error) {
     let err = {
       name: "Web3-Transfer",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -495,7 +498,7 @@ exports.transferAdmin = async (_receiver, _value) => {
   } catch (error) {
     let err = {
       name: "Web3-TransferBySuperAdmin",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -535,7 +538,7 @@ exports.transfers = async (_senderAddr, _senderPswd, _receiver, _value) => {
   } catch (error) {
     let err = {
       name: "Web3-Transfer",
-      error: error.message,
+      error: error.message.message,
     };
     throw err;
   }
@@ -576,7 +579,7 @@ exports.minting = async (_value, _mintTo) => {
     }else{
       let err = {
         name: "Web3-MintingToken",
-        error: error,
+        error: error.message,
       };
     }
     throw err;
@@ -603,7 +606,7 @@ exports.redeeming = async (_senderAddr, _senderPswd, _amount) => {
   } catch (error) {
     let err = {
       name: "Web3-RedeemingToken",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -640,7 +643,7 @@ exports.approve = async (_tokenOwnerAddr, _tokenOwnerPswd, _spenderAddr, _value)
   } catch (error) {
     let err = {
       name: "Web3-Approve",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -679,7 +682,7 @@ exports.transferFrom = async (_tokenOwnerAddr, _to, _spenderAddr, _spenderPwsd, 
     } catch (error) {
         let err = {
             name: "Web3-TransferFrom",
-            error: error,
+            error: error.message,
         };
         throw err;
     }
@@ -712,7 +715,7 @@ exports.destroyBlackFunds = async (_evilUser) => {
   } catch (error) {
     let err = {
       name: "Web3-DestroyBlackFunds",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
