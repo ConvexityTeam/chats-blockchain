@@ -13,6 +13,6 @@ RUN npm install
 
 ENV NODE_ENV=production
 
-EXPOSE 3000
+EXPOSE 3000 3001
 
 CMD [ "node", "server.js" ]

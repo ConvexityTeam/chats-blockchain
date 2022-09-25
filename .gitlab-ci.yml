@@ -10,14 +10,13 @@ before_script:
 deploy_staging:
   stage: deploy
   script:
-   - ssh $USER@$APP_URL_STAGING -o StrictHostKeyChecking=no ". ssh-restart.sh && ssh-add .ssh/id_rsa && cd token-chats-staging && git fetch && git reset --hard origin/develop && git pull origin master && docker-compose build token-app-staging && docker-compose up --force-recreate --no-deps -d && exit"
-    # - ssh $USER@$APP_URL -o StrictHostKeyChecking=no ". ssh-restart.sh && ssh-add .ssh/convexityApps && cd token-chats && git fetch && git reset --hard origin/master && git pull origin master && docker-compose build token-app && docker-compose up -d && chmod +x ssl_renew.sh && exit"
+    - ssh $USER@$APP_URL_STAGING -o StrictHostKeyChecking=no ". ssh-restart.sh && ssh-add .ssh/id_rsa && cd token-chats-staging && git fetch && git reset --hard origin/develop && git pull origin develop && docker-compose -f docker-compose.staging.yml up --build -d && exit"
   only:
     - develop
 
 deploy_production:
   stage: production
   script:
-   - ssh $USER@$APP_URL -o StrictHostKeyChecking=no ". ssh-restart.sh && ssh-add .ssh/id_rsa && cd token-chats && git fetch && git reset --hard origin/master && git pull origin master && docker-compose build token-app && docker-compose up --force-recreate --no-deps -d && exit"
+    - ssh $USER@$APP_URL -o StrictHostKeyChecking=no ". ssh-restart.sh && ssh-add .ssh/id_rsa && cd token-chats && git fetch && git reset --hard origin/master && git pull origin master && docker-compose -f docker-compose.prod.yml up --build -d && exit"
   only:
     - master
