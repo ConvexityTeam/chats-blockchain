@@ -11,7 +11,7 @@ RUN npm cache verify
 
 RUN npm install
 
-ENV NODE_ENV=production
+ENV NODE_ENV=development
 
 EXPOSE 3001
 
