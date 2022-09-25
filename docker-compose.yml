@@ -1,8 +1,8 @@
 version: "3.9"
 
 services:
-  token-app-staging:
-    container_name: token-app-staging
+  token-app:
+    container_name: token-app
     build:
       context: .
       dockerfile: Dockerfile
@@ -19,15 +19,15 @@ networks:
     driver: bridge
 
 volumes:
-  web-root1:
+  web-root:
     driver: local
     driver_opts:
       type: none
-      device: /home/ubuntu/token-chats-staging/views/
+      device: /home/ubuntu/token-chats/views/
       o: bind
-  dhparam1:
+  dhparam:
     driver: local
     driver_opts:
       type: none
-      device: /home/ubuntu/token-chats-staging/dhparam/
+      device: /home/ubuntu/token-chats/dhparam/
       o: bind
