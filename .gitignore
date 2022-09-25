@@ -7,4 +7,5 @@ test/
 .openzeppelin/.session
 .env
 docker-compsers.yml
+src/routes/home.js
 
