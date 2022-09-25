@@ -18,7 +18,7 @@ services:
     container_name: token-app-staging
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./stagingconfig/Dockerfile
     ports:
       - 3001:3001
     networks:
