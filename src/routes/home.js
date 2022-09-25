@@ -2,7 +2,7 @@ const router = require('express').Router()
 
 const GetApp = async (req, res)=>{
     try {
-        return res.status(200).json({message: 'Welcome to CHATS token service'})
+        return res.status(200).json({message: 'Staging CHATS token service'})
     } catch (error) {
         res.status(500)
         return res.json({status: false, message: error})
