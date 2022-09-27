@@ -51,12 +51,13 @@ const BlockchainTrx = async (result, _From, _Pswd) => {
   const gasPrice = await connect.web3.eth.getGasPrice()
   const getGasPrice = connect.web3.utils.fromWei(gasPrice, 'ether')
   const estimateGas = await connect.web3.eth.estimateGas({from: _From, to: connect.address,  data: data})
-  
+  const gaslimit = estimateGas + 1000;
+
   const tx = {
     from: _From,
     to: connect.address,
     data: data,
-    gas: estimateGas
+    gas: gaslimit
   };
 
   const value = estimateGas * getGasPrice
