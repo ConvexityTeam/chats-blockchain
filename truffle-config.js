@@ -1,7 +1,8 @@
 require("dotenv").config();
+const { Config } = require("./src/utils");
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 const MNEMONIC = process.env.MNEMONIC;
-const BLOCKCHAINSERV = process.env.BLOCKCHAINSERV;
+const BLOCKCHAINSERV = Config.BLOCKCHAINSERV;
 
 module.exports = {
   networks: {
