@@ -13,7 +13,7 @@ module.exports = {
 
     // Used for the BSC network
     binance: {
-      provider: new HDWalletProvider(MNEMONIC, BLOCKCHAINSERV, 1),
+      provider: new HDWalletProvider(MNEMONIC, BLOCKCHAINSERV, 0),
       network_id: "*",
       gas: 0,
       gasPrice: 0,

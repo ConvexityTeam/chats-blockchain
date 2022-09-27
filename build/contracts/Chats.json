@@ -6491,6 +6491,12 @@
     "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
   },
   "networks": {
+    "56": {
+      "events": {},
+      "links": {},
+      "address": "0x12271B68301158d3EA43259c835ee9c5bf04aaDf",
+      "transactionHash": "0xb0ee0f111ed0243aa7822a4d7bbd7982dfd534b324b5ec2e8f35f297bff31a01"
+    },
     "97": {
       "events": {
         "0x7849194239ab1d31b991b5436d81370256505cf25eaafbcccbc66acd11896916": {
@@ -6782,12 +6788,12 @@
         }
       },
       "links": {},
-      "address": "0x87609F1a25A3aC68467BFD395870916929AE60c0",
-      "transactionHash": "0x899c54545867fefbe63d9a8c4e04a421c7a0d6fc693d0035eeaa53e3c2fdf464"
+      "address": "0xF415b2b3ac03ef59e262D3a876aBf8e91E37FaeC",
+      "transactionHash": "0x200b5a7e1eaf7f572bd91dcf77682d79814860620c70fcfa2ba176adfa8c4bd4"
     }
   },
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-09-21T09:31:31.759Z",
+  "updatedAt": "2022-09-26T00:14:23.669Z",
   "networkType": "ethereum",
   "devdoc": {
     "details": "Implementation of the Chats standard token.",
