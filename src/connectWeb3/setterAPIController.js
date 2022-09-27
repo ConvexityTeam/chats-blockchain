@@ -9,7 +9,7 @@ const logger = createLogger({
 
 
 const MNEMONIC = process.env.MNEMONIC;
-const mnemonicWallet = ethers.Wallet.fromMnemonic(MNEMONIC, `m/44'/60'/0'/0/1`);
+const mnemonicWallet = ethers.Wallet.fromMnemonic(MNEMONIC, `m/44'/60'/0'/0/0`);
 const accountObj = connect.web3.eth.accounts.privateKeyToAccount(
     mnemonicWallet.privateKey
   );
