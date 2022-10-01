@@ -1,16 +1,78 @@
 const { Config } = require("../utils");
-const {  web3 } = require("../resources/web3config.js");
-const ethers = require("ethers");
-const Transaction  = require("@ethereumjs/tx").Transaction;
+// const web3  = require('web3');
+const { ethers } = require("ethers");
+const provider = new ethers.providers.getDefaultProvider(Config.BLOCKCHAINSERV);
 const Common = require("@ethereumjs/common").default;
 const { Chain, Hardfork} = require("@ethereumjs/common")
-const MNEMONIC = process.env.MNEMONIC;
-const mnemonicWallet = ethers.Wallet.fromMnemonic(MNEMONIC, `m/44'/60'/0'/0/1`);
-const accountObj = web3.eth.accounts.privateKeyToAccount(
-    mnemonicWallet.privateKey
-  );
-const deployerAccount = accountObj.address;
+const deployerAccount = Config.ADMIN;
 const commons = new Common({ chain: Chain.Mainnet});
+
+async function wallet(_pkey) {
+  const wallet = new ethers.Wallet(_pkey, provider);
+  return wallet;
+}
+
+async function sendEther(amount, addressTo){
+    const walletInit = wallet(Config.ADMIN_PASS);
+  const tx = {
+        to: addressTo,
+        value: ethers.utils.parseEther(amount),
+      };
+      const createReceipt = await walletInit.sendTransaction(tx);
+      await createReceipt.wait();
+    }
+    
+  
+  module.exports.adminTrx = async (_contract, _gas, _method, _pswd, ..._parameters) => {
+    
+      const gasPrice = await provider.getGasPrice() 
+      const getNonce = await wallet(_pswd)
+      const nonce = await getNonce.getTransactionCount("latest")
+      const overrides = { nonce, gasPrice }
+      overrides.gasLimit = _gas
+      let params = ''
+      for (let index = 0; index < _parameters.length; index++) params += (_parameters.length <= 1)? _parameters[index] :  _parameters[index] + ','
+      params = (_parameters.length == 1)? params : params.slice(0, -1)
+      const createReceipt = await _contract[_method](params, overrides);
+
+    return createReceipt.hash;
+  }
+
+  module.exports.userTrx = async (_to, _contract, _method, _pswd, ..._parameters) => {
+
+    const gasPrice = provider.getGasPrice() 
+    const getNonce = await wallet(_pswd)
+    const nonce = await getNonce.getTransactionCount("latest")
+    const overrides = { nonce, gasPrice }
+    const gas = await _contract.estimateGas[_method](_parameters, [ overrides ] );
+       sendEther(gas * gasPrice, _to).catch((error) => {
+           throw Error(`Error sending Eth for minting: ${error.message}`);  
+   })
+
+// add missing arguments to call ethers write function
+    let params = ''
+    for (let index = 0; index < _parameters.length; index++) para += (_parameters.length <= 1)? _parameters[index] :  _parameters[index] + ','
+    params = (_parameters.length == 1)? params : params.slice(0, -1)
+    overrides.gasLimit = gas;
+    const createReceipt = await _contract[_method](_params, [ overrides ]);
+
+  return createReceipt.hash;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports.BlockchainTrxAdmin = async (_result, _nonce, _address) => {
   const data = _result.encodeABI();
@@ -25,18 +87,14 @@ module.exports.BlockchainTrxAdmin = async (_result, _nonce, _address) => {
     from: deployerAccount,
     to: _address,
     data: data,
-    gasLimit: estimateGas,
-    nonce:  nonce
+    // gasLimit: estimateGas,
+    // nonce:  nonce
   };
   const signed = await web3.eth.accounts.signTransaction(
     txParams,
-    mnemonicWallet.privateKey
+    Config.ADMIN_PASS
   );
-  // const tx = Transaction.fromTxData(txParams, { common: commons });
-  // const privateKey = Buffer.from(mnemonicWallet.privateKey.slice(2), "hex");
-  // tx.sign(privateKey);
-  // console.log(tx, 'tx')
-  // const receipt = await web3.eth.sendSignedTransaction("0x" + tx.serialize().toString("hex"));
+
   const receipt = await web3.eth.sendSignedTransaction(
     signed.rawTransaction
   );

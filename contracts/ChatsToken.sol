@@ -13,7 +13,7 @@ import "./Operations.sol";
 /**
  * @title Basic FreeMoney token.
  */
-contract ChatsToken is Ownable, ERC20Permit, ReentrancyGuard {
+contract Chats is Ownable, ERC20Permit, ReentrancyGuard {
     using SafeMath for uint256;
     Operations public operations;
 
@@ -36,13 +36,11 @@ contract ChatsToken is Ownable, ERC20Permit, ReentrancyGuard {
     }
 
     constructor(string memory _name,string memory _symbol, address _operations) ERC20Permit(_name) ERC20(_name, _symbol) {
-    // name = _name;
-    // symbol = _symbol;
     operations = Operations(_operations);
     }
 
     function decimals() public pure override returns (uint8) {
-        return 3;
+        return 6;
     }
 
     /**
@@ -68,12 +66,16 @@ contract ChatsToken is Ownable, ERC20Permit, ReentrancyGuard {
      *
      * @param _amount Number of tokens to be issued
      */
-    function redeem(uint256 _amount) public {
+    function redeem(uint256 _amount) 
+    public 
+    {
+        require(operations.CheckUserList(_msgSender()), "User is not allowed to receive tokens");
+        require(!operations.isBlackListedAddress(_msgSender()), "Account is BlackListed");
         require(totalSupply() >= _amount, "Total supply is less than amount");
-        require(balanceOf(msg.sender) >= _amount, "Balance is less than amount");
-        _burn(msg.sender, _amount);
+        require(balanceOf(_msgSender()) >= _amount, "Balance is less than amount");
+        _burn(_msgSender(), _amount);
         totalRedeemed = totalRedeemed.add(_amount);
-        emit Redeem(_amount, msg.sender);
+        emit Redeem(_amount, _msgSender());
     }
 
     function setParams(uint256 newBasisPoints, uint256 newMaxFee)
@@ -94,8 +96,9 @@ contract ChatsToken is Ownable, ERC20Permit, ReentrancyGuard {
      * @param _to The address to transfer to.
      * @param _value The amount to be transferred.
      */
-    function transferToken(address _to, uint256 _value)
+    function transfer(address _to, uint256 _value)
         public
+        override
         returns (bool)
     {
         require(operations.CheckUserList(_to), "User is not allowed to receive tokens");
@@ -105,13 +108,11 @@ contract ChatsToken is Ownable, ERC20Permit, ReentrancyGuard {
         if (fee > maximumFee) {
             fee = maximumFee;
         }
-        transfer(_to, _value.sub(fee));
-        if (fee > 0) {
+        if(fee > 0) {
             transfer(owner(), fee);
         }
-        emit Transfer(_msgSender(), _to, _value.sub(fee));
-
-        return true;
+        transfer(_to, _value.sub(fee));
+        
     }
 
     /**
@@ -120,11 +121,12 @@ contract ChatsToken is Ownable, ERC20Permit, ReentrancyGuard {
      * @param _to address The address which you want to transfer to
      * @param _value uint the amount of tokens to be transferred
      */
-    function transferTokenFrom(
+    function transferFrom(
         address _from,
         address _to,
         uint256 _value
     ) public
+        override
         returns (bool) {
         require(operations.CheckUserList(_to), "User is not allowed to receive tokens");
         require(!operations.isBlackListedAddress(_to), "Account is BlackListed");
@@ -133,11 +135,9 @@ contract ChatsToken is Ownable, ERC20Permit, ReentrancyGuard {
         if (fee > maximumFee) {
             fee = maximumFee;
         }
-        transferFrom(_from, _to, _value.sub(fee));
         if (fee > 0) {
             transferFrom(_from, owner(), fee);
         }
-
-        return true;
+        transferFrom(_from, _to, _value.sub(fee));
     }
 }

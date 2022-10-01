@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-// import "@openzeppelin/upgrades/contracts/Initializable.sol";
-
+// import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 
@@ -67,7 +66,9 @@ contract Operations is Ownable, Pausable {
         _;
     }
 
-    constructor() {
+    constructor()
+    // public initializer
+     {
         isUserListed[_msgSender()] = true;
         usersList.push(_msgSender());
 
