@@ -1,4 +1,4 @@
-const connect = require("../resources/web3config.js");
+const {tokenContract, operationsContract} = require("../resources/web3config.js");
 const web3 = require('web3');
 //////////      Get Contract Details        ////////////
 
@@ -6,11 +6,11 @@ const web3 = require('web3');
  * @name GetName
  * @description This gets contract Name
  * 
- * @returns {string} Name of the FreeMoney Contract
+ * @returns {string} Name of the CHATS Contract
  */
 exports.getName = async () => {
   try {
-    let result = await connect.contract.methods.name().call();
+    let result = await tokenContract.name().call();
     return result;
   } catch (error) {
     let err = {

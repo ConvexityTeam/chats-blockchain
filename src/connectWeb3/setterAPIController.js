@@ -1,4 +1,4 @@
-const {tokenAddress, operationsAddress, tokenContract, operationsContract, tokenFactory, operationsFactory} = require("../resources/web3config.js");
+const {tokenContract, operationsContract} = require("../resources/web3config.js");
 const Web3 = require('web3');
 const web3 = new Web3();
 const { userTrx, adminTrx } = require("./localGNS.js");
@@ -27,8 +27,8 @@ exports.createAccount = async () => {
     logger.info("CreateAccount");
        const account = web3.eth.accounts.create();
        const result = operationsContract(Config.ADMIN_PASS)
-       const gasEstimate = await result.estimateGas.SetUserList(account.address);
-       const tranxHash = adminTrx(result, gasEstimate, 'SetUserList', Config.ADMIN_PASS, account.address);
+       console.log(account)
+       const tranxHash = adminTrx(result, 'SetUserList', Config.ADMIN_PASS, account.address);
      logger.info("Account created", tranxHash);
       return tranxHash;
   } catch (error) {
@@ -51,8 +51,7 @@ exports.addAdmin = async (_adminAddress) => {
   try {
     logger.info("Add Admin");
     const result = operationsContract(Config.ADMIN_PASS)
-    const gasEstimate = await result.estimateGas.AddAdmin(_adminAddress)
-    const tranxHash = adminTrx(result, gasEstimate, 'AddAdmin', Config.ADMIN_PASS, _adminAddress)
+    const tranxHash = adminTrx(result, 'AddAdmin', Config.ADMIN_PASS, _adminAddress)
     logger.info("Added Admin",tranxHash)
     return tranxHash
   } catch (error) {
@@ -75,8 +74,7 @@ exports.removeAdmin = async (_adminAddress) => {
   try {
     logger.info("Remove Admin");
     const result = operationsContract(Config.ADMIN_PASS)
-    const gasEstimate = await result.estimateGas.RemoveAdmin(_adminAddress)
-    const tranxHash = adminTrx(result, gasEstimate, 'RemoveAdmin', Config.ADMIN_PASS, _adminAddress)
+    const tranxHash = adminTrx(result, 'RemoveAdmin', Config.ADMIN_PASS, _adminAddress)
     logger.info("Admin Removed",tranxHash)
     return tranxHash
   } catch (error) {
@@ -99,8 +97,7 @@ exports.addAuthorizer = async (_authAddress) => {
   try {
     logger.info("Add Authorizer", _authAddress);
     const result = operationsContract(Config.ADMIN_PASS)
-    const gasEstimate = await result.estimateGas.AddAuthorizer(_authAddress)
-    const tranxHash = adminTrx(result, gasEstimate, 'AddAuthorizer', Config.ADMIN_PASS, _authAddress)
+    const tranxHash = adminTrx(result, 'AddAuthorizer', Config.ADMIN_PASS, _authAddress)
     logger.info("Authorizer Added",tranxHash)
     return tranxHash
   } catch (error) {
@@ -122,8 +119,7 @@ exports.removeAuthorizer = async (_authAddress) => {
   try {
     logger.info("Remove Authorizer", _authAddress);
     const result = operationsContract(Config.ADMIN_PASS)
-    const gasEstimate = await result.estimateGas.RemoveAuthorizer(_authAddress)
-    const tranxHash = adminTrx(result, gasEstimate, 'RemoveAuthorizer', Config.ADMIN_PASS, _authAddress)
+    const tranxHash = adminTrx(result, 'RemoveAuthorizer', Config.ADMIN_PASS, _authAddress)
     logger.info("Authorizer Removed",tranxHash)
     return tranxHash
   } catch (error) {
@@ -146,8 +142,7 @@ exports.addBlackList = async (_address) => {
   try {
     logger.info("Add Blacklist", _address);
     const result = operationsContract(Config.ADMIN_PASS)
-    const gasEstimate = await result.estimateGas.AddBlackList(_address)
-    const tranxHash = adminTrx(result, gasEstimate, 'AddBlackList', Config.ADMIN_PASS, _address)
+    const tranxHash = adminTrx(result, 'AddBlackList', Config.ADMIN_PASS, _address)
     logger.info("Blacklist Added",tranxHash)
     return tranxHash
   } catch (error) {
@@ -169,8 +164,7 @@ exports.removeBlackList = async (_address) => {
   try {
     logger.info("Remove Blacklist", _address);
     const result = operationsContract(Config.ADMIN_PASS)
-    const gasEstimate = await result.estimateGas.RemoveBlackList(_address)
-    const tranxHash = adminTrx(result, gasEstimate, 'RemoveBlackList', Config.ADMIN_PASS, _address)
+    const tranxHash = adminTrx(result, 'RemoveBlackList', Config.ADMIN_PASS, _address)
     logger.info("Blacklist Removed",tranxHash)
     return tranxHash
   } catch (error) {
@@ -193,8 +187,7 @@ exports.addUserList = async (_address) => {
   try {
     logger.info("Add User", _address);
     const result = operationsContract(Config.ADMIN_PASS)
-    const gasEstimate = await result.estimateGas.SetUserList(_address)
-    const tranxHash = adminTrx(result, gasEstimate, 'SetUserList', Config.ADMIN_PASS, _address)
+    const tranxHash = adminTrx(result, 'SetUserList', Config.ADMIN_PASS, _address)
     logger.info("User Added",tranxHash)
     return tranxHash
   } catch (error) {
@@ -216,8 +209,7 @@ exports.removeUserList = async (_address) => {
   try {
     logger.info("Remove User", _address);
     const result = operationsContract(Config.ADMIN_PASS)
-    const gasEstimate = await result.estimateGas.RemoveUserList(_address)
-    const tranxHash = adminTrx(result, gasEstimate, 'RemoveUserList', Config.ADMIN_PASS, _address)
+    const tranxHash = adminTrx(result, 'RemoveUserList', Config.ADMIN_PASS, _address)
     logger.info("User Removed",tranxHash)
     return tranxHash
   } catch (error) {
@@ -242,8 +234,7 @@ exports.pause = async () => {
   try {
     logger.info("Pause Operation");
     const result = operationsContract(Config.ADMIN_PASS)
-    const gasEstimate = await result.estimateGas.pause()
-    const tranxHash = adminTrx(result, gasEstimate, 'pause', Config.ADMIN_PASS)
+    const tranxHash = adminTrx(result, 'pause', Config.ADMIN_PASS)
     logger.info("Operation Paused",tranxHash)
     return tranxHash
   } catch (error) {
@@ -266,8 +257,7 @@ exports.unpause = async () => {
   try {
     logger.info("UnPause Operation");
     const result = operationsContract(Config.ADMIN_PASS)
-    const gasEstimate = await result.estimateGas.unpause()
-    const tranxHash = adminTrx(result, gasEstimate, 'unpause', Config.ADMIN_PASS)
+    const tranxHash = adminTrx(result, 'unpause', Config.ADMIN_PASS)
     logger.info("Operation UnPaused",tranxHash)
     return tranxHash
   } catch (error) {
@@ -361,9 +351,7 @@ exports.setParams = async (_newBasisPoints, _newMaxFee) => {
   try {
     logger.info("Set Fee Params");
     const result = tokenContract(Config.ADMIN_PASS)
-    const gasEstimate = await result.estimateGas.setParams(_newBasisPoints, _newMaxFee)
-    const params = {_newBasisPoints, _newMaxFee}
-    const tranxHash = adminTrx(result, gasEstimate, 'setParams', Config.ADMIN_PASS, params)
+    const tranxHash = adminTrx(result, 'setParams', Config.ADMIN_PASS, _newBasisPoints, _newMaxFee)
     logger.info("Fee Params Set",tranxHash)
     return tranxHash
   } catch (error) {
@@ -392,9 +380,7 @@ exports.transferAdmin = async (_receiver, _value) => {
 
     logger.info("Admin Transfer");
     const result = tokenContract(Config.ADMIN_PASS)
-    const gasEstimate = await result.estimateGas.transfer(_receiver, Number(value))
-    const params = {_receiver, value}
-    const tranxHash = adminTrx(result, gasEstimate, 'transfer', Config.ADMIN_PASS, params)
+    const tranxHash = adminTrx(result, 'transfer', Config.ADMIN_PASS, _receiver, value)
     logger.info("Admin Transferred",tranxHash)
 
     return tranxHash
@@ -420,19 +406,16 @@ exports.transferAdmin = async (_receiver, _value) => {
 exports.transfers = async (_senderPswd, _receiver, _value) => {
   try {
     let value = Number(web3.utils.toBN(web3.utils.toWei(_value, "kwei")));
-    
     logger.info("User Transfer");
     const result = tokenContract(_senderPswd)
-    const gasEstimate = await result.estimateGas.transfer(_receiver, value)
-    const params = {_receiver, value}
-    const tranxHash = userTrx(result, gasEstimate, 'transfer', _senderPswd, params)
-    logger.info("User Transferred",tranxHash)
+    const tranxHash = userTrx(result, 'transfer', _senderPswd, _receiver, value)
 
     return tranxHash
   } catch (error) {
+    logger.error(error)
     let err = {
       name: "Web3-Transfer",
-      error: error.message.message,
+      error: error.message,
     };
     throw err;
   }
@@ -453,7 +436,7 @@ exports.minting = async (_value, _mintTo) => {
     const result = tokenContract(Config.ADMIN_PASS)
     const gasEstimate = await result.estimateGas.issue(value, _mintTo)
     const params = {value, _mintTo}
-    const tranxHash = adminTrx(result, gasEstimate, 'issue', Config.ADMIN_PASS, params)
+    const tranxHash = adminTrx(result, gasEstimate, 'issue', Config.ADMIN_PASS, value, _mintTo)
     logger.info("Minting Done")
 
     return tranxHash

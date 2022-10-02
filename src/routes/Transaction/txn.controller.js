@@ -13,12 +13,11 @@ const TransferAdmin = async (req, res) => {
 };
 
 const Transfers = async (req, res) => {
-    const senderaddr = req.params.senderaddr;
     const senderpwsd = req.params.senderpwsd;
     const receiver = req.params.receiver
     const amount = req.params.amount
     try {
-        const Transfered = await trnx.transfers(senderaddr, senderpwsd, receiver, amount);
+        const Transfered = await trnx.transfers(senderpwsd, receiver, amount);
         
         return res.json({ Transfered });
     } catch (error) {
@@ -42,11 +41,10 @@ const Minting = async (req, res) => {
 };
 
 const Redeeming = async (req, res) => {
-    const senderaddr = req.params.senderaddr
     const senderpswd = req.params.senderpswd
     const amount = req.params.amount
     try {
-        const Redeemed = await trnx.redeeming(senderaddr, senderpswd, amount);
+        const Redeemed = await trnx.redeeming(senderpswd, amount);
         
         return res.json({ Redeemed });
     } catch (error) {
