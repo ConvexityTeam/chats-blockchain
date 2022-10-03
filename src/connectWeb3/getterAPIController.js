@@ -1,5 +1,5 @@
-const {tokenContract, operationsContract} = require("../resources/web3config.js");
-const web3 = require('web3');
+const {getTokenContract, getOpsContract} = require("../resources/web3config.js");
+const ethers = require('ethers');
 //////////      Get Contract Details        ////////////
 
 /**
@@ -10,12 +10,12 @@ const web3 = require('web3');
  */
 exports.getName = async () => {
   try {
-    let result = await tokenContract.name().call();
+    let result = await getTokenContract.name();
     return result;
   } catch (error) {
     let err = {
       name: "Web-GetName",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -29,12 +29,12 @@ exports.getName = async () => {
  */
 exports.getOwner = async () => {
   try {
-    let result = await connect.contract.methods.owner().call();
+    let result = await getTokenContract.owner();
     return result;
   } catch (error) {
     let err = {
       name: "Web-GetOwner",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -49,12 +49,12 @@ exports.getOwner = async () => {
  */
 exports.isOwner = async (_address) => {
   try {
-    let result = await connect.contract.methods.isOwner(_address).call();
+    let result = await getTokenContract.isOwner(_address);
     return result;
   } catch (error) {
     let err = {
       name: "Web-isOwner",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -73,7 +73,7 @@ exports.isPaused = async () => {
   } catch (error) {
     let err = {
       name: "Web-isPaused",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -93,7 +93,7 @@ exports.totalSupply = async () => {
   } catch (error) {
     let err = {
       name: "Web-TotalSupply",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -113,7 +113,7 @@ exports.totalIssued = async (_From) => {
   } catch (error) {
     let err = {
       name: "Web-TotalIssued",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -128,12 +128,12 @@ exports.totalIssued = async (_From) => {
 exports.totalRedeemed = async (_From) => {
   try {
     let value = await connect.contract.methods.totalRedeemed().call({ from: _From });
-    const result =web3.utils.fromWei(value, "kwei");
+    const result = ethers.utils.formatEther(value, "kwei");
     return result;
   } catch (error) {
     let err = {
       name: "Web-TotalRedeemed",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -153,13 +153,13 @@ exports.totalRedeemed = async (_From) => {
  */
 exports.allowance = async (_tokenOwner, _spender) => {
   try {
-    let value = await connect.contract.methods.allowance(_tokenOwner, _spender).call();
-    const result =web3.utils.fromWei(value, "kwei");
-    return result;
+    let value = await getTokenContract.allowance(_tokenOwner, _spender);
+    const result = ethers.utils.formatUnits(value, "mwei");
+    return ethers.utils.commify(result);
   } catch (error) {
     let err = {
       name: "Web-Allowance",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -175,13 +175,14 @@ exports.allowance = async (_tokenOwner, _spender) => {
  */
 exports.balanceOf = async (_account) => {
   try {
-    let value = await connect.contract.methods.balanceOf(_account).call();
-    const result =web3.utils.fromWei(value, "kwei");
-    return result;
+    
+    let value = await getTokenContract.balanceOf(_account);
+    const result = ethers.utils.formatUnits(value, "mwei");
+    return ethers.utils.commify(result);
   } catch (error) {
     let err = {
       name: "Web-BalanceOf",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -202,7 +203,7 @@ exports.getUsersList = async (_From) => {
   } catch (error) {
     let err = {
       name: "Web-GetUsersList",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -221,7 +222,7 @@ exports.getAdminList = async (_From) => {
   } catch (error) {
     let err = {
       name: "Web-GetAdminList",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -240,7 +241,7 @@ exports.getAuthorizerList = async (_From) => {
   } catch (error) {
     let err = {
       name: "Web-GetAuthorizerList",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -259,7 +260,7 @@ exports.getBlackListed = async (_From) => {
   } catch (error) {
     let err = {
       name: "Web-GetBlackListed",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -280,7 +281,7 @@ exports.isUserListed = async (_account) => {
   } catch (error) {
     let err = {
       name: "Web3-isUserListed",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -299,7 +300,7 @@ exports.isAdmin = async (_account) => {
   } catch (error) {
     let err = {
       name: "Web3-isAdmin",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -318,7 +319,7 @@ exports.isAuthorizer = async (_account) => {
   } catch (error) {
     let err = {
       name: "Web3-isAuthorizer",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -338,7 +339,7 @@ exports.isBlackListed = async (_account) => {
   } catch (error) {
     let err = {
       name: "Web3-isBlackListed",
-      error: error,
+      error: error.message,
     };
     throw err;
   }

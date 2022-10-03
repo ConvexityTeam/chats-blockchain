@@ -15,11 +15,15 @@ const tokenContract = (_wallet)=> {
   return initContract;
 }
 
+const getTokenContract = new ethers.Contract(Config.CONTRACTADDR, JSON.parse(fs.readFileSync("build/contracts/ChatsToken.json", {encoding: "utf8"}))['abi'], provider)
+
 const operationsContract = (_wallet)=> { 
   walletInit = new ethers.Wallet(_wallet, provider);
   const initContract = new ethers.Contract(Config.OPERATIONSADDR, JSON.parse(fs.readFileSync("build/contracts/Operations.json", {encoding: "utf8"}))['abi'], walletInit)
   return initContract;
 }
+
+const getOpsContract = new ethers.Contract(Config.OPERATIONSADDR, JSON.parse(fs.readFileSync("build/contracts/Operations.json", {encoding: "utf8"}))['abi'], provider)
 
 module.exports = {
   provider,
@@ -27,6 +31,8 @@ module.exports = {
   operationsAddress,
   tokenContract,
   operationsContract,
+  getTokenContract,
+  getOpsContract,
   account,
   account_pass,
 };

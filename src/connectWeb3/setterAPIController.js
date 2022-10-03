@@ -432,18 +432,17 @@ exports.transfers = async (_senderPswd, _receiver, _value) => {
 exports.minting = async (_value, _mintTo) => {
   try {
     logger.info("Minting");
-    let value = Number(web3.utils.toBN(web3.utils.toWei(_value, "kwei")));
+    let value = ethers.utils.parseUnits(_value, "mwei")
     const result = tokenContract(Config.ADMIN_PASS)
-    const gasEstimate = await result.estimateGas.issue(value, _mintTo)
-    const params = {value, _mintTo}
-    const tranxHash = adminTrx(result, gasEstimate, 'issue', Config.ADMIN_PASS, value, _mintTo)
+    const tranxHash = adminTrx(result, 'issue', Config.ADMIN_PASS, value, _mintTo)
     logger.info("Minting Done")
 
     return tranxHash
   } catch (error) { 
+    logger.error("error:", JSON.stringify(error.message))
     let err = {
       name: "Web3-MintingToken",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -459,13 +458,11 @@ exports.minting = async (_value, _mintTo) => {
  */
 exports.redeeming = async (_senderPswd, _amount) => {
   try {
-    let value = Number(web3.utils.toBN(web3.utils.toWei(_amount, "kwei")));
+    let value = ethers.utils.parseUnits(_amount, "mwei");
 
     logger.info("Token Redeem");
     const result = tokenContract(_senderPswd)
-    const gasEstimate = await result.estimateGas.redeem(value)
-    const params = {_receiver, value}
-    const tranxHash = userTrx(result, gasEstimate, 'redeem', _senderPswd, params)
+    const tranxHash = userTrx(result, 'redeem', _senderPswd, _receiver, value)
     logger.info("Token Redeemed",tranxHash)
 
     return tranxHash
@@ -490,7 +487,7 @@ exports.redeeming = async (_senderPswd, _amount) => {
  */
 exports.approve = async (_tokenOwnerAddr, _tokenOwnerPswd, _spenderAddr, _value) => {
   try {
-    let value = web3.utils.toWei(_value, "kwei");
+    let value = ethers.utils.parseUnits(_value, "mwei");
         // value = web3.utils.toBN(value);
         // logger.info("Approve");
         // const wallet = new ethers.Wallet(_tokenOwnerPswd, new ethers.providers.JsonRpcProvider(Config.BLOCKCHAINSERV));
@@ -503,9 +500,7 @@ exports.approve = async (_tokenOwnerAddr, _tokenOwnerPswd, _spenderAddr, _value)
 
       logger.info("Token Redeem");
       const result = tokenContract(_senderPswd)
-      const gasEstimate = await result.estimateGas.approve(_spenderAddr, value)
-      const params = {_spenderAddr, value}
-      const tranxHash = userTrx(result, gasEstimate, 'redeem', _senderPswd, params)
+      const tranxHash = userTrx(result, 'redeem', _senderPswd, _spenderAddr, value)
       logger.info("Token Redeemed",tranxHash)
   
       return tranxHash
@@ -530,13 +525,11 @@ exports.approve = async (_tokenOwnerAddr, _tokenOwnerPswd, _spenderAddr, _value)
  */
 exports.transferFrom = async (_tokenOwnerAddr, _to, _spenderPwsd, _value) => {
     try {
-        let value = web3.utils.toBN(web3.utils.toWei(_value, "kwei"));
+        let value = ethers.utils.parseUnits(_value, "mwei");
 
         logger.info("Token TransferFrom");
         const result = tokenContract(_senderPswd)
-        const gasEstimate = await result.estimateGas.transferFrom(_tokenOwnerAddr, _to, value)
-        const params = {_tokenOwnerAddr, _to, value}
-        const tranxHash = userTrx(result, gasEstimate, 'transferFrom', _senderPswd, params)
+        const tranxHash = userTrx(result, 'transferFrom', _senderPswd, _tokenOwnerAddr, _to, value)
         logger.info("Transferred Token From",tranxHash)
 
         return tranxHash
@@ -561,9 +554,7 @@ exports.destroyBlackFunds = async (_evilUser) => {
   try {
     logger.info("User Fund Destroy");
     const result = tokenContract(Config.ADMIN_PASS)
-    const gasEstimate = await result.estimateGas.DestroyBlackFunds(_evilUser)
-    const params = {_evilUser}
-    const tranxHash = adminTrx(result, gasEstimate, 'DestroyBlackFunds', Config.ADMIN_PASS, params)
+    const tranxHash = adminTrx(result, 'DestroyBlackFunds', Config.ADMIN_PASS, _evilUser)
     logger.info("Destroyed User Fund",tranxHash)
 
     return tranxHash
