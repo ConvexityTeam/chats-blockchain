@@ -1,11 +1,6 @@
 const { Config } = require("../utils");
-// const web3  = require('web3');
 const { ethers } = require("ethers");
 const provider = new ethers.providers.getDefaultProvider(Config.BLOCKCHAINSERV);
-const Common = require("@ethereumjs/common").default;
-const { Chain, Hardfork} = require("@ethereumjs/common")
-const deployerAccount = Config.ADMIN;
-const commons = new Common({ chain: Chain.Mainnet});
 
 async function wallet(_pkey) {
   const wallet = new ethers.Wallet(_pkey, provider);
@@ -13,7 +8,7 @@ async function wallet(_pkey) {
 }
 
 async function sendEther(amount, addressTo){
-    const walletInit = wallet(Config.ADMIN_PASS);
+  const walletInit = await wallet(Config.ADMIN_PASS);
   const tx = {
         to: addressTo,
         value: ethers.utils.parseEther(amount),
@@ -36,13 +31,12 @@ async function sendEther(amount, addressTo){
   }
 
   module.exports.userTrx = async (_contract, _method, _pswd, ..._params) => {
-    const gasPrice = provider.getGasPrice() 
+    const gasPrice = await provider.getGasPrice() 
     const getNonce = await wallet(_pswd)
     const nonce = await getNonce.getTransactionCount("latest")
     const overrides = { nonce, gasPrice }
     const gas = await _contract.estimateGas[_method](..._params);
-    console.log('gas', gas)
-       sendEther(gas * gasPrice, _to).catch((error) => {
+       sendEther(ethers.utils.formatUnits((gas * gasPrice).toString()).toString(), getNonce.address).catch((error) => {
            throw Error(`Error sending Eth for minting: ${error.message}`);  
       })
     overrides.gasLimit = gas;

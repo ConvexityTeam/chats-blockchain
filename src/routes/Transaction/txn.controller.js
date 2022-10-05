@@ -30,6 +30,7 @@ const Minting = async (req, res) => {
     const amount = req.params.amount
     const mintTo = req.params.mintTo
     try {
+        console.log("minting", amount, mintTo);
         const Minted = await trnx.minting(amount, mintTo);
         
         return res.json({ Minted });
@@ -54,12 +55,11 @@ const Redeeming = async (req, res) => {
 };
 
 const Approve = async (req, res) => {
-    const tokenowneraddr = req.params.tokenowneraddr
     const tokenownerpswd = req.params.tokenownerpswd
     const spenderaddr = req.params.spenderaddr
     const amount = req.params.amount
     try {
-        const Approved = await trnx.approve(tokenowneraddr, tokenownerpswd, spenderaddr, amount);
+        const Approved = await trnx.approve( tokenownerpswd, spenderaddr, amount);
         
         return res.json({ Approved });
     } catch (error) {
@@ -68,15 +68,27 @@ const Approve = async (req, res) => {
     }
 };
 
+const Disapprove = async (req, res) => {
+    const tokenownerpswd = req.params.tokenownerpswd
+    const spenderaddr = req.params.spenderaddr
+    const amount = req.params.amount
+    try {
+        const Disapproved = await trnx.disApprove( tokenownerpswd, spenderaddr, amount);
+        
+        return res.json({ Disapproved });
+    } catch (error) {
+        res.status(500);
+        return res.json({ status: false, message: error });
+    }
+};
+
 const TransferFrom = async (req, res) => {
     const tokenowneraddr = req.params.tokenowneraddr
-    const to = req.params.to
-    const spenderaddr = req.params.spenderaddr
     const spenderpwsd = req.params.spenderpwsd
     const amount = req.params.amount;
     
     try {
-        const TransferedFrom = await trnx.transferFrom(tokenowneraddr, to, spenderaddr, spenderpwsd, amount);
+        const TransferedFrom = await trnx.transferFrom(tokenowneraddr, spenderpwsd, amount);
         
         return res.json({ TransferedFrom });
     } catch (error) {
@@ -101,6 +113,7 @@ module.exports = {
     TransferAdmin,
     Transfers,
     Approve,
+    Disapprove,
     Minting,
     Redeeming,
     TransferFrom,

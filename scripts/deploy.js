@@ -5,32 +5,15 @@ async function main() {
    const chats = await ethers.getContractFactory("Chats");
    const operation = await ethers.getContractFactory("Operations");
 
-   console.log("Deploying CHATS Operations contracts...");
-   const ops = await operation.deploy();
-   await ops.deployed();
-   console.log("Operation Contract deployed to:", ops.address);
-   // const upgradeableOPs = await upgrades.deployProxy(operation, {
-   //    gasPrice: gas, 
-   //    initializer: "initialvalue",
-   // });
-   // await upgradeableOPs.deployed();
-   // console.log("Upgradeable upgradeableOPs Contract deployed to:", upgradeableOPs.address);
+   console.log("Deploying Operations contract...");
+   const upgradeableOPs = await upgrades.deployProxy(operation);
+   await upgradeableOPs.deployed();
+   console.log("Upgradeable OPs Contract deployed to:", upgradeableOPs.address);
 
-   console.log("Deploying CHATS contracts...");
-   const chatsdeploy = await chats.deploy('CHATS', 'CHS', ops.address);
-   await chatsdeploy.deployed();
-   console.log("CHATS Contract deployed to:", chatsdeploy.address);
-
-   // const upgradeableOPs = await upgrades.deployProxy(operation, {
-   //    gasPrice: gas, 
-   //    initializer: "initialvalue",
-   // });
-   // const chats = await upgrades.deployProxy(chats, 'CHATS', 'CHS', upgradeableOPs.address, {
-   //    gasPrice: gas, 
-   //    initializer: "initialvalue",
-   // });
-   // await upgradeable.deployed();
-   // console.log("Upgradeable CHATS Contract deployed to:", upgradeable.address);
+   console.log("Deploying CHATS contract...");
+   const upgradeChats = await upgrades.deployProxy(chats, [upgradeableOPs.address]);
+   await upgradeChats.deployed();
+   console.log("Upgradeable CHATS Contract deployed to:", upgradeChats.address);
 }
 
 main().catch((error) => {

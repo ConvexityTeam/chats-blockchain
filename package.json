@@ -11,6 +11,7 @@
     "@ethereumjs/tx": "^3.5.2",
     "@nomiclabs/hardhat-etherscan": "^3.1.0",
     "@openzeppelin/contracts-ethereum-package": "^3.0.0",
+    "@openzeppelin/contracts-upgradeable": "^4.8.0-rc.1",
     "@openzeppelin/upgrades": "^2.8.0",
     "@truffle/hdwallet-provider": "^2.0.9",
     "bl": "^4.0.3",

@@ -11,19 +11,19 @@ const operationsAddress = Config.OPERATIONSADDR;
 
 const tokenContract = (_wallet)=> { 
   walletInit = new ethers.Wallet(_wallet, provider);
-  const initContract = new ethers.Contract(Config.CONTRACTADDR, JSON.parse(fs.readFileSync("build/contracts/ChatsToken.json", {encoding: "utf8"}))['abi'], walletInit)
+  const initContract = new ethers.Contract(Config.CONTRACTADDR, JSON.parse(fs.readFileSync("contracts/artifacts/Chats.json", {encoding: "utf8"}))['abi'], walletInit)
   return initContract;
 }
 
-const getTokenContract = new ethers.Contract(Config.CONTRACTADDR, JSON.parse(fs.readFileSync("build/contracts/ChatsToken.json", {encoding: "utf8"}))['abi'], provider)
+const getTokenContract = new ethers.Contract(Config.CONTRACTADDR, JSON.parse(fs.readFileSync("contracts/artifacts/Chats.json", {encoding: "utf8"}))['abi'], provider)
 
 const operationsContract = (_wallet)=> { 
   walletInit = new ethers.Wallet(_wallet, provider);
-  const initContract = new ethers.Contract(Config.OPERATIONSADDR, JSON.parse(fs.readFileSync("build/contracts/Operations.json", {encoding: "utf8"}))['abi'], walletInit)
+  const initContract = new ethers.Contract(Config.OPERATIONSADDR, JSON.parse(fs.readFileSync("contracts/artifacts/Operations.json", {encoding: "utf8"}))['abi'], walletInit)
   return initContract;
 }
 
-const getOpsContract = new ethers.Contract(Config.OPERATIONSADDR, JSON.parse(fs.readFileSync("build/contracts/Operations.json", {encoding: "utf8"}))['abi'], provider)
+const getOpsContract = new ethers.Contract(Config.OPERATIONSADDR, JSON.parse(fs.readFileSync("contracts/artifacts/Operations.json", {encoding: "utf8"}))['abi'], provider)
 
 module.exports = {
   provider,

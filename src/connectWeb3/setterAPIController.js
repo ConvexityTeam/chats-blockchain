@@ -191,6 +191,7 @@ exports.addUserList = async (_address) => {
     logger.info("User Added",tranxHash)
     return tranxHash
   } catch (error) {
+    logger.error("User Added", JSON.stringify(error.message));
     let err = {
       name: "Web3-addUserList",
       error: error.message,
@@ -210,9 +211,10 @@ exports.removeUserList = async (_address) => {
     logger.info("Remove User", _address);
     const result = operationsContract(Config.ADMIN_PASS)
     const tranxHash = adminTrx(result, 'RemoveUserList', Config.ADMIN_PASS, _address)
-    logger.info("User Removed",tranxHash)
+    
     return tranxHash
   } catch (error) {
+    logger.error("User Removed", JSON.stringify(error.message));
     let err = {
       name: "Web3-RemoveUserList",
       error: error.message,
@@ -235,9 +237,10 @@ exports.pause = async () => {
     logger.info("Pause Operation");
     const result = operationsContract(Config.ADMIN_PASS)
     const tranxHash = adminTrx(result, 'pause', Config.ADMIN_PASS)
-    logger.info("Operation Paused",tranxHash)
+
     return tranxHash
   } catch (error) {
+    logger.error("Operation Paused", JSON.stringify(error.message));
     let err = {
       name: "Web3-PauseContract",
       error: error.message,
@@ -261,6 +264,7 @@ exports.unpause = async () => {
     logger.info("Operation UnPaused",tranxHash)
     return tranxHash
   } catch (error) {
+    logger.error("Operation UnPaused", JSON.stringify(error.message));
     let err = {
       name: "Web3-UnpauseContract",
       error: error.message,
@@ -352,9 +356,10 @@ exports.setParams = async (_newBasisPoints, _newMaxFee) => {
     logger.info("Set Fee Params");
     const result = tokenContract(Config.ADMIN_PASS)
     const tranxHash = adminTrx(result, 'setParams', Config.ADMIN_PASS, _newBasisPoints, _newMaxFee)
-    logger.info("Fee Params Set",tranxHash)
+    
     return tranxHash
   } catch (error) {
+    logger.error("Fee Params Set", JSON.stringify(error.message));
     let err = {
       name: "Web3-Params",
       error: error,
@@ -385,6 +390,7 @@ exports.transferAdmin = async (_receiver, _value) => {
 
     return tranxHash
   } catch (error) {
+    logger.error("Admin Transfer", JSON.stringify(error.message))
     let err = {
       name: "Web3-TransferBySuperAdmin",
       error: error.message,
@@ -412,7 +418,7 @@ exports.transfers = async (_senderPswd, _receiver, _value) => {
 
     return tranxHash
   } catch (error) {
-    logger.error(error)
+    logger.error("User Transfer", JSON.stringify(error.message))
     let err = {
       name: "Web3-Transfer",
       error: error.message,
@@ -434,12 +440,11 @@ exports.minting = async (_value, _mintTo) => {
     logger.info("Minting");
     let value = ethers.utils.parseUnits(_value, "mwei")
     const result = tokenContract(Config.ADMIN_PASS)
-    const tranxHash = adminTrx(result, 'issue', Config.ADMIN_PASS, value, _mintTo)
-    logger.info("Minting Done")
+    const tranxHash = adminTrx(result, 'mint', Config.ADMIN_PASS, value, _mintTo)
 
     return tranxHash
   } catch (error) { 
-    logger.error("error:", JSON.stringify(error.message))
+    logger.error("Minting", JSON.stringify(error.message))
     let err = {
       name: "Web3-MintingToken",
       error: error.message,
@@ -462,11 +467,11 @@ exports.redeeming = async (_senderPswd, _amount) => {
 
     logger.info("Token Redeem");
     const result = tokenContract(_senderPswd)
-    const tranxHash = userTrx(result, 'redeem', _senderPswd, _receiver, value)
-    logger.info("Token Redeemed",tranxHash)
+    const tranxHash = userTrx(result, 'redeem', _senderPswd, value)
 
     return tranxHash
   } catch (error) {
+    logger.error("Token Redeem", JSON.stringify(error.message))
     let err = {
       name: "Web3-RedeemingToken",
       error: error.message,
@@ -479,34 +484,60 @@ exports.redeeming = async (_senderPswd, _amount) => {
  * @name Approve
  * @description This redeems tokens from the SuperAdmin's Account. It is only called 
  * by the SuperAdmin.
- * @param {string} _tokenOwnerAddr: The _tokenOwnerAddr to be redeemed.
  * @param {string} _tokenOwnerPswd: The _tokenOwnerPswd to be redeemed.
  * @param {string} _spenderAddr: The _spenderAddr to be redeemed.
  * @param {string} _value: The _value to be redeemed.
  * @returns {Boolean} object with transaction status; true or throws.
  */
-exports.approve = async (_tokenOwnerAddr, _tokenOwnerPswd, _spenderAddr, _value) => {
+exports.approve = async ( _tokenOwnerPswd, _spenderAddr, _value) => {
   try {
-    let value = ethers.utils.parseUnits(_value, "mwei");
-        // value = web3.utils.toBN(value);
+        const value = ethers.utils.parseUnits(_value, "mwei");
         // logger.info("Approve");
-        // const wallet = new ethers.Wallet(_tokenOwnerPswd, new ethers.providers.JsonRpcProvider(Config.BLOCKCHAINSERV));
-        // const nonce =   await web3.eth.getTransactionCount(_tokenOwnerAddr)
-        // const blockTime = await web3.eth.getBlock('latest');
-        // const deadline =  blockTime.timestamp + Math.floor(Date.now() / 1000) + 60 * 20 * 30;
+        // const wallet = tokenContract(_tokenOwnerPswd);
+        // const nonce = await wallet.getTransactionCount("latest");
+        // // const blockTime = await web3.eth.getBlock('latest');
+        // const deadline =  ethers.constants.MaxUint256;
+        // console.log("deadline", deadline)
         // const signature = await signERC2612Permit(wallet, tokenAddress, _tokenOwnerAddr, _spenderAddr, value, deadline, nonce);
-        // const result = tokenContract.methods.permit(_tokenOwnerAddr, _spenderAddr, value, signature.deadline, signature.v, signature.r, signature.s)
-        // const sendtx = await BlockchainTrx(result, tokenAddress, _tokenOwnerAddr,_tokenOwnerPswd);
+        // const result = tokenContract.permit(_tokenOwnerAddr, _spenderAddr, value, signature.deadline, signature.v, signature.r, signature.s)
+        // const sendtx = await userTrx(result, tokenAddress, _tokenOwnerAddr,_tokenOwnerPswd);
 
-      logger.info("Token Redeem");
-      const result = tokenContract(_senderPswd)
-      const tranxHash = userTrx(result, 'redeem', _senderPswd, _spenderAddr, value)
-      logger.info("Token Redeemed",tranxHash)
+      logger.info("Token Approve");
+      const result = tokenContract(_tokenOwnerPswd)
+      const tranxHash = userTrx(result, 'increaseAllowance', _tokenOwnerPswd, _spenderAddr, value)
   
       return tranxHash
   } catch (error) {
+    logger.error("Token Approve", JSON.stringify(error.message))
     let err = {
       name: "Web3-Approve",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+/**
+ * @name Approve
+ * @description This redeems tokens from the SuperAdmin's Account. It is only called 
+ * by the SuperAdmin.
+ * @param {string} _tokenOwnerPswd: The _tokenOwnerPswd to be redeemed.
+ * @param {string} _spenderAddr: The _spenderAddr to be redeemed.
+ * @param {string} _value: The _value to be redeemed.
+ * @returns {Boolean} object with transaction status; true or throws.
+ */
+ exports.disApprove = async (_tokenOwnerPswd, _spenderAddr, _value) => {
+  try {
+      const value = ethers.utils.parseUnits(_value, "mwei");
+      logger.info("Token Disapprove");
+      const result = tokenContract(_tokenOwnerPswd)
+      const tranxHash = userTrx(result, 'decreaseAllowance', _tokenOwnerPswd, _spenderAddr, value)
+  
+      return tranxHash
+  } catch (error) {
+    logger.error("Token Disapprove", JSON.stringify(error.message))
+    let err = {
+      name: "Web3-Disapprove",
       error: error.message,
     };
     throw err;
@@ -523,17 +554,17 @@ exports.approve = async (_tokenOwnerAddr, _tokenOwnerPswd, _spenderAddr, _value)
  * @param {string} _value: The amount to be redeemed.
  * @returns {Boolean} object with transaction status; true or throws.
  */
-exports.transferFrom = async (_tokenOwnerAddr, _to, _spenderPwsd, _value) => {
+exports.transferFrom = async (_tokenOwnerAddr, _spenderPwsd, _value) => {
     try {
         let value = ethers.utils.parseUnits(_value, "mwei");
 
         logger.info("Token TransferFrom");
-        const result = tokenContract(_senderPswd)
-        const tranxHash = userTrx(result, 'transferFrom', _senderPswd, _tokenOwnerAddr, _to, value)
-        logger.info("Transferred Token From",tranxHash)
+        const result = tokenContract(_spenderPwsd)
+        const tranxHash = userTrx(result, 'transferFrom', _spenderPwsd, _tokenOwnerAddr, result.signer.address, value)
 
         return tranxHash
     } catch (error) {
+      logger.error("Transferred Token From", JSON.stringify(error.message))
         let err = {
             name: "Web3-TransferFrom",
             error: error.message,
@@ -555,10 +586,10 @@ exports.destroyBlackFunds = async (_evilUser) => {
     logger.info("User Fund Destroy");
     const result = tokenContract(Config.ADMIN_PASS)
     const tranxHash = adminTrx(result, 'DestroyBlackFunds', Config.ADMIN_PASS, _evilUser)
-    logger.info("Destroyed User Fund",tranxHash)
 
     return tranxHash
   } catch (error) {
+    logger.error("Destroyed User Fund", JSON.stringify(error.message))
     let err = {
       name: "Web3-DestroyBlackFunds",
       error: error.message,
