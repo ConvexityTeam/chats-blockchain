@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-// import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/Pausable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
+
+import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
 /**
  * @dev Contract module for user management.
@@ -11,7 +13,7 @@ import "@openzeppelin/contracts/security/Pausable.sol";
  * This module is used through inheritance. It will make available the contract
  * addresses of users, admin, whitelisting and blacklisting of users.
  */
-contract Operations is Ownable, Pausable {
+contract Operations is Initializable, OwnableUpgradeable, PausableUpgradeable, UUPSUpgradeable {
     // To Check and Balance the System Account.
     uint256 internal _totalIssued;
     uint256 internal _totalRedeemed;
@@ -66,13 +68,20 @@ contract Operations is Ownable, Pausable {
         _;
     }
 
-    constructor()
-    // public initializer
+     /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
+    }
+    
+
+    function initialize()
+    public initializer
      {
+         __Ownable_init();
+         __Pausable_init();
         isUserListed[_msgSender()] = true;
         usersList.push(_msgSender());
 
-        // SetUserList(_msgSender());
         AddAdmin(_msgSender());
         AddAuthorizer(_msgSender());
     }
@@ -293,5 +302,11 @@ contract Operations is Ownable, Pausable {
     {
         return blackList;
     }
+
+    function _authorizeUpgrade(address newImplementation)
+        internal
+        onlyOwner
+        override
+    {}
 
 }
