@@ -1,5 +1,6 @@
 const { Config } = require("../utils");
 const { ethers } = require("ethers");
+const { NonceManager } = require("@ethersproject/experimental");
 const provider = new ethers.providers.getDefaultProvider(Config.BLOCKCHAINSERV);
 
 async function wallet(_pkey) {
@@ -31,12 +32,15 @@ async function sendEther(amount, addressTo){
   }
 
   module.exports.userTrx = async (_contract, _method, _pswd, ..._params) => {
-    const gasPrice = await provider.getGasPrice() 
-    const getNonce = await wallet(_pswd)
-    const nonce = await getNonce.getTransactionCount("latest")
+    // const nonceManager = new NonceManager(_pswd)
+    // await nonceManager.incrementTransactionCount()
+    const gasPrice = await provider.getGasPrice()
+    const userWallet = await wallet(_pswd)
+    let nonce = await userWallet.getTransactionCount("pending")
+    nonce++
     const overrides = { nonce, gasPrice }
     const gas = await _contract.estimateGas[_method](..._params);
-       sendEther(ethers.utils.formatUnits((gas * gasPrice).toString()).toString(), getNonce.address).catch((error) => {
+       sendEther(ethers.utils.formatUnits((gas * gasPrice).toString()).toString(), userWallet.address).catch((error) => {
            throw Error(`Error sending Eth for minting: ${error.message}`);  
       })
     overrides.gasLimit = gas;
