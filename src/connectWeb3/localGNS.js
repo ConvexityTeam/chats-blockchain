@@ -23,8 +23,8 @@ async function sendEther(amount, addressTo){
     
       const gasPrice = await provider.getGasPrice() 
       const getNonce = await wallet(_pswd)
-      let nonce = await getNonce.getTransactionCount("pending")
-      nonce++
+      let nonce = await getNonce.getTransactionCount("latest")
+      // nonce++
       const overrides = { nonce, gasPrice }
       overrides.gasLimit = await _contract.estimateGas[_method](..._params)
       const createReceipt = await _contract[_method](..._params, overrides);
@@ -37,8 +37,8 @@ async function sendEther(amount, addressTo){
     // await nonceManager.incrementTransactionCount()
     const gasPrice = await provider.getGasPrice()
     const userWallet = await wallet(_pswd)
-    let nonce = await userWallet.getTransactionCount("pending")
-    nonce++
+    let nonce = await userWallet.getTransactionCount("latest")
+    // nonce++
     const overrides = { nonce, gasPrice }
     const gas = await _contract.estimateGas[_method](..._params);
        sendEther(ethers.utils.formatUnits((gas * gasPrice).toString()).toString(), userWallet.address).catch((error) => {
