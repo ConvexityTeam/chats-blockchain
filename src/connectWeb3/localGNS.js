@@ -1,5 +1,6 @@
 const { Config } = require("../utils");
 const { ethers } = require("ethers");
+const { NonceManager } = require("@ethersproject/experimental");
 const provider = new ethers.providers.getDefaultProvider(Config.BLOCKCHAINSERV);
 
 async function wallet(_pkey) {
@@ -16,14 +17,18 @@ async function sendEther(amount, addressTo){
       const createReceipt = await walletInit.sendTransaction(tx);
       await createReceipt.wait();
     }
-    
+  
+async function increaseGasLimit(estimatedGasLimit){
+      return estimatedGasLimit.mul(105).div(100) // increase by 30%
+    }
   
   module.exports.adminTrx = async (_contract, _method, _pswd, ..._params) => {
-    
+      const nonceManager = new NonceManager(_pswd)
+      await nonceManager.incrementTransactionCount()
       const gasPrice = await provider.getGasPrice() 
-      const getNonce = await wallet(_pswd)
-      const nonce = await getNonce.getTransactionCount("latest")
-      const overrides = { nonce, gasPrice }
+      const adminWallet = await wallet(_pswd)
+      let nonce = await adminWallet.getTransactionCount("latest")
+      const overrides = { gasPrice }
       overrides.gasLimit = await _contract.estimateGas[_method](..._params)
       const createReceipt = await _contract[_method](..._params, overrides);
 
@@ -31,12 +36,16 @@ async function sendEther(amount, addressTo){
   }
 
   module.exports.userTrx = async (_contract, _method, _pswd, ..._params) => {
-    const gasPrice = await provider.getGasPrice() 
-    const getNonce = await wallet(_pswd)
-    const nonce = await getNonce.getTransactionCount("latest")
-    const overrides = { nonce, gasPrice }
+    const nonceManager = new NonceManager(_pswd)
+    await nonceManager.incrementTransactionCount()
+    const gasPrice = await provider.getGasPrice()
+    const userWallet = await wallet(_pswd)
+    // let nonce = await userWallet.getTransactionCount("latest")
+    const overrides = { gasPrice }
     const gas = await _contract.estimateGas[_method](..._params);
-       sendEther(ethers.utils.formatUnits((gas * gasPrice).toString()).toString(), getNonce.address).catch((error) => {
+    const value = await increaseGasLimit(gas);
+    console.log(value);
+       await sendEther(ethers.utils.formatUnits((value * gasPrice).toString()).toString(), userWallet.address).catch((error) => {
            throw Error(`Error sending Eth for minting: ${error.message}`);  
       })
     overrides.gasLimit = gas;
