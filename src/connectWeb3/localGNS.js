@@ -39,13 +39,12 @@ async function increaseGasLimit(estimatedGasLimit){
     const nonceManager = new NonceManager(_pswd)
     await nonceManager.incrementTransactionCount()
     const gasPrice = await provider.getGasPrice()
-    const userWallet = await wallet(_pswd)
+    // const userWallet = await wallet(_pswd)
     // let nonce = await userWallet.getTransactionCount("latest")
     const overrides = { gasPrice }
     const gas = await _contract.estimateGas[_method](..._params);
     const value = await increaseGasLimit(gas);
-    console.log(value);
-       await sendEther(ethers.utils.formatUnits((value * gasPrice).toString()).toString(), userWallet.address).catch((error) => {
+       await sendEther(ethers.utils.formatUnits((value * gasPrice).toString()).toString(), _contract.signer.address).catch((error) => {
            throw Error(`Error sending Eth for minting: ${error.message}`);  
       })
     overrides.gasLimit = gas;

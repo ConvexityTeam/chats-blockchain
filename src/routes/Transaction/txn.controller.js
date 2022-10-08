@@ -84,11 +84,12 @@ const Disapprove = async (req, res) => {
 
 const TransferFrom = async (req, res) => {
     const tokenowneraddr = req.params.tokenowneraddr
+    const receiveraddr = req.params.receiveraddr
     const spenderpwsd = req.params.spenderpwsd
     const amount = req.params.amount;
     
     try {
-        const TransferedFrom = await trnx.transferFrom(tokenowneraddr, spenderpwsd, amount);
+        const TransferedFrom = await trnx.transferFrom(tokenowneraddr, receiveraddr, spenderpwsd, amount);
         
         return res.json({ TransferedFrom });
     } catch (error) {
