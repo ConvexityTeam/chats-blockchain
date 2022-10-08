@@ -10,6 +10,6 @@ router.post('/redeem/:senderpswd/:amount', Redeeming);
 router.post('/distroyblackfund/:useraddr', DestroyBlackFunds);
 router.post('/approve/:tokenownerpswd/:spenderaddr/:amount', Approve);
 router.post('/disapprove/:tokenownerpswd/:spenderaddr/:amount', Disapprove);
-router.post('/transferfrom/:tokenowneraddr/:spenderpwsd/:amount', TransferFrom);
+router.post('/transferfrom/:tokenowneraddr/:receiveraddr/:spenderpwsd/:amount', TransferFrom);
 
 module.exports = router;

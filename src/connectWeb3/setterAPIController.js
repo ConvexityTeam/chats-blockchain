@@ -554,13 +554,13 @@ exports.approve = async ( _tokenOwnerPswd, _spenderAddr, _value) => {
  * @param {string} _value: The amount to be redeemed.
  * @returns {Boolean} object with transaction status; true or throws.
  */
-exports.transferFrom = async (_tokenOwnerAddr, _spenderPwsd, _value) => {
+exports.transferFrom = async (_tokenOwnerAddr, _receiverAddr, _spenderPwsd, _value) => {
     try {
         let value = ethers.utils.parseUnits(_value, "mwei");
 
         logger.info("Token TransferFrom");
         const result = tokenContract(_spenderPwsd)
-        const tranxHash = userTrx(result, 'transferFrom', _spenderPwsd, _tokenOwnerAddr, result.signer.address, value)
+        const tranxHash = userTrx(result, 'transferFrom', _spenderPwsd, _tokenOwnerAddr, _receiverAddr, value)
 
         return tranxHash
     } catch (error) {
