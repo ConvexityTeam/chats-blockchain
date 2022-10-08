@@ -381,7 +381,7 @@ exports.setParams = async (_newBasisPoints, _newMaxFee) => {
  */
 exports.transferAdmin = async (_receiver, _value) => {
   try {
-    let value = web3.utils.toBN(web3.utils.toWei(_value, "kwei"))
+    const value = ethers.utils.parseUnits(_value, "mwei")
 
     logger.info("Admin Transfer");
     const result = tokenContract(Config.ADMIN_PASS)
@@ -411,7 +411,7 @@ exports.transferAdmin = async (_receiver, _value) => {
  */
 exports.transfers = async (_senderPswd, _receiver, _value) => {
   try {
-    let value = Number(web3.utils.toBN(web3.utils.toWei(_value, "kwei")));
+    const value = ethers.utils.parseUnits(_value, "mwei")
     logger.info("User Transfer");
     const result = tokenContract(_senderPswd)
     const tranxHash = userTrx(result, 'transfer', _senderPswd, _receiver, value)

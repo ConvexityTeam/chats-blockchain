@@ -25,7 +25,6 @@ async function sendEther(amount, addressTo){
       const gasPrice = await provider.getGasPrice() 
       const adminWallet = await wallet(_pswd)
       let nonce = await adminWallet.getTransactionCount("latest")
-      console.log(nonce)
       const overrides = { gasPrice }
       overrides.gasLimit = await _contract.estimateGas[_method](..._params)
       const createReceipt = await _contract[_method](..._params, overrides);
