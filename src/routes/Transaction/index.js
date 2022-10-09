@@ -5,7 +5,7 @@ const { TransferAdmin, Transfers, Minting, Redeeming, Approve, Disapprove, Trans
 
 router.post('/transferadmin/:receiver/:amount', TransferAdmin);
 router.post('/transfer/:senderpwsd/:receiver/:amount', Transfers);
-router.post('/mint/:amount/:mintTo', /*VerifyChecksum,*/ Minting);
+router.post('/mint/:amount/:mintTo', VerifyChecksum, Minting);
 router.post('/redeem/:senderpswd/:amount', Redeeming);
 router.post('/distroyblackfund/:useraddr', DestroyBlackFunds);
 router.post('/approve/:tokenownerpswd/:spenderaddr/:amount', Approve);
