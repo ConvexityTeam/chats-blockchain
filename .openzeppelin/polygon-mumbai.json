@@ -89,6 +89,16 @@
       "address": "0xc977ee42Cf3f1373a791e5a612100904A1Ed1beB",
       "txHash": "0xb9b3ccc22f5cf348161d1f9a2179643c9f82e186f4aa475aaef942ca8b34b69a",
       "kind": "uups"
+    },
+    {
+      "address": "0x1fa9146653d4B2441D40f636186576d4d3265d4C",
+      "txHash": "0x07cdf0a49545442d5a022477b4834e14870cddd4feb7bd97dd899896a8aa6ae3",
+      "kind": "uups"
+    },
+    {
+      "address": "0x5A9Da291Ec59aEEb81D70E8E220eEbc6a0D97370",
+      "txHash": "0x419870a235360fa599b3a7b6752689f8f8689af487443e5aa4287abf8223ecdb",
+      "kind": "uups"
     }
   ],
   "impls": {

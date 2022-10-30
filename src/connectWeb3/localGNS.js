@@ -1,5 +1,5 @@
 const { Config } = require("../utils");
-const { ethers } = require("ethers");
+const { ethers, Contract } = require("ethers");
 const { NonceManager } = require("@ethersproject/experimental");
 const provider = new ethers.providers.getDefaultProvider(Config.BLOCKCHAINSERV);
 
@@ -23,13 +23,18 @@ async function increaseGasLimit(estimatedGasLimit){
     }
   
   module.exports.adminTrx = async (_contract, _method, _pswd, ..._params) => {
-      const nonceManager = new NonceManager(_pswd)
-      await nonceManager.incrementTransactionCount()
+    
+      
+      // const adminWallet = await wallet(_pswd)
+      // let nonce = await adminWallet.getTransactionCount("latest")
+      // const nonceManager = new NonceManager(_pswd)
+      // await nonceManager.incrementTransactionCount()
+      
       const gasPrice = await provider.getGasPrice() 
       const overrides = { gasPrice }
-      overrides.gasLimit = await _contract.estimateGas[_method](..._params)
+      // overrides.gasLimit = await _contract.estimateGas[_method](..._params)
       const createReceipt = await _contract[_method](..._params, overrides);
-
+    // const mined = await createReceipt.wait();
     return createReceipt.hash;
   }
 

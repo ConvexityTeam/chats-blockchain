@@ -1,4 +1,4 @@
-const {tokenContract, operationsContract} = require("../resources/web3config.js");
+const {tokenContract, operationsContract, getOpsContract} = require("../resources/web3config.js");
 const Web3 = require('web3');
 const web3 = new Web3();
 const { userTrx, adminTrx } = require("./localGNS.js");
@@ -27,7 +27,6 @@ exports.createAccount = async () => {
     logger.info("CreateAccount");
        const account = web3.eth.accounts.create();
        const result = operationsContract(Config.ADMIN_PASS)
-       console.log(account)
        const tranxHash = adminTrx(result, 'SetUserList', Config.ADMIN_PASS, account.address);
      logger.info("Account created", tranxHash);
       return tranxHash;
@@ -187,7 +186,7 @@ exports.addUserList = async (_address) => {
   try {
     logger.info("Add User", _address);
     const result = operationsContract(Config.ADMIN_PASS)
-    const tranxHash = adminTrx(result, 'SetUserList', Config.ADMIN_PASS, _address)
+    const tranxHash = adminnTrx(result, 'SetUserList', Config.ADMIN_PASS, _address)
     logger.info("User Added",tranxHash)
     return tranxHash
   } catch (error) {
