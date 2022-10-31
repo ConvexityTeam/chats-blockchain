@@ -8,13 +8,16 @@ async function wallet(_pkey) {
   return wallet;
 }
 
-async function sendEther(amount, addressTo){
+async function sendEther(_amount, addressTo, _gas){
   const walletInit = await wallet(Config.ADMIN_PASS);
+  // console.log(ethers.utils.parseEther(amount).toString(), "amount", addressTo, "addressTo");
   const tx = {
         to: addressTo,
-        value: ethers.utils.parseEther(amount),
+        value: ethers.utils.parseEther(_amount),
+        gasPrice: _gas
       };
-      const createReceipt = await walletInit.sendTransaction(tx);
+      const createReceipt = await walletInit.sendTransaction(tx)
+      console.log( createReceipt, "createReceipt");
       await createReceipt.wait();
     }
   
@@ -44,10 +47,12 @@ async function increaseGasLimit(estimatedGasLimit){
     const overrides = { gasPrice }
     const gas = await _contract.estimateGas[_method](..._params);
     const value = await increaseGasLimit(gas);
-       await sendEther(ethers.utils.formatUnits((value * gasPrice).toString()).toString(), _contract.signer.address).catch((error) => {
+    const amount = ethers.utils.formatUnits(value * gasPrice);
+       await sendEther(amount, _contract.signer.address, gasPrice).catch((error) => {
            throw Error(`Error sending Eth for minting: ${error.message}`);  
       })
-    overrides.gasLimit = gas;
+      console.log("Eth sent");
+    overrides.gasLimit = value;
     const createReceipt = await _contract[_method](..._params, overrides);
 
   return createReceipt.hash;
