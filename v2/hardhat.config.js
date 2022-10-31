@@ -8,12 +8,8 @@ module.exports = {
   networks: {
     mumbai: {
       url: process.env.RPC_URL,
-      accounts: [process.env.PRIVATE_KEY]
+      accounts: [process.env.PRIVATE_KEY],
     },
-    polygon: {
-      url: process.env.BLOCKCHAINSERV,
-      accounts: [process.env.PRIVATE_KEY]
-  },
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,
