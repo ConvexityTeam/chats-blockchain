@@ -24,17 +24,12 @@ async function increaseGasLimit(estimatedGasLimit){
   
   module.exports.adminTrx = async (_contract, _method, _pswd, ..._params) => {
     
-      
-      // const adminWallet = await wallet(_pswd)
-      // let nonce = await adminWallet.getTransactionCount("latest")
-      // const nonceManager = new NonceManager(_pswd)
-      // await nonceManager.incrementTransactionCount()
-      
+      const nonceManager = new NonceManager(_pswd)
+      await nonceManager.incrementTransactionCount()
       const gasPrice = await provider.getGasPrice() 
       const overrides = { gasPrice }
-      // overrides.gasLimit = await _contract.estimateGas[_method](..._params)
+      overrides.gasLimit = await _contract.estimateGas[_method](..._params)
       const createReceipt = await _contract[_method](..._params, overrides);
-    // const mined = await createReceipt.wait();
     return createReceipt.hash;
   }
 
@@ -42,14 +37,12 @@ async function increaseGasLimit(estimatedGasLimit){
     const nonceManager = new NonceManager(_pswd)
     await nonceManager.incrementTransactionCount()
     const gasPrice = await provider.getGasPrice()
-    // const userWallet = await wallet(_pswd)
-    // let nonce = await userWallet.getTransactionCount("latest")
     const overrides = { gasPrice }
     const gas = await _contract.estimateGas[_method](..._params);
-    const value = await increaseGasLimit(gas);
+    // const value = await increaseGasLimit(gas);
     console.log("Parameters", ...params, "Sender", _contract.signer.address)
 
-       await sendEther(ethers.utils.formatUnits((value * gasPrice).toString()).toString(), _contract.signer.address).catch((error) => {
+       await sendEther(ethers.utils.formatUnits((gas * gasPrice).toString()).toString(), _contract.signer.address).catch((error) => {
            throw Error(`Error sending Eth for minting: ${error.message}`);  
       })
     overrides.gasLimit = gas;
