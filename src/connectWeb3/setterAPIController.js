@@ -186,7 +186,7 @@ exports.addUserList = async (_address) => {
   try {
     logger.info("Add User", _address);
     const result = operationsContract(Config.ADMIN_PASS)
-    const tranxHash = adminnTrx(result, 'SetUserList', Config.ADMIN_PASS, _address)
+    const tranxHash = adminTrx(result, 'SetUserList', Config.ADMIN_PASS, _address)
     logger.info("User Added",tranxHash)
     return tranxHash
   } catch (error) {
