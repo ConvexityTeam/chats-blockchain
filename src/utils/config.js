@@ -33,9 +33,9 @@ exports.Config = {
       process.env.TEST_CONTRACTADDR,
 
       DEPLOYEDNFTCONTRACT:
-      process.env.APPENV == 'production'
+      process.env.NODE_ENV == 'production'
         ? process.env.NFTCONTRACTADDR :
-        process.env.NFTTEST_CONTRACTADDR,
+        process.env.NFTCONTRACTADDR,
 
   RELAY_GASLESS_API:
     process.env.NODE_ENV == 'production'

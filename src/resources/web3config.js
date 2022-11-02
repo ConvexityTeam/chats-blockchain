@@ -20,11 +20,15 @@ const tokenContract = (_wallet)=> {
 
 const nftContract = (_wallet) => {
   walletInit = new ethers.Wallet(_wallet, provider);
-  const initContract = new ethers.Contract(Config.CONTRACTADDR, JSON.parse(fs.readFileSync("contracts/artifacts/nft.json", {encoding: "utf8"}))['abi'], walletInit)
+  const initContract = new ethers.Contract(Config.DEPLOYEDNFTCONTRACT, JSON.parse(fs.readFileSync("contracts/artifacts/nft.json", {encoding: "utf8"}))['abi'], walletInit)
+  console.log(initContract)
   return initContract;
 }
 
+const getNFTContract = new ethers.Contract(Config.DEPLOYEDNFTCONTRACT, JSON.parse(fs.readFileSync("contracts/artifacts/nft.json", {encoding: "utf8"}))['abi'], provider)
+
 const getTokenContract = new ethers.Contract(Config.CONTRACTADDR, JSON.parse(fs.readFileSync("contracts/artifacts/Chats.json", {encoding: "utf8"}))['abi'], provider)
+
 
 const operationsContract = (_wallet)=> { 
   walletInit = new ethers.Wallet(_wallet, provider);
@@ -44,4 +48,6 @@ module.exports = {
   getOpsContract,
   account,
   account_pass,
+  nftContract,
+  getNFTContract
 };

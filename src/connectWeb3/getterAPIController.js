@@ -344,3 +344,136 @@ exports.isBlackListed = async (_account) => {
     throw err;
   }
 };
+
+// nft getter functions
+exports.NFTgetName = async (contractIndex_) => {
+  try {
+    const result = await getNFTContract.NFTgetName(contractIndex_);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get collection name",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.NFTgetSymbol = async (contractIndex_) => {
+  try {
+    const result = await getNFTContract.NFTgetSymbol(contractIndex_);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get collection symbol",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.NFTgetOwner = async (tokenID_, contractIndex_) => {
+  try {
+    const result = await getNFTContract.NFTgetOwner(tokenID_, contractIndex_);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get NFT owner",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.NFTgetBalance = async (owner_, contractIndex_) => {
+  try {
+    const result = await getNFTContract.NFTgetBalance(owner_, contractIndex_);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get user NFT balance",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.NFTgetTotalMinted = async (contractIndex_) => {
+  try {
+    const result = await getNFTContract.NFTgetTotalMinted(contractIndex_);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get total minted",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.NFTgetTokenURI = async (tokenID_, collectionIndex_) => {
+  try {
+    const result = await getNFTContract.NFTgetTokenURI(tokenID_, collectionIndex_);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get NFT metadata URI",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.NFTgetApproved = async (tokenID_, contractIndex_) => {
+  try {
+    const result = await getNFTContract.NFTgetApproved_(tokenID_, contractIndex_);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get get approved address",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.NFTisApprovedForAll = async (owner_, operator_, contractIndex_) => {
+  try {
+    const result = await getNFTContract.NFTisApprovedForAll_(owner_, operator_, contractIndex_);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get get all approved NFT",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.getCollectionAddressByIndex = async (contractIndex_) => {
+  try {
+    const result = await getNFTContract.getCollectionAddressByIndex_(contractIndex_);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get NFT collection address by its index in the collection array",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.getCollectionNameByIndex = async (contractIndex_) => {
+  try {
+    const result = await getNFTContract.getCollectionNameByIndex_(contractIndex_);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get NFT collection name by its index in the collection array",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+
