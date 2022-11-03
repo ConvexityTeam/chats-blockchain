@@ -5,7 +5,8 @@ const { TransferAdmin, Transfers, Minting, Redeeming, Approve, Disapprove, Trans
     mintNFT,
     burnNFT,
     NFTtransferFrom,
-    NFTsafeTransferFrom,
+    setNFTlimit,
+    deployCollection,
     NFTapprove,
     NFTsetApprovalForAll } = require('./txn.controller');
 
@@ -23,6 +24,7 @@ router.post('/mint-nft/:receiver/:contractIndex', mintNFT)
 router.post('/burn-nft/:contractIndex', burnNFT)
 router.post('/approve-nft/:operator/:tokenId/:contractIndex', NFTapprove)
 router.post('/transfer-nft/:sender/:receiver/:tokenId/:contractIndex', NFTtransferFrom)
-router.post('/safe-transfer-nft/:sender/:receiver/:tokenId/:contractIndex',NFTsafeTransferFrom)
 router.post('/setapproval-forall-nft/:operator/:approvalStatus/:contractIndex',NFTsetApprovalForAll)
+router.post('/set-nft-limit/:limit/:contractIndex',setNFTlimit)
+router.post('/deploy-collection/:contractName/:collectionName/:collectionSymbol', deployCollection)
 module.exports = router;

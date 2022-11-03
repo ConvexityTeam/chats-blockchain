@@ -111,18 +111,7 @@ const DestroyBlackFunds = async (req, res) => {
 };
 
 // NFT controllers
-const mintNFT = async (req, res) => {
-    const tokenURI = req.body.tokenURI;
-    const receiver = req.params.receiver;
-    const index = req.params.contractIndex;
-    try {
-        const nft = await trnx.mintNFT(receiver, tokenURI, index); 
-        return res.json({ nft });
-    } catch (error) {
-        res.status(500);
-        return res.json({ status: false, message: error });
-    }
-};
+
 
 const mintNFT = async (req, res) => {
     const tokenURI = req.body.tokenURI;
@@ -163,20 +152,6 @@ const NFTtransferFrom = async (req, res) => {
     }
 };
 
-const NFTsafeTransferFrom = async (req, res) => {
-    const sender = req.params.sender;
-    const receiver = req.params.receiver;
-    const id = req.params.tokenId;
-    const index = req.params.contractIndex;
-    try {
-        const safeTransfer = await trnx.NFTsafeTransferFrom(sender ,receiver ,id , index); 
-        return res.json({ safeTransfer });
-    } catch (error) {
-        res.status(500);
-        return res.json({ status: false, message: error });
-    }
-};
-
 const NFTsetApprovalForAll = async (req, res) => {
     const operator = req.params.operator;
     const status = req.params.approvalStatus;
@@ -203,6 +178,31 @@ const NFTapprove = async (req, res) => {
     }
 };
 
+const setNFTlimit = async (req, res) => {
+    const limit = req.params.limit;
+    const index = req.params.contractIndex;
+    try {
+        const mlimit = await trnx.setNFTlimit(limit, index); 
+        return res.json({ mlimit });
+    } catch (error) {
+        res.status(500);
+        return res.json({ status: false, message: error });
+    }
+};
+
+const deployCollection = async (req, res) => {
+    const contractName = req.params.contractName;
+    const collectionName = req.params.collectionName;
+    const collectionSymbol = req.params.collectionSymbol;
+    try {
+        const ncollection = await trnx.deployCollection(contractName, collectionName, collectionSymbol); 
+        return res.json({ ncollection });
+    } catch (error) {
+        res.status(500);
+        return res.json({ status: false, message: error });
+    }
+};
+
 module.exports = {
     TransferAdmin,
     Transfers,
@@ -215,7 +215,8 @@ module.exports = {
     mintNFT,
     burnNFT,
     NFTtransferFrom,
-    NFTsafeTransferFrom,
     NFTapprove,
-    NFTsetApprovalForAll
+    NFTsetApprovalForAll,
+    deployCollection,
+    setNFTlimit
 };

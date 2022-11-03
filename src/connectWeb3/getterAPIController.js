@@ -1,4 +1,4 @@
-const {getTokenContract, getOpsContract} = require("../resources/web3config.js");
+const {getTokenContract, getOpsContract, getNFTContract} = require("../resources/web3config.js");
 const ethers = require('ethers');
 //////////      Get Contract Details        ////////////
 
@@ -413,7 +413,7 @@ exports.NFTgetTotalMinted = async (contractIndex_) => {
 
 exports.NFTgetTokenURI = async (tokenID_, collectionIndex_) => {
   try {
-    const result = await getNFTContract.NFTgetTokenURI(tokenID_, collectionIndex_);
+    const result = await getNFTContract.getTokenURI(tokenID_, collectionIndex_);
     return result;
   } catch (error) {
     const err = {

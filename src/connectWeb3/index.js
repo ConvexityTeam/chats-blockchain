@@ -56,10 +56,11 @@ const {
   // nft setter functions
   mintNFT,
   burnNFT,
-  NFTsafeTransferFrom,
   NFTsetApprovalForAll,
   NFTapprove,
-  NFTtransferFrom
+  NFTtransferFrom,
+  setNFTlimit,
+  deployCollection
 } = require("./setterAPIController");
 
 module.exports = {
@@ -118,8 +119,9 @@ module.exports = {
   // nft setter functions
   mintNFT,
   burnNFT,
-  NFTsafeTransferFrom,
   NFTsetApprovalForAll,
   NFTapprove,
-  NFTtransferFrom
+  NFTtransferFrom,
+  setNFTlimit,
+  deployCollection
 };
