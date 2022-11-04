@@ -109,6 +109,19 @@ const DestroyBlackFunds = async (req, res) => {
     }
 };
 
+const SetParams = async (req, res) => {
+    const pointBase = req.params.pointbase;
+    const maxFee = req.params.maxfee;
+    try {
+        const SetParam = await trnx.setParams(pointBase, maxFee);
+
+        return res.json({ SetParam });
+    } catch (error) {
+        res.status(500);
+        return res.json({ status: false, message: error });
+    }
+};
+
 module.exports = {
     TransferAdmin,
     Transfers,
@@ -117,5 +130,6 @@ module.exports = {
     Minting,
     Redeeming,
     TransferFrom,
-    DestroyBlackFunds
+    DestroyBlackFunds,
+    SetParams
 };

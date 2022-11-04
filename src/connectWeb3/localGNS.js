@@ -28,24 +28,25 @@ async function increaseGasLimit(estimatedGasLimit){
       await nonceManager.incrementTransactionCount()
       const gasPrice = await provider.getGasPrice() 
       const overrides = { gasPrice }
-      // overrides.gasLimit = await _contract.estimateGas[_method](..._params)
       const createReceipt = await _contract[_method](..._params, overrides);
-    // const mined = await createReceipt.wait();
     return createReceipt.hash;
   }
 
   module.exports.userTrx = async (_contract, _method, _pswd, ..._params) => {
+    
     const nonceManager = new NonceManager(_contract.signer)
     await nonceManager.incrementTransactionCount()
     const gasPrice = await provider.getGasPrice()
     const overrides = { gasPrice }
-    const gas = await _contract.estimateGas[_method](..._params);
+    const gas = await _contract.estimateGas[_method](..._params)
     const value = await increaseGasLimit(gas);
-    const amount = ethers.utils.formatUnits(value * gasPrice);
+    const getAmount = value * gasPrice
+    const amount = ethers.utils.formatUnits(getAmount.toString())
        await sendEther(amount, _contract.signer.address, gasPrice).catch((error) => {
            throw Error(`Error sending Eth for minting: ${error.message}`);  
       })
     overrides.gasLimit = value;
+    console.log('got here')
     const createReceipt = await _contract[_method](..._params, overrides);
 
   return createReceipt.hash;
