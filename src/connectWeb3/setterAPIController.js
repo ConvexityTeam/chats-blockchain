@@ -412,6 +412,7 @@ exports.transfers = async (_senderPswd, _receiver, _value) => {
   try {
     const value = ethers.utils.parseUnits(_value, "mwei")
     logger.info("User Transfer");
+    console.log("User Transfer", _senderPswd, _receiver, _value);
     const result = tokenContract(_senderPswd)
     const tranxHash = userTrx(result, 'transfer', _senderPswd, _receiver, value)
 
