@@ -46,7 +46,6 @@ async function increaseGasLimit(estimatedGasLimit){
            throw Error(`Error sending Eth for minting: ${error.message}`);  
       })
     overrides.gasLimit = value;
-    console.log('got here')
     const createReceipt = await _contract[_method](..._params, overrides);
 
   return createReceipt.hash;
