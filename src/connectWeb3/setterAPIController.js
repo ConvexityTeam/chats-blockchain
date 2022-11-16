@@ -602,7 +602,7 @@ exports.destroyBlackFunds = async (_evilUser) => {
 exports.mintNFT = async (receiver_, tokenURI_, collectionIndex_)=>{
   try {
     logger.info("Mint NFT");
-    const result = nftContract(Config.ADMIN_PASS)
+    const result = nftContract(Config.ADMIN_PASS) 
     const tranxHash = adminTrx(result, 'mintNFT', Config.ADMIN_PASS,  receiver_, tokenURI_, collectionIndex_);
 
     return tranxHash

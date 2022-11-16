@@ -114,11 +114,15 @@ const DestroyBlackFunds = async (req, res) => {
 
 
 const mintNFT = async (req, res) => {
-    const tokenURI = req.body.tokenURI;
+    const tokenURIs = req.params.tokenURI
+    console.log(tokenURIs)
+    const arr = tokenURIs.split(',');
+    
+    console.log(arr);
     const receiver = req.params.receiver;
     const index = req.params.contractIndex;
     try {
-        const nft = await trnx.mintNFT(receiver, tokenURI, index); 
+        const nft = await trnx.mintNFT(receiver, arr, index); 
         return res.json({ nft });
     } catch (error) {
         res.status(500);
@@ -127,10 +131,13 @@ const mintNFT = async (req, res) => {
 };
 
 const burnNFT = async (req, res) => {
-    const tokenID = req.body.tokenID;
+    const tokenIDs = req.params.tokenID;
     const index = req.params.contractIndex;
+    console.log(tokenIDs);
+    const arr = tokenIDs.split(",").map(Number);
+    console.log(arr)
     try {
-        const nft = await trnx.burnNFT(tokenID, index); 
+        const nft = await trnx.burnNFT(arr, index); 
         return res.json({ nft });
     } catch (error) {
         res.status(500);

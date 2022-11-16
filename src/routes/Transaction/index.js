@@ -20,11 +20,12 @@ router.post('/disapprove/:tokenownerpswd/:spenderaddr/:amount', Disapprove);
 router.post('/transferfrom/:tokenowneraddr/:receiveraddr/:spenderpwsd/:amount', TransferFrom);
 
 // nft routes
-router.post('/mint-nft/:receiver/:contractIndex', mintNFT)
-router.post('/burn-nft/:contractIndex', burnNFT)
+router.post('/mint-nft/:receiver/:contractIndex/:tokenURI', mintNFT)
+router.post('/burn-nft/:contractIndex/:tokenID', burnNFT)
 router.post('/approve-nft/:operator/:tokenId/:contractIndex', NFTapprove)
 router.post('/transfer-nft/:sender/:receiver/:tokenId/:contractIndex', NFTtransferFrom)
 router.post('/setapproval-forall-nft/:operator/:approvalStatus/:contractIndex',NFTsetApprovalForAll)
 router.post('/set-nft-limit/:limit/:contractIndex',setNFTlimit)
 router.post('/deploy-collection/:contractName/:collectionName/:collectionSymbol', deployCollection)
+
 module.exports = router;

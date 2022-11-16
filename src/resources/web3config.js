@@ -21,7 +21,7 @@ const tokenContract = (_wallet)=> {
 const nftContract = (_wallet) => {
   walletInit = new ethers.Wallet(_wallet, provider);
   const initContract = new ethers.Contract(Config.DEPLOYEDNFTCONTRACT, JSON.parse(fs.readFileSync("contracts/artifacts/nft.json", {encoding: "utf8"}))['abi'], walletInit)
-  console.log(initContract)
+  //console.log(initContract)
   return initContract;
 }
 

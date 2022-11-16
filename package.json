@@ -29,7 +29,9 @@
     "ipfs-http-client": "^47.0.1",
     "latest": "^0.2.0",
     "morgan": "^1.10.0",
-    "winston": "^3.7.2"
+    "swagger-jsdoc": "^6.2.5",
+    "winston": "^3.7.2",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
@@ -41,11 +43,11 @@
     "hardhat": "^2.11.2",
     "nodemon": "^2.0.16",
     "swagger": "^0.0.1",
-    "swagger-ui-express": "^4.1.4"
+    "swagger-ui-express": "^4.5.0"
   },
   "scripts": {
     "test": "mocha",
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "dev": "nodemon server.js"
   },
   "repository": {
