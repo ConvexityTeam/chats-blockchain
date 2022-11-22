@@ -1,5 +1,5 @@
 var app = require('./app');
-var debug = require('debug')('BlockchainServices:server');
+var debug = require('debug')('BlockchainServices:server')
 var http = require('http');
 const chalk = require('chalk');
 const PORT = process.env.PORT
@@ -9,7 +9,7 @@ var port = normalizePort(PORT);
 app.set('port', port);
 
 // Create HTTP server.
-var server = http.createServer(app);
+var server = http.createServer(app)
 
 // Listen on provided port, on all network interfaces.
 server.listen(port, () => {

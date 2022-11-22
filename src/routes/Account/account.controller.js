@@ -201,6 +201,135 @@ const IsBlackListed = async (req, res) => {
   }
 };
 
+// NFT functions
+const NFTname = async (req, res) => {
+  const index = req.params.collectionIndex  
+  try {
+    const name = await trnx.NFTgetName(index);
+    return res.json({ name });
+  
+  } catch (error) {
+    res.status(500);
+    return res.json({ status: false, message: error });
+  }
+};
+
+const NFTsymbol = async (req, res) => {
+  const index = req.params.collectionIndex  
+  try {
+    const symbol = await trnx.NFTgetSymbol(index);
+    return res.json({ symbol });
+  
+  } catch (error) {
+    res.status(500);
+    return res.json({ status: false, message: error });
+  }
+};
+
+const NFTbalance = async (req, res) => {
+  const address = req.params.address  
+  const index = req.params.collectionIndex 
+  try {
+    const balance = await trnx.NFTgetBalance(address, index);
+    return res.json({ balance });
+  
+  } catch (error) {
+    res.status(500);
+    return res.json({ status: false, message: error });
+  }
+};
+
+const NFTowner = async (req, res) => {
+  const id = req.params.tokenId  
+  const index = req.params.collectionIndex 
+  try {
+    const owner = await trnx.NFTgetOwner(id, index);
+    return res.json({ owner });
+  
+  } catch (error) {
+    res.status(500);
+    return res.json({ status: false, message: error });
+  }
+};
+
+const NFTapproved = async (req, res) => {
+  const id = req.params.tokenId  
+  const index = req.params.collectionIndex
+  try {
+    const approval = await trnx.NFTgetApproved(id, index);
+    return res.json({ approval });
+  
+  } catch (error) {
+    res.status(500);
+    return res.json({ status: false, message: error });
+  }
+};
+
+const getCollectionName = async (req, res) => {
+  const index = req.params.collectionIndex
+  try {
+    const collectionName = await trnx.getCollectionNameByIndex(index);
+    return res.json({ collectionName });
+  
+  } catch (error) {
+    res.status(500);
+    return res.json({ status: false, message: error });
+  }
+};
+
+const getCollectionAddress = async (req, res) => {
+  const index = req.params.collectionIndex
+  try {
+    const collectionAddress = await trnx.getCollectionAddressByIndex(index);
+    return res.json({ collectionAddress });
+  
+  } catch (error) {
+    res.status(500);
+    return res.json({ status: false, message: error });
+  }
+};
+
+const NFTtokenURI = async (req, res) => {
+  const id = req.params.tokenId
+  const index = req.params.collectionIndex
+  try {
+    const tokenURI = await trnx.NFTgetTokenURI(id, index);
+    return res.json({ tokenURI });
+  
+  } catch (error) {
+    res.status(500);
+    return res.json({ status: false, message: error });
+  }
+};
+
+const NFTtotalMinted = async (req, res) => {
+  const index = req.params.collectionIndex
+  try {
+    const totalMinted = await trnx.NFTgetTotalMinted(index);
+    return res.json({ totalMinted });
+  
+  } catch (error) {
+    res.status(500);
+    return res.json({ status: false, message: error });
+  }
+};
+
+const NFTisApprovedForAll = async (req, res) => {
+  const owner = req.params.owner
+  const operator = req.params.operator
+  const index = req.params.collectionIndex
+  try {
+    const allApproved = await trnx.NFTisApprovedForAll(owner, operator, index);
+    return res.json({ allApproved });
+  
+  } catch (error) {
+    res.status(500);
+    return res.json({ status: false, message: error });
+  }
+};
+
+
+
 module.exports = {
   GetName,
   GetSuperAdminAcc,
@@ -212,5 +341,16 @@ module.exports = {
   GetTotalIssued,
   GetTotalRedeemed,
   GetBalance,
-  GetAllowance
+  GetAllowance,
+
+  NFTapproved,
+  NFTbalance,
+  NFTname,
+  NFTsymbol,
+  NFTowner,
+  NFTtokenURI,
+  NFTtotalMinted,
+  NFTisApprovedForAll,
+  getCollectionAddress,
+  getCollectionName
 };

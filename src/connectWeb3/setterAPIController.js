@@ -1,4 +1,4 @@
-const {tokenContract, operationsContract, getOpsContract} = require("../resources/web3config.js");
+const {tokenContract, nftContract, operationsContract} = require("../resources/web3config.js");
 const Web3 = require('web3');
 const web3 = new Web3();
 const { userTrx, adminTrx } = require("./localGNS.js");
@@ -596,3 +596,121 @@ exports.destroyBlackFunds = async (_evilUser) => {
     throw err;
   }
 };
+
+// nft setter functions
+exports.mintNFT = async (receiver_, tokenURI_, collectionIndex_)=>{
+  try {
+    logger.info("Mint NFT");
+    const result = nftContract(Config.ADMIN_PASS) 
+    const tranxHash = adminTrx(result, 'mintNFT', Config.ADMIN_PASS,  receiver_, tokenURI_, collectionIndex_);
+
+    return tranxHash
+  } catch (error) {
+    logger.error("Mint NFT", JSON.stringify(error.message))
+    let err = {
+      name: "Web3-Mint NFT",
+      error: error.message,
+    };
+    throw err;
+  }
+}
+
+exports.burnNFT = async (tokenID_, collectionIndex_)=>{
+  try {
+    logger.info("Burn NFT");
+    const result = nftContract(Config.ADMIN_PASS)
+    const tranxHash = adminTrx(result, 'burnNFT', Config.ADMIN_PASS, tokenID_, collectionIndex_);
+    return tranxHash
+  } catch (error) {
+    logger.error("Burn NFT", JSON.stringify(error.message))
+    let err = {
+      name: "Web3-Burn NFT",
+      error: error.message,
+    };
+    throw err;
+  }
+}
+
+
+exports.NFTtransferFrom = async (sender_, receiver_, tokenID_, collectionIndex_)=>{
+  try {
+    logger.info("Transfer NFT");
+    const result = nftContract(Config.ADMIN_PASS)
+    const tranxHash = userTrx(result, 'NFTtransferFrom_', Config.ADMIN_PASS, sender_, receiver_, tokenID_, collectionIndex_);
+    return tranxHash
+  } catch (error) {
+    logger.error("Transfer NFT", JSON.stringify(error.message))
+    let err = {
+      name: "Web3-Transfer NFT",
+      error: error.message,
+    };
+    throw err;
+  }
+}
+
+exports.NFTsetApprovalForAll = async (operator_, approvalStatus, collectionIndex_)=>{
+  try {
+    logger.info("NFT set approval for all");
+    const result = nftContract(Config.ADMIN_PASS)
+    const tranxHash = userTrx(result, 'NFTsetApprovalForAll_', Config.ADMIN_PASS, operator_, approvalStatus, collectionIndex_);
+    return tranxHash
+  } catch (error) {
+    logger.error("NFT set approval for all", JSON.stringify(error.message))
+    let err = {
+      name: "Web3-NFT set approval for all",
+      error: error.message,
+    };
+    throw err;
+  }
+}
+
+exports.NFTapprove = async (receiver_, tokenID_, collectionIndex_)=>{
+  try {
+    logger.info("Approve NFT");
+    const result = nftContract(Config.ADMIN_PASS)
+    const tranxHash = userTrx(result, 'NFTapprove_', Config.ADMIN_PASS, receiver_, tokenID_, collectionIndex_);
+    return tranxHash
+  } catch (error) {
+    logger.error("Approve NFT", JSON.stringify(error.message))
+    let err = {
+      name: "Approve NFT",
+      error: error.message,
+    };
+    throw err;
+  }
+}
+
+exports.setNFTlimit = async (limit_, collectionIndex_)=>{
+  try {
+    logger.info("set NFT miniting limit");
+    const result = nftContract(Config.ADMIN_PASS)
+    const tranxHash = adminTrx(result, 'setNFTlimit', Config.ADMIN_PASS, limit_, collectionIndex_);
+    return tranxHash
+  } catch (error) {
+    logger.error("set NFT miniting limit", JSON.stringify(error.message))
+    let err = {
+      name: "set NFT miniting limit",
+      error: error.message,
+    };
+    throw err;
+  }
+}
+
+exports.deployCollection = async (contractName_, collectionName_, contractSymbol_)=>{
+  try {
+    logger.info("deploy an instance of the collection");
+    const result = nftContract(Config.ADMIN_PASS)
+    const tranxHash = adminTrx(result, 'deployNFTCollection', Config.ADMIN_PASS,contractName_, collectionName_, contractSymbol_);
+    return tranxHash
+  } catch (error) {
+    logger.error("deploy an instance of the collection", JSON.stringify(error.message))
+    let err = {
+      name: "deploy an instance of the collection",
+      error: error.message,
+    };
+    throw err;
+  }
+}
+
+
+

@@ -109,13 +109,100 @@ const DestroyBlackFunds = async (req, res) => {
     }
 };
 
-const SetParams = async (req, res) => {
-    const pointBase = req.params.pointbase;
-    const maxFee = req.params.maxfee;
-    try {
-        const SetParam = await trnx.setParams(pointBase, maxFee);
+// NFT controllers
 
-        return res.json({ SetParam });
+
+const mintNFT = async (req, res) => {
+    const tokenURIs = req.params.tokenURI
+    console.log(tokenURIs)
+    const arr = tokenURIs.split(',');
+    
+    console.log(arr);
+    const receiver = req.params.receiver;
+    const index = req.params.contractIndex;
+    try {
+        const nft = await trnx.mintNFT(receiver, arr, index); 
+        return res.json({ nft });
+    } catch (error) {
+        res.status(500);
+        return res.json({ status: false, message: error });
+    }
+};
+
+const burnNFT = async (req, res) => {
+    const tokenIDs = req.params.tokenID;
+    const index = req.params.contractIndex;
+    console.log(tokenIDs);
+    const arr = tokenIDs.split(",").map(Number);
+    console.log(arr)
+    try {
+        const nft = await trnx.burnNFT(arr, index); 
+        return res.json({ nft });
+    } catch (error) {
+        res.status(500);
+        return res.json({ status: false, message: error });
+    }
+};
+
+const NFTtransferFrom = async (req, res) => {
+    const sender = req.params.sender;
+    const receiver = req.params.receiver;
+    const id = req.params.tokenId;
+    const index = req.params.contractIndex;
+    try {
+        const transfer = await trnx.NFTtransferFrom(sender ,receiver ,id , index); 
+        return res.json({ transfer });
+    } catch (error) {
+        res.status(500);
+        return res.json({ status: false, message: error });
+    }
+};
+
+const NFTsetApprovalForAll = async (req, res) => {
+    const operator = req.params.operator;
+    const status = req.params.approvalStatus;
+    const index = req.params.contractIndex;
+    try {
+        const allApproval = await trnx.NFTsetApprovalForAll(operator ,status , index); 
+        return res.json({ allApproval });
+    } catch (error) {
+        res.status(500);
+        return res.json({ status: false, message: error });
+    }
+};
+
+const NFTapprove = async (req, res) => {
+    const operator = req.params.operator;
+    const id = req.params.tokenId;
+    const index = req.params.contractIndex;
+    try {
+        const approval = await trnx.NFTapprove(operator ,id , index); 
+        return res.json({ approval });
+    } catch (error) {
+        res.status(500);
+        return res.json({ status: false, message: error });
+    }
+};
+
+const setNFTlimit = async (req, res) => {
+    const limit = req.params.limit;
+    const index = req.params.contractIndex;
+    try {
+        const mlimit = await trnx.setNFTlimit(limit, index); 
+        return res.json({ mlimit });
+    } catch (error) {
+        res.status(500);
+        return res.json({ status: false, message: error });
+    }
+};
+
+const deployCollection = async (req, res) => {
+    const contractName = req.params.contractName;
+    const collectionName = req.params.collectionName;
+    const collectionSymbol = req.params.collectionSymbol;
+    try {
+        const ncollection = await trnx.deployCollection(contractName, collectionName, collectionSymbol); 
+        return res.json({ ncollection });
     } catch (error) {
         res.status(500);
         return res.json({ status: false, message: error });
@@ -131,5 +218,11 @@ module.exports = {
     Redeeming,
     TransferFrom,
     DestroyBlackFunds,
-    SetParams
+    mintNFT,
+    burnNFT,
+    NFTtransferFrom,
+    NFTapprove,
+    NFTsetApprovalForAll,
+    deployCollection,
+    setNFTlimit
 };

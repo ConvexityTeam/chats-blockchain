@@ -20,7 +20,7 @@
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
     "defender-relay-client": "^1.24.0",
-    "dotenv": "^8.2.0",
+    "dotenv": "^8.6.0",
     "eth-permit": "^0.2.1",
     "ethers": "^5.4.1",
     "express": "^4.17.1",
@@ -29,7 +29,9 @@
     "ipfs-http-client": "^47.0.1",
     "latest": "^0.2.0",
     "morgan": "^1.10.0",
-    "winston": "^3.7.2"
+    "swagger-jsdoc": "^6.2.5",
+    "winston": "^3.7.2",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
@@ -41,11 +43,11 @@
     "hardhat": "^2.11.2",
     "nodemon": "^2.0.16",
     "swagger": "^0.0.1",
-    "swagger-ui-express": "^4.1.4"
+    "swagger-ui-express": "^4.5.0"
   },
   "scripts": {
     "test": "mocha",
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "dev": "nodemon server.js"
   },
   "repository": {
