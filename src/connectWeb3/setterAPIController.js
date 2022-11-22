@@ -27,7 +27,6 @@ exports.createAccount = async () => {
     logger.info("CreateAccount");
        const account = web3.eth.accounts.create();
        const result = operationsContract(Config.ADMIN_PASS)
-       console.log(account)
        const tranxHash = adminTrx(result, 'SetUserList', Config.ADMIN_PASS, account.address);
      logger.info("Account created", tranxHash);
       return tranxHash;
@@ -414,7 +413,7 @@ exports.transfers = async (_senderPswd, _receiver, _value) => {
     const value = ethers.utils.parseUnits(_value, "mwei")
     logger.info("User Transfer");
     const result = tokenContract(_senderPswd)
-    const tranxHash = userTrx(result, 'transfer', _senderPswd, _receiver, value)
+    const tranxHash = userTrx(result, 'transfer', _senderPswd, _receiver, value.toString())
 
     return tranxHash
   } catch (error) {

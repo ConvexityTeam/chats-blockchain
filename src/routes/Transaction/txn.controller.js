@@ -30,7 +30,6 @@ const Minting = async (req, res) => {
     const amount = req.params.amount
     const mintTo = req.params.mintTo
     try {
-        console.log("minting", amount, mintTo);
         const Minted = await trnx.minting(amount, mintTo);
         
         return res.json({ Minted });
