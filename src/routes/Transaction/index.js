@@ -1,14 +1,23 @@
 
 const router = require('express').Router();
 const VerifyChecksum = require('../../middleware/verifyChecksum');
-const { TransferAdmin, Transfers, Minting, Redeeming, Approve, Disapprove, TransferFrom, DestroyBlackFunds,
+const { 
+    TransferAdmin, 
+    Transfers, 
+    Minting, 
+    Redeeming, 
+    Approve, 
+    Disapprove, 
+    TransferFrom, 
+    DestroyBlackFunds,
     mintNFT,
     burnNFT,
     NFTtransferFrom,
     setNFTlimit,
     deployCollection,
     NFTapprove,
-    NFTsetApprovalForAll } = require('./txn.controller');
+    NFTsetApprovalForAll,
+    SetParams } = require('./txn.controller');
 
 router.post('/transferadmin/:receiver/:amount', TransferAdmin);
 router.post('/transfer/:senderpwsd/:receiver/:amount', Transfers);

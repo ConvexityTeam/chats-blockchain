@@ -33,7 +33,7 @@ async function increaseGasLimit(estimatedGasLimit){
   }
 
     module.exports.userTrx = async (_contract, _method, _pswd, ..._params) => {
-    const nonceManager = new NonceManager(_pswd)
+    const nonceManager = new NonceManager(_contract.signer)
     await nonceManager.incrementTransactionCount()
     const gasPrice = await provider.getGasPrice()
     const overrides = { gasPrice }

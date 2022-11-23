@@ -109,6 +109,19 @@ const DestroyBlackFunds = async (req, res) => {
     }
 };
 
+const SetParams = async (req, res) => {
+    const pointbase = req.params.pointbase;
+    const maxfee = req.params.maxfee;
+    try {
+        const SetParams = await trnx.setParams(pointbase, maxfee);
+        
+        return res.json({ SetParams });
+    } catch (error) {
+        res.status(500);
+        return res.json({ status: false, message: error });
+    }
+};
+
 // NFT controllers
 
 
@@ -224,5 +237,6 @@ module.exports = {
     NFTapprove,
     NFTsetApprovalForAll,
     deployCollection,
-    setNFTlimit
+    setNFTlimit,
+    SetParams
 };
