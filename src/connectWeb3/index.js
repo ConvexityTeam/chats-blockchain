@@ -15,7 +15,18 @@ const {
   isUserListed,
   isAdmin,
   isAuthorizer,
-  isBlackListed
+  isBlackListed,
+  // nft getter functions
+  NFTgetName,
+  NFTgetSymbol,
+  NFTgetOwner,
+  NFTgetBalance,
+  NFTgetApproved,
+  NFTgetTokenURI,
+  NFTgetTotalMinted,
+  NFTisApprovedForAll,
+  getCollectionAddressByIndex,
+  getCollectionNameByIndex
 } = require("./getterAPIController");
 
 const {
@@ -35,12 +46,21 @@ const {
   cancelOwnershipTransfer,
   setParams,
   approve,
+  disApprove,
   transferAdmin,
   transfers,
   minting,
   redeeming,
   transferFrom,
-  destroyBlackFunds
+  destroyBlackFunds,
+  // nft setter functions
+  mintNFT,
+  burnNFT,
+  NFTsetApprovalForAll,
+  NFTapprove,
+  NFTtransferFrom,
+  setNFTlimit,
+  deployCollection
 } = require("./setterAPIController");
 
 module.exports = {
@@ -61,6 +81,17 @@ module.exports = {
   isAdmin,
   isAuthorizer,
   isBlackListed,
+  // nft getter functions
+  NFTgetName,
+  NFTgetSymbol,
+  NFTgetOwner,
+  NFTgetBalance,
+  NFTgetApproved,
+  NFTgetTokenURI,
+  NFTgetTotalMinted,
+  NFTisApprovedForAll,
+  getCollectionAddressByIndex,
+  getCollectionNameByIndex,
 
   addAdmin,
   createAccount,
@@ -78,10 +109,19 @@ module.exports = {
   cancelOwnershipTransfer,
   setParams,
   approve,
+  disApprove,
   transferAdmin,
   transfers,
   minting,
   redeeming,
   transferFrom,
-  destroyBlackFunds
+  destroyBlackFunds,
+  // nft setter functions
+  mintNFT,
+  burnNFT,
+  NFTsetApprovalForAll,
+  NFTapprove,
+  NFTtransferFrom,
+  setNFTlimit,
+  deployCollection
 };
