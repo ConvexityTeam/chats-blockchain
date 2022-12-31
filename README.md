@@ -1,5 +1,5 @@
 # Introduction 
-Convexity Humanitarian Aids Transfer Solution(CHATS) Blockchain ERC20 token for disbursement to beneficiaries by Donor or NGO
+Convexity Humanitarian Aids Transfer Solution(CHATS) Blockchain ERC20 and ERC721 token for disbursement of fund and items to beneficiaries by Donor or NGO
 
 # Getting Started
 TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
