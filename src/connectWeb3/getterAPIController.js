@@ -1,21 +1,21 @@
-const connect = require("../resources/web3config.js");
-
+const {getTokenContract, getOpsContract, getNFTContract} = require("../resources/web3config.js");
+const ethers = require('ethers');
 //////////      Get Contract Details        ////////////
 
 /**
  * @name GetName
  * @description This gets contract Name
  * 
- * @returns {string} Name of the FreeMoney Contract
+ * @returns {string} Name of the CHATS Contract
  */
 exports.getName = async () => {
   try {
-    let result = await connect.contract.methods.name().call();
+    const result = await getTokenContract.name();
     return result;
   } catch (error) {
-    let err = {
+    const err = {
       name: "Web-GetName",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -29,12 +29,12 @@ exports.getName = async () => {
  */
 exports.getOwner = async () => {
   try {
-    let result = await connect.contract.methods.owner().call();
+    const result = await getTokenContract.owner();
     return result;
   } catch (error) {
-    let err = {
+    const err = {
       name: "Web-GetOwner",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -49,12 +49,12 @@ exports.getOwner = async () => {
  */
 exports.isOwner = async (_address) => {
   try {
-    let result = await connect.contract.methods.isOwner(_address).call();
+    const result = await getTokenContract.isOwner(_address);
     return result;
   } catch (error) {
-    let err = {
+    const err = {
       name: "Web-isOwner",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -68,12 +68,12 @@ exports.isOwner = async (_address) => {
  */
 exports.isPaused = async () => {
   try {
-    let result = await connect.contract.methods.paused().call();
+    const result = await getTokenContract.paused();
     return result;
   } catch (error) {
-    let err = {
+    const err = {
       name: "Web-isPaused",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -87,13 +87,13 @@ exports.isPaused = async () => {
  */
 exports.totalSupply = async () => {
   try {
-    let value = await connect.contract.methods.totalSupply().call();
-    const result =connect.web3.utils.fromWei(value, "kwei");
-    return result;
+    const value = await getTokenContract.totalSupply();
+    const result = ethers.utils.formatUnits(value, "mwei");
+    return ethers.utils.commify(result);
   } catch (error) {
-    let err = {
+    const err = {
       name: "Web-TotalSupply",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -107,13 +107,13 @@ exports.totalSupply = async () => {
  */
 exports.totalIssued = async (_From) => {
   try {
-    let value = await connect.contract.methods.totalIssued().call({ from: _From });
-    const result =connect.web3.utils.fromWei(value, "kwei");
-    return result;
+    const value = await getTokenContract.totalIssued();
+    const result = ethers.utils.formatUnits(value, "mwei");
+    return ethers.utils.commify(result);
   } catch (error) {
-    let err = {
+    const err = {
       name: "Web-TotalIssued",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -127,13 +127,13 @@ exports.totalIssued = async (_From) => {
  */
 exports.totalRedeemed = async (_From) => {
   try {
-    let value = await connect.contract.methods.totalRedeemed().call({ from: _From });
-    const result =connect.web3.utils.fromWei(value, "kwei");
-    return result;
+    const value = await getTokenContract.totalRedeemed();
+    const result = ethers.utils.formatUnits(value, "mwei");
+    return ethers.utils.commify(result);
   } catch (error) {
-    let err = {
+    const err = {
       name: "Web-TotalRedeemed",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -153,13 +153,13 @@ exports.totalRedeemed = async (_From) => {
  */
 exports.allowance = async (_tokenOwner, _spender) => {
   try {
-    let value = await connect.contract.methods.allowance(_tokenOwner, _spender).call();
-    const result =connect.web3.utils.fromWei(value, "kwei");
-    return result;
+    const value = await getTokenContract.allowance(_tokenOwner, _spender);
+    const result = ethers.utils.formatUnits(value, "mwei");
+    return ethers.utils.commify(result);
   } catch (error) {
-    let err = {
+    const err = {
       name: "Web-Allowance",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -175,13 +175,14 @@ exports.allowance = async (_tokenOwner, _spender) => {
  */
 exports.balanceOf = async (_account) => {
   try {
-    let value = await connect.contract.methods.balanceOf(_account).call();
-    const result =connect.web3.utils.fromWei(value, "kwei");
-    return result;
+    
+    const value = await getTokenContract.balanceOf(_account);
+    const result = ethers.utils.formatUnits(value, "mwei");
+    return ethers.utils.commify(result);
   } catch (error) {
-    let err = {
+    const err = {
       name: "Web-BalanceOf",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -195,14 +196,14 @@ exports.balanceOf = async (_account) => {
  * 
  * @returns {bool} returns a list of registered accounts
  */
-exports.getUsersList = async (_From) => {
+exports.getUsersList = async () => {
   try {
-    let result = await connect.contract.methods.GetUsersList().call({ from: _From });
+    const result = await getTokenContract.GetUsersList();
     return result;
   } catch (error) {
-    let err = {
+    const err = {
       name: "Web-GetUsersList",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -214,14 +215,14 @@ exports.getUsersList = async (_From) => {
  * 
  * @returns {bool} returns a list of all Admins
  */
-exports.getAdminList = async (_From) => {
+exports.getAdminList = async () => {
   try {
-    let result = await connect.contract.methods.GetAdminList().call({ from: _From });
+    const result = await getTokenContract.GetAdminList();
     return result;
   } catch (error) {
-    let err = {
+    const err = {
       name: "Web-GetAdminList",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -233,14 +234,14 @@ exports.getAdminList = async (_From) => {
  * 
  * @returns {bool} returns a list of all Authorisers
  */
-exports.getAuthorizerList = async (_From) => {
+exports.getAuthorizerList = async () => {
   try {
-    let result = await connect.contract.methods.GetAuthorizerList().call({ from: _From });
+    const result = await getTokenContract.GetAuthorizerList();
     return result;
   } catch (error) {
-    let err = {
+    const err = {
       name: "Web-GetAuthorizerList",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -252,14 +253,14 @@ exports.getAuthorizerList = async (_From) => {
  * 
  * @returns {bool} returns a list of all BlackListed Accounts
  */
-exports.getBlackListed = async (_From) => {
+exports.getBlackListed = async () => {
   try {
-    let result = await connect.contract.methods.GetBlackListed().call({ from: _From });
+    const result = await getTokenContract.GetBlackListed();
     return result;
   } catch (error) {
-    let err = {
+    const err = {
       name: "Web-GetBlackListed",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -275,12 +276,12 @@ exports.getBlackListed = async (_From) => {
  */
 exports.isUserListed = async (_account) => {
   try {
-    let result = await connect.contract.methods.isUserListed(_account).call();
+    const result = await getTokenContract.isUserListed(_account);
     return result;
   } catch (error) {
-    let err = {
+    const err = {
       name: "Web3-isUserListed",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -294,12 +295,12 @@ exports.isUserListed = async (_account) => {
  */
 exports.isAdmin = async (_account) => {
   try {
-    let result = await connect.contract.methods.isAdmin(_account).call();
+    const result = await getTokenContract.isAdmin(_account);
     return result;
   } catch (error) {
-    let err = {
+    const err = {
       name: "Web3-isAdmin",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -313,12 +314,12 @@ exports.isAdmin = async (_account) => {
  */
 exports.isAuthorizer = async (_account) => {
   try {
-    let result = await connect.contract.methods.isAuthorizer(_account).call();
+    const result = await getTokenContract.isAuthorizer(_account);
     return result;
   } catch (error) {
-    let err = {
+    const err = {
       name: "Web3-isAuthorizer",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
@@ -333,13 +334,146 @@ exports.isAuthorizer = async (_account) => {
  */
 exports.isBlackListed = async (_account) => {
   try {
-    let result = await connect.contract.methods.isBlackListed(_account).call();
+    const result = await getTokenContract.isBlackListed(_account);
     return result;
   } catch (error) {
-    let err = {
+    const err = {
       name: "Web3-isBlackListed",
-      error: error,
+      error: error.message,
     };
     throw err;
   }
 };
+
+// nft getter functions
+exports.NFTgetName = async (contractIndex_) => {
+  try {
+    const result = await getNFTContract.NFTgetName(contractIndex_);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get collection name",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.NFTgetSymbol = async (contractIndex_) => {
+  try {
+    const result = await getNFTContract.NFTgetSymbol(contractIndex_);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get collection symbol",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.NFTgetOwner = async (tokenID_, contractIndex_) => {
+  try {
+    const result = await getNFTContract.NFTgetOwner(tokenID_, contractIndex_);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get NFT owner",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.NFTgetBalance = async (owner_, contractIndex_) => {
+  try {
+    const result = await getNFTContract.NFTgetBalance(owner_, contractIndex_);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get user NFT balance",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.NFTgetTotalMinted = async (contractIndex_) => {
+  try {
+    const result = await getNFTContract.NFTgetTotalMinted(contractIndex_);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get total minted",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.NFTgetTokenURI = async (tokenID_, collectionIndex_) => {
+  try {
+    const result = await getNFTContract.getTokenURI(tokenID_, collectionIndex_);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get NFT metadata URI",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.NFTgetApproved = async (tokenID_, contractIndex_) => {
+  try {
+    const result = await getNFTContract.NFTgetApproved_(tokenID_, contractIndex_);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get get approved address",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.NFTisApprovedForAll = async (owner_, operator_, contractIndex_) => {
+  try {
+    const result = await getNFTContract.NFTisApprovedForAll_(owner_, operator_, contractIndex_);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get get all approved NFT",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.getCollectionAddressByIndex = async (contractIndex_) => {
+  try {
+    const result = await getNFTContract.getCollectionAddressByIndex_(contractIndex_);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get NFT collection address by its index in the collection array",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.getCollectionNameByIndex = async (contractIndex_) => {
+  try {
+    const result = await getNFTContract.getCollectionNameByIndex_(contractIndex_);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get NFT collection name by its index in the collection array",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+

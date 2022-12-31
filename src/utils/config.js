@@ -16,6 +16,11 @@ exports.Config = {
     process.env.NODE_ENV == 'production'
       ? process.env.CONTRACTADDR
       : process.env.CONTRACTADDR_TEST,
+
+  OPERATIONSADDR:
+    process.env.NODE_ENV == 'production'
+      ? process.env.OPERATIONSADDR
+      : process.env.OPERATIONSADDR_TEST,
   
   BLOCKCHAINSERV:
     process.env.NODE_ENV == 'production'
@@ -26,6 +31,11 @@ exports.Config = {
     process.env.APPENV == 'production'
       ? process.env.CONTRACTADDR :
       process.env.TEST_CONTRACTADDR,
+
+  DEPLOYEDNFTCONTRACT:
+    process.env.NODE_ENV == 'production'
+      ? process.env.NFTCONTRACTADDR 
+      : process.env.NFTCONTRACTADDR_TEST,
 
   RELAY_GASLESS_API:
     process.env.NODE_ENV == 'production'

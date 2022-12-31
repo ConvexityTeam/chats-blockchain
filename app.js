@@ -9,12 +9,15 @@ const helmet = require('helmet');
 const logger = require('morgan');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./src/docs/swagger.json');
+const YAML = require('yamljs');
+const swaggerJSDocs = YAML.load("./api.yaml");
+
 const {
   Config,
 } = require("./src/utils");
 
 const app = express();
-const swaggerSetupOptions = {};
+
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -36,10 +39,9 @@ const corsOptions = {
 // app.use(cors(corsOptions));
 app.use(cors())
 
-
 // APIs
 app.use('/api/v1', router);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJSDocs));
 
 // catch 404 and forward to error handler
 app.all('*', function (req, res) {

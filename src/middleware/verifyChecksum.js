@@ -12,7 +12,6 @@ module.exports = (req, res, next) => {
         message: 'Checksum header missing.'
       });
     }
-
     if(hash !== checksum) {
       return res.status(400).json({
         status: false,

@@ -1,10 +1,11 @@
-pragma solidity ^0.5.0;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
-// import "@openzeppelin/upgrades/contracts/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 
-import "./Ownable.sol";
-import "./Pausable.sol";
-import "./ERC20Basic.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
 /**
  * @dev Contract module for user management.
@@ -12,7 +13,7 @@ import "./ERC20Basic.sol";
  * This module is used through inheritance. It will make available the contract
  * addresses of users, admin, whitelisting and blacklisting of users.
  */
-contract Operations is Pausable, ERC20Basic {
+contract Operations is Initializable, OwnableUpgradeable, PausableUpgradeable, UUPSUpgradeable {
     // To Check and Balance the System Account.
     uint256 internal _totalIssued;
     uint256 internal _totalRedeemed;
@@ -67,11 +68,20 @@ contract Operations is Pausable, ERC20Basic {
         _;
     }
 
-    constructor() internal {
+     /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
+    }
+    
+
+    function initialize()
+    public initializer
+     {
+         __Ownable_init();
+         __Pausable_init();
         isUserListed[_msgSender()] = true;
         usersList.push(_msgSender());
 
-        // SetUserList(_msgSender());
         AddAdmin(_msgSender());
         AddAuthorizer(_msgSender());
     }
@@ -213,6 +223,15 @@ contract Operations is Pausable, ERC20Basic {
         return true;
     }
 
+    //check if user is listed
+    function CheckUserList(address _addr)
+        public
+        view
+        returns (bool)
+    {
+        return isUserListed[_addr];
+    }
+
     //Get all listed users in the System
     function GetUsersList()
         public
@@ -266,25 +285,28 @@ contract Operations is Pausable, ERC20Basic {
         return true;
     }
 
+    //check if address is blacklisted
+    function isBlackListedAddress(address _addr)
+        public
+        view
+        returns (bool)
+    {
+        return isBlackListed[_addr];
+    }
+
     //Get all who is blacklisted on the System
     function GetBlackListed()
         public
         view
-        isAdminAddr(_msgSender())
         returns (address[] memory)
     {
         return blackList;
     }
 
-    // Destroying the fundds of a BlackListed account
-    function DestroyBlackFunds(address _blackListedUser) public onlyOwner {
-        require(isBlackListed[_blackListedUser], "User not BlackListed");
+    function _authorizeUpgrade(address newImplementation)
+        internal
+        onlyOwner
+        override
+    {}
 
-        uint256 dirtyFunds = balanceOf(_blackListedUser);
-        balances[_blackListedUser] = 0;
-        _totalSupply -= dirtyFunds;
-        _totalRedeemed += dirtyFunds;
-
-        emit DestroyedBlackFunds(_blackListedUser, dirtyFunds);
-    }
 }
