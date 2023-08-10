@@ -26,7 +26,15 @@ const {
   NFTgetTotalMinted,
   NFTisApprovedForAll,
   getCollectionAddressByIndex,
-  getCollectionNameByIndex
+  getCollectionNameByIndex,
+
+  // escrow getter functions
+  getFundAmount,
+  getFundAvailability,
+  getCampaignStatus,
+  getTokenBalance,
+  funderAvailable,
+  WithdrawalApprovalStatus,
 } = require("./getterAPIController");
 
 const {
@@ -60,7 +68,16 @@ const {
   NFTapprove,
   NFTtransferFrom,
   setNFTlimit,
-  deployCollection
+  deployCollection,
+
+  // escrow
+  deployEscrow,
+  endCampaign,
+  resumeCampaign,
+  adminSignatory,
+  updateDefaultStableCoin,
+  updateErc20Token,
+  adminWithdrawFunds
 } = require("./setterAPIController");
 
 module.exports = {
@@ -123,5 +140,20 @@ module.exports = {
   NFTapprove,
   NFTtransferFrom,
   setNFTlimit,
-  deployCollection
+  deployCollection,
+
+  //escrow
+  deployEscrow,
+  endCampaign,
+  resumeCampaign,
+  getFundAmount,
+  getFundAvailability,
+  getCampaignStatus,
+  adminSignatory,
+  getTokenBalance,
+  updateDefaultStableCoin,
+  updateErc20Token,
+  funderAvailable,
+  WithdrawalApprovalStatus,
+  adminWithdrawFunds
 };

@@ -32,6 +32,11 @@ exports.Config = {
       ? process.env.CONTRACTADDR :
       process.env.TEST_CONTRACTADDR,
 
+  ESCROWFACTORYCONTRACT:
+      process.env.APPENV == "production"
+        ? process.env.ESCROWFACTORYCONTRACT:
+        process.env.ESCROWFACTORYCONTRACT_TEST,
+
   DEPLOYEDNFTCONTRACT:
     process.env.NODE_ENV == 'production'
       ? process.env.NFTCONTRACTADDR 

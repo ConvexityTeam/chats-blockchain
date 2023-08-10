@@ -1,4 +1,10 @@
-const {getTokenContract, getOpsContract, getNFTContract} = require("../resources/web3config.js");
+const {
+  getTokenContract, 
+  getOpsContract, 
+  getNFTContract,
+  getEscrowContract,
+  getEscrowFactoryContract
+} = require("../resources/web3config.js");
 const ethers = require('ethers');
 //////////      Get Contract Details        ////////////
 
@@ -470,6 +476,86 @@ exports.getCollectionNameByIndex = async (contractIndex_) => {
   } catch (error) {
     const err = {
       name: "Web3-get NFT collection name by its index in the collection array",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+// escrow getter functions
+
+exports.getTokenBalance = async (escrowContractAddress) => {
+  try {
+    const result = await getEscrowContract(escrowContractAddress).getTokenBalance();
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get escrow fund balance",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.getCampaignStatus = async (escrowContractAddress) => {
+  try {
+    const result = await getEscrowContract(escrowContractAddress).getCampaignStatus();
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get escrow get campaign status",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.WithdrawalApprovalStatus = async (escrowContractAddress, funderAddress) => {
+  try {
+    const result = await getEscrowContract(escrowContractAddress).WithdrawalApprovalStatus(funderAddress);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get escrow get the withdrawal approval status of a funder",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.funderAvailable = async (escrowContractAddress, funderAddress) => {
+  try {
+    const result = await getEscrowContract(escrowContractAddress).funderAvailable(funderAddress);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get escrow get the status of a funder",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.getFundAvailability = async (escrowContractAddress, funderAddress) => {
+  try {
+    const result = await getEscrowContract(escrowContractAddress).getFundAvailability(funderAddress);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get escrow get the fund availability status of a funder",
+      error: error.message,
+    };
+    throw err;
+  }
+};
+
+exports.getFundAmount = async (escrowContractAddress, funderAddress) => {
+  try {
+    const result = await getEscrowContract(escrowContractAddress).getFundAmount(funderAddress);
+    return result;
+  } catch (error) {
+    const err = {
+      name: "Web3-get escrow get the amount funded by a funder",
       error: error.message,
     };
     throw err;

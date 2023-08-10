@@ -31,9 +31,9 @@ router.post('/setparams/:pointbase/:maxfee', SetParams);
 
 // nft routes
 router.post('/mint-nft/:receiver/:contractIndex/:tokenURI', mintNFT)
-router.post('/burn-nft/:contractIndex/:tokenID', burnNFT)
-router.post('/approve-nft/:operator/:tokenId/:contractIndex', NFTapprove)
-router.post('/transfer-nft/:sender/:receiver/:tokenId/:contractIndex', NFTtransferFrom)
+router.post('/burn-nft/:burnerPrivateKey/:collectionAddress/:tokenID', burnNFT)
+router.post('/approve-nft/:tokenownerpswd/:operator/:tokenId/:collectionAddress', NFTapprove)
+router.post('/transfer-nft/:senderPrivateKey/:sender/:receiver/:tokenId/:collectionAddress', NFTtransferFrom)
 router.post('/setapproval-forall-nft/:operator/:approvalStatus/:contractIndex',NFTsetApprovalForAll)
 router.post('/set-nft-limit/:limit/:contractIndex',setNFTlimit)
 router.post('/deploy-collection/:contractName/:collectionName/:collectionSymbol', deployCollection)

@@ -144,12 +144,13 @@ const mintNFT = async (req, res) => {
 
 const burnNFT = async (req, res) => {
     const tokenIDs = req.params.tokenID;
-    const index = req.params.contractIndex;
+    const index = req.params.collectionAddress;
+    const password = req.params.burnerPrivateKey
     console.log(tokenIDs);
     const arr = tokenIDs.split(",").map(Number);
     console.log(arr)
     try {
-        const nft = await trnx.burnNFT(arr, index); 
+        const nft = await trnx.burnNFT(password,arr, index); 
         return res.json({ nft });
     } catch (error) {
         res.status(500);
@@ -161,9 +162,10 @@ const NFTtransferFrom = async (req, res) => {
     const sender = req.params.sender;
     const receiver = req.params.receiver;
     const id = req.params.tokenId;
-    const index = req.params.contractIndex;
+    const index = req.params.collectionAddress;
+    const senderPrivateKey = req.params.senderPrivateKey;
     try {
-        const transfer = await trnx.NFTtransferFrom(sender ,receiver ,id , index); 
+        const transfer = await trnx.NFTtransferFrom(senderPrivateKey, sender ,receiver ,id , index); 
         return res.json({ transfer });
     } catch (error) {
         res.status(500);
@@ -185,11 +187,13 @@ const NFTsetApprovalForAll = async (req, res) => {
 };
 
 const NFTapprove = async (req, res) => {
+    const tokenownerpswd = req.params.tokenownerpswd
     const operator = req.params.operator;
     const id = req.params.tokenId;
-    const index = req.params.contractIndex;
+    const index = req.params.collectionAddress;
+    const userPass = req.params.tokenownerpswd
     try {
-        const approval = await trnx.NFTapprove(operator ,id , index); 
+        const approval = await trnx.NFTapprove(tokenownerpswd, operator ,id , index); 
         return res.json({ approval });
     } catch (error) {
         res.status(500);

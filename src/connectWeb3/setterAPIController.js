@@ -1,4 +1,12 @@
-const {tokenContract, nftContract, operationsContract} = require("../resources/web3config.js");
+const {
+  tokenContract, 
+  nftContract, 
+  operationsContract,
+  factoryContract, 
+  escrowFactoryContract, 
+  escrowContract
+
+} = require("../resources/web3config.js");
 const Web3 = require('web3');
 const web3 = new Web3();
 const { userTrx, adminTrx } = require("./localGNS.js");
@@ -615,11 +623,11 @@ exports.mintNFT = async (receiver_, tokenURI_, collectionIndex_)=>{
   }
 }
 
-exports.burnNFT = async (tokenID_, collectionIndex_)=>{
+exports.burnNFT = async (burnerPrivateKey,tokenID_, collectionAddress)=>{
   try {
     logger.info("Burn NFT");
-    const result = nftContract(Config.ADMIN_PASS)
-    const tranxHash = adminTrx(result, 'burnNFT', Config.ADMIN_PASS, tokenID_, collectionIndex_);
+    const result = factoryContract(burnerPrivateKey, collectionAddress)
+    const tranxHash = userTrx(result, 'burnNFT', burnerPrivateKey, tokenID_);
     return tranxHash
   } catch (error) {
     logger.error("Burn NFT", JSON.stringify(error.message))
@@ -632,11 +640,11 @@ exports.burnNFT = async (tokenID_, collectionIndex_)=>{
 }
 
 
-exports.NFTtransferFrom = async (sender_, receiver_, tokenID_, collectionIndex_)=>{
+exports.NFTtransferFrom = async (_senderPivateKey, sender_, receiver_, tokenID_, collectionAddress)=>{
   try {
     logger.info("Transfer NFT");
-    const result = nftContract(Config.ADMIN_PASS)
-    const tranxHash = userTrx(result, 'NFTtransferFrom_', Config.ADMIN_PASS, sender_, receiver_, tokenID_, collectionIndex_);
+    const result = factoryContract(_senderPivateKey, collectionAddress)
+    const tranxHash = userTrx(result, 'transferFrom_', _senderPivateKey, sender_, receiver_, tokenID_);
     return tranxHash
   } catch (error) {
     logger.error("Transfer NFT", JSON.stringify(error.message))
@@ -664,11 +672,11 @@ exports.NFTsetApprovalForAll = async (operator_, approvalStatus, collectionIndex
   }
 }
 
-exports.NFTapprove = async (receiver_, tokenID_, collectionIndex_)=>{
+exports.NFTapprove = async (_tokenOwnerPswd, receiver_, tokenID_, collectionAddress)=>{
   try {
     logger.info("Approve NFT");
-    const result = nftContract(Config.ADMIN_PASS)
-    const tranxHash = userTrx(result, 'NFTapprove_', Config.ADMIN_PASS, receiver_, tokenID_, collectionIndex_);
+    const result = factoryContract(_tokenOwnerPswd, collectionAddress)
+    const tranxHash = userTrx(result, 'approve_', _tokenOwnerPswd, receiver_, tokenID_)
     return tranxHash
   } catch (error) {
     logger.error("Approve NFT", JSON.stringify(error.message))
@@ -711,6 +719,122 @@ exports.deployCollection = async (contractName_, collectionName_, contractSymbol
     throw err;
   }
 }
+
+// escrow function
+
+exports.deployEscrow = async (escrowContractAddress, uniswapRouterAddress, wmaticContractAddress,quickSwapRouter, campaignName)=>{
+  try {
+    logger.info("deploy an instance of a campaign escrow");
+    const result = escrowFactoryContract(Config.ADMIN_PASS, escrowContractAddress)
+    const tranxHash = adminTrx(result, 'deployEscrow', Config.ADMIN_PASS, uniswapRouterAddress, wmaticContractAddress,quickSwapRouter, campaignName);
+    return tranxHash
+  } catch (error) {
+    logger.error("deploy an instance of a campaign escrow", JSON.stringify(error.message))
+    let err = {
+      name: "deploy an instance of a campaign escrow",
+      error: error.message,
+    };
+    throw err;
+  }
+}
+
+exports.adminSignatory = async (escrowContractAddress, withdrawer)=>{
+  try {
+    logger.info("admin approve withdrawal");
+    const result = escrowFactoryContract(Config.ADMIN_PASS, escrowContractAddress)
+    const tranxHash = adminTrx(result, 'deployEscrow', Config.ADMIN_PASS, withdrawer);
+    return tranxHash
+  } catch (error) {
+    logger.error("admin approve withdrawal", JSON.stringify(error.message))
+    let err = {
+      name: "admin approve withdrawal",
+      error: error.message,
+    };
+    throw err;
+  }
+}
+
+exports.updateDefaultStableCoin = async (escrowContractAddress, defaultStableCoin)=>{
+  try {
+    logger.info("admin update default stable coin");
+    const result = escrowFactoryContract(Config.ADMIN_PASS, escrowContractAddress)
+    const tranxHash = adminTrx(result, 'updateDefaultStableCoin', Config.ADMIN_PASS, defaultStableCoin);
+    return tranxHash
+  } catch (error) {
+    logger.error("admin update default stable coin", JSON.stringify(error.message))
+    let err = {
+      name: "admin update default stable coin",
+      error: error.message,
+    };
+    throw err;
+  }
+}
+
+exports.endCampaign = async (escrowContractAddress)=>{
+  try {
+    logger.info("ngo end/pause campaign");
+    const result = escrowFactoryContract(Config.ADMIN_PASS, escrowContractAddress)
+    const tranxHash = adminTrx(result, 'endCampaign', Config.ADMIN_PASS);
+    return tranxHash
+  } catch (error) {
+    logger.error("ngo end/pause campaign", JSON.stringify(error.message))
+    let err = {
+      name: "ngo end/pause campaign",
+      error: error.message,
+    };
+    throw err;
+  }
+}
+
+exports.resumeCampaign = async (escrowContractAddress)=>{
+  try {
+    logger.info("ngo resume campaign");
+    const result = escrowFactoryContract(Config.ADMIN_PASS, escrowContractAddress)
+    const tranxHash = adminTrx(result, 'resumeCampaign', Config.ADMIN_PASS);
+    return tranxHash
+  } catch (error) {
+    logger.error("ngo resume campaign", JSON.stringify(error.message))
+    let err = {
+      name: "ngo resume campaign",
+      error: error.message,
+    };
+    throw err;
+  }
+}
+
+exports.updateErc20Token = async (escrowContractAddress, tokenAddress, symbol)=>{
+  try {
+    logger.info("admin update erc20 token");
+    const result = escrowFactoryContract(Config.ADMIN_PASS, escrowContractAddress)
+    const tranxHash = adminTrx(result, 'updateErc20Token', Config.ADMIN_PASS, tokenAddress, symbol);
+    return tranxHash
+  } catch (error) {
+    logger.error("admin update erc20 token", JSON.stringify(error.message))
+    let err = {
+      name: "admin update erc20 token",
+      error: error.message,
+    };
+    throw err;
+  }
+}
+
+exports.adminWithdrawFunds = async (escrowContractAddress, amount, offRampAddress)=>{
+  try {
+    logger.info("admin withdraw funds");
+    const result = escrowFactoryContract(Config.ADMIN_PASS, escrowContractAddress)
+    const tranxHash = adminTrx(result, 'adminWithdrawFunds', Config.ADMIN_PASS, amount, offRampAddress);
+    return tranxHash
+  } catch (error) {
+    logger.error("admin withdraw funds", JSON.stringify(error.message))
+    let err = {
+      name: "admin withdraw funds",
+      error: error.message,
+    };
+    throw err;
+  }
+}
+
+
 
 
 
